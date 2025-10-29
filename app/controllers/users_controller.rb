@@ -1,12 +1,54 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
 
-  def index
-    # for admin or recruiter to see all users (optional)
-    @users = User.all
+  def new_signup
+    @user = User.new
   end
 
-  def show
-    @user = current_user
+  def user_signup
+    @user = User.new(user_params)
+
+    if @user.save
+      flash[:success] = "Account successfully created. Please log in."
+      redirect_to login_path
+    else
+      flash.now[:error] = @user.errors.full_messages
+      render :new_signup, status: :unprocessable_entity
+    end
+  end
+
+  def new_login
+    @user = User.new
+  end
+
+  def user_login
+    @user = User.find_by(email: params[:user][:email])
+
+    if @user&.valid_password?(params[:user][:password])
+      session[:user_id] = @user.id
+      flash[:success] = "Login successful!"
+      
+      redirect_path = case @user.role
+                      when "recruiter" then recruiter_home_path
+                      when "jobseeker" then jobseeker_home_path
+                      else root_path
+                      end
+
+      redirect_to redirect_path
+    else
+      flash.now[:error] = "Invalid email or password"
+      render :new_login, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    session[:user_id] = nil
+    flash[:success] = "Successfully logged out."
+    redirect_to login_path
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:username, :email, :phone_number, :password, :password_confirmation, :role)
   end
 end

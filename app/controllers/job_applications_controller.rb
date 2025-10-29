@@ -1,11 +1,19 @@
 class JobApplicationsController < ApplicationController
-  before_action :authenticate_user!
   before_action :ensure_jobseeker!
   before_action :set_job, only: [:new, :create]
 
-  def index
-    # My applied jobs
-    @applications = current_user.job_applications.includes(:job).order(created_at: :desc)
+  def applied_jobs
+    @applications = current_user.job_applications
+                                .includes(:job)
+                                .order(created_at: :desc)
+  end
+
+  def all_jobs
+    @jobs = Job.all
+  end
+
+    
+  def jobseeker_index
   end
 
   def new
@@ -13,21 +21,32 @@ class JobApplicationsController < ApplicationController
   end
 
   def create
-    @application = @job.job_applications.build(jobseeker: current_user)
-    @application.resume.attach(params[:job_application][:resume]) if params[:job_application][:resume].present?
-    @application.status = "applied"
+    @application = @job.job_applications.build(jobseeker_id: current_user.id)
+    
+    if params[:resume].present?
+      @application.resume.attach(params[:resume])
+    end
+  
+    @application.about_yourself = params[:about_yourself]
+    @application.status = "review"
+    
     if @application.save
-      redirect_to job_applications_path, notice: "Applied successfully."
+      redirect_to applied_jobs_path, notice: "Applied successfully."
     else
       flash.now[:alert] = @application.errors.full_messages.join(", ")
       render :new
     end
   end
+  
 
   private
 
   def set_job
     @job = Job.find(params[:job_id])
+  end
+
+  def job_application_params
+    params.require(:job_application).permit(:resume, :about_yourself, :status)
   end
 
   def ensure_jobseeker!

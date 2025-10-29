@@ -6,7 +6,7 @@ class CreateJobs < ActiveRecord::Migration[7.1]
       t.string :location
       t.string :industry_type
       t.integer :vacany
-      t.references :recruiter, null: false, foreign_key: true
+      t.references :recruiter, null: false, foreign_key: { to_table: :users }
       t.string :company_name
 
       t.timestamps

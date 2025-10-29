@@ -1,0 +1,125 @@
+<%= render partial: 'partials/header' %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f7fa;
+  padding: 20px;
+}
+
+.job-form {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.form-input, .form-textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+}
+
+.form-input:focus, .form-textarea:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
+}
+
+.form-textarea {
+  height: 150px;
+}
+
+.form-submit {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #3498db;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-submit:hover {
+  background-color: #2980b9;
+}
+
+@media (max-width: 600px) {
+  .job-form {
+    padding: 20px;
+  }
+
+  .form-title {
+    font-size: 20px;
+  }
+
+  .form-input, .form-textarea {
+    font-size: 12px;
+  }
+
+  .form-submit {
+    font-size: 14px;
+  }
+}
+
+</style>
+<body>
+  <%= form_with(model: @apply_job, url: job_applications_path, html: {class: 'job-form'}) do |form| %>
+    <div class="form-container">
+    <h2 class="form-title">Apply To Job</h2>
+    <p @apply_job.job.title</p>
+      <div class="form-group">
+          <%= form.label :about_yourself, class: 'form-label' %>
+          <%= form.text_field :about_yourself, class: 'form-input', placeholder: "About Yourself" %>
+      </div>
+
+      <div class="form-group">
+          <%= form.label :description, class: 'form-label' %>
+          <%= form.file_field :resume, class: 'form-textarea', placeholder: "Attach Resume" %>
+      </div>
+
+      <div class="form-group">
+          <%= form.submit 'Apply Job', class: 'form-submit' %>
+      </div>
+    </div>
+  <% end %>
+</body>
+</html>

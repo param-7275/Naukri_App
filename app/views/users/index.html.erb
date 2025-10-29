@@ -1,0 +1,339 @@
+<%= render partial: 'partials/header' %>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/71fda7b2a0.js" crossorigin="anonymous"></script>
+<style>
+    *{
+    margin: 0;
+    padding: 0;
+    font-family: 'poppins', sans-serif;
+    box-sizing: border-box;
+}
+body{
+    background: #8b8990;
+    color: #fff;
+ }
+ #header{
+     width: 100%;
+     height: 100vh;
+     background-image:url(images/rachael.png);
+     background-size:cover;
+     background-position: center;
+ }
+ .container{
+     padding: 10px 10%;
+ }
+ nav{
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     flex-wrap: wrap;
+ }
+ .logo{
+     width: 140px;
+ }
+ nav ul li{
+     display: inline-block;
+     list-style: none;
+     margin: 10px 20px;
+ }
+ nav ul li a{ 
+ color: #fff;
+ text-decoration: none;
+ font-size: 18px;
+ position: relative;
+ }
+ nav ul li a::after{
+     content: '';
+     width: 0%;
+     height: 3px;
+     background: #ff004f;
+     position: absolute;
+     left: 0;
+     bottom: -6px;
+     transform: 0.5s;
+ }
+ nav ul li a:hover::after{
+     width: 100%;
+ }
+ .header-text{
+     margin-top: 20%;
+     font-size: 30px;
+ }
+ .header-text h1{
+     font-size: 60px;
+     margin-top: 20px;
+ }
+ .header-text h1 span{
+     color: #ff004f;
+ }
+/*-------About-------*/
+#About{
+    padding: 60px 0;
+    color: #ababab;
+}
+.row{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.About-col-1{
+    flex-basis: 35%;
+}
+.About-col-1 img{
+    width: 100%;
+    border-radius: 15px;
+}
+.About-col-2{
+    flex-basis: 60%;
+}
+.sub-title{
+    font-size: 60px;
+    font-weight: 600;
+    color: #fff;
+}
+.tab-titles{
+    display: flex;
+    margin: 20px 0 40px;
+}
+.tab-links{
+    margin-right: 50px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+}
+.tab-links::after{
+    content: '';
+    width: 0;
+    height: 3px;
+    background: #ff004f;
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    transition: 0.5s;
+}
+.tab-links.active-link::after{
+    width: 50%;
+}
+.tab-contents ul li{
+    list-style: none;
+    margin: 10px 0;
+}
+.tab-contents ul li span{
+    color: #b54769;
+    font-size: 14px;
+}
+.tab-contents{
+    display: none;
+}
+.tab-contents.active-tab{
+    display: block;
+}
+
+/*--------Services--------*/
+#Services{
+    padding: 30px 0;
+}
+.Services-List{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 40px;
+    margin-top: 50px;
+}
+.Services-List div{
+    background: #262626;
+    padding: 40px;
+    font-size: 13px;
+    font-weight: 300;
+    border-radius: 10px;
+    transition: background 0.5s, transform 0.5s;
+}
+.Services-List div i{
+    font-size: 50px;
+    margin-bottom: 30px;
+}
+.Services-List div h2{
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+.Services-List div a{
+    text-decoration: none;
+    color: #fff;
+    font-size: 12px;
+    margin-top: 20px;
+    display: inline-block;
+}
+.Services-List div:hover{
+    background: #ff004f;
+    transform: translateY(-10px);
+}
+/*-------Portfolio--------*/
+#Portfolio{
+    padding: 50px 0;
+}
+.work-list{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 40px;
+    margin-top: 50px;
+}
+.work{
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+.work img{
+    width: 100%;
+    border-radius: 10px;
+    display: block;
+    transition: transform 0.5s;
+}
+.layer{
+    width: 100%;
+    height: 0%;
+    background: linear-gradient(rgba(0,0,0,0.6), #ff004f);
+    border-radius: 10px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
+    font-size: 14px;
+    transition: height 0.5s;
+}
+.layer h3{
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+.work:hover img{
+    transform: scale(1.1);
+}
+.work:hover .layer{
+    height: 100%;
+}
+/*--------Contact---------*/
+.contact-left{
+    flex-basis: 35%;
+}
+.contact-right{
+    flex-basis: 60%;
+}
+.contact-left p{
+    margin-top: 30px;
+}
+.contact-left p i{
+    color: #ff004f;
+    margin-right: 15px;
+    font-size: 25px;
+}
+.social-icons{
+    margin-top: 30px;
+}
+.social-icons a{
+    text-decoration: none;
+    font-size: 30px;
+    margin-right: 15px;
+    color: #ababab;
+    display: inline-block;
+    transition: transform 0.5s;
+}
+.social-icons a:hover{
+    color: #ff004f;
+    transform: translateY(-5px);
+}
+/* download Button style starts here */
+.download_btn{
+    margin: 10px 0;
+    padding: 10px 5px;
+    /* border: 1px solid white; */
+    background-color: #ff004f;
+    border-radius: 4px;
+    width: 150px;
+    text-align: center;
+}
+.download_btn a{
+    text-decoration: none;
+    font-weight: 300;
+    color: #fff;
+}
+/* download button style ends here  */
+</style>
+</head>
+
+<body   >
+    
+
+
+    <div id="header">
+ <div class="container">
+<nav>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjAiI6aZjB-7abnIlPH35y0g7b7fmJu3zaCQ&usqp=CAU" width="160" height="150" class="logo">
+    <img src="https://imgs.search.brave.com/TBfLGC5AWiWdDzEkBFCfAwkxwa9N5zTaAfIFwG4Qu-g/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9jZG4u/ZHJpYmJibGUuY29t/L3VzZXJ1cGxvYWQv/MTY2MDA4OTcvZmls/ZS9vcmlnaW5hbC05/MDYzNDIxZTg1Mjhm/MDE2NzM4NWQ2MTkz/Y2U5ZGYwNi5qcGc_/Zm9ybWF0PXdlYnAm/cmVzaXplPTQwMHgz/MDAmdmVydGljYWw9/Y2VudGVy" width="160" height="150" class="logo">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRw84JTDQKO6BrcqnWiO0aqh0gjhOasQzngljV37pEWoQN3Mf8h4iMUk8JHycQ_aw3Tow&usqp=CAU" width="160" height="150" class="logo">
+    <img src="https://imgs.search.brave.com/cgu8FaitdC8EVIHqxHpP-2LsfbKvNoBhQzDZpM721-E/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMubmF1a2ltZy5j/b20vcy80LzExMC9p/LzE1NTI5OTg1MDVf/d2hhdC1yZWNydWl0/ZXItbG9vay1mb3It/aW4tY3YuanBlZw" width="160" height="150" class="logo">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBu84cqRpnR1b72ID7SBgFlY6L5MOtBNhTb0TdP3ngNVMo-yncUOLyI6CTmwDPRGdN4v8&usqp=CAU" width="160" height="150" class="logo">
+    </nav>
+<div class="header-text">
+<h1><span>JOB PORTAL:</span><br></h1><br>
+<h4 style="color: white;">
+  “Find the perfect job opportunity that matches your skills and career goals! 
+  On our Naukri-style Job Portal, you can explore thousands of openings across 
+  industries, customize your profile, and connect directly with top recruiters. 
+  Build a strong resume, apply easily, and take your career to the next level with us.”
+</h4>
+<br>
+
+<p style="color: white;">
+  A professional job profile is your gateway to new opportunities — it’s your first impression to employers.
+  On our portal, we make it simple to create, manage, and update your job applications so you can focus 
+  on what matters most: <b>your career growth.</b>
+  <br><br>
+  <b>Types of Job Opportunities:</b><br>
+  1 - Full-Time Jobs <br>
+  2 - Part-Time Jobs <br>
+  3 - Freelance / Remote Work <br>
+  4 - Internship Opportunities <br>
+
+  <br><b>(i) Featured Jobs:</b><br>
+  These are top openings from verified companies that are actively hiring. 
+  Get noticed by applying early and showcasing your skills.
+  <br><br>
+
+  <b>(ii) Walk-In Interviews:</b><br>
+  Apply for companies conducting direct interviews — no waiting, no delay! 
+  Check schedules and locations easily from your dashboard.
+  <br><br>
+
+  <b>(iii) Government & PSU Jobs:</b><br>
+  Stay updated with the latest openings in government sectors and public enterprises. 
+  We provide verified listings, eligibility criteria, and direct application links.
+  <br><br>
+
+  <b>(iv) Remote / Work-from-Home Roles:</b><br>
+  Explore flexible job options that let you work from anywhere. 
+  Perfect for freelancers, students, and professionals seeking better work-life balance.
+  <br><br>
+
+  Build your career with confidence — upload your resume, set up job alerts, and let recruiters find you today!
+</p>
+<hr>
+
+</div>
+</div>
+    </div>
+</body>
+</html>
+ 

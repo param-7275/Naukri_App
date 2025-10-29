@@ -1,0 +1,92 @@
+<%= render partial: 'partials/header' %>
+
+<!DOCTYPE html>
+<title>My Example</title>
+
+<style>
+.table-with-caption {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: sans-serif;
+    margin-top: 1.5rem; 
+}
+
+.table-with-caption caption {
+    caption-side: top;ßß
+    
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: left;
+    color: #333;
+    padding-bottom: 10px;
+}
+
+.table-with-caption thead th {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    text-align: left;
+}
+
+.table-with-caption td {
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    background: white;
+}
+</style>
+
+
+<table class="table-with-caption">
+  <% if @applications.any? %>
+    <caption>APPLICANT DETAILS</caption>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Applied For</th>
+            <th scope="col">About</th>
+            <th scope="col">Status</th>
+            <th scope="col">Resume</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <% @applications.each do |app| %>
+          <tr>
+            <td><%= app.jobseeker.username %></td>
+            <td><%= app.jobseeker.email %></td>
+            <td><%= app.jobseeker.phone_number %></td>
+            <td><%= app.job.title %></td>
+            <td><%= app.about_yourself.presence || "—" %></td>
+            <td><%= app.status.capitalize %></td>
+            <td>
+              <% if app.resume.attached? %>
+                <%= link_to "Download", rails_blob_path(app.resume, disposition: "attachment"), class: "btn btn-sm btn-primary" %>
+              <% else %>
+                No Resume
+              <% end %>
+            </td>
+            <td>
+              <%= form_with url: change_job_status_path(app), method: :patch, data: { turbo: true }, local: true do |f| %>
+                <%= f.select :status, 
+                    [
+                      ['Review', 'Review'],
+                      ['Reject', 'Reject'], 
+                      ['Select for Interview', 'selected for Interview'], 
+                      ['Select for Job', 'Selected For Job']
+                    ], 
+                    { selected: app.status }, 
+                    { onchange: 'this.form.requestSubmit()' } %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tr>
+    </tbody>
+  <% else %>
+    <p>No applicants yet for this job.</p>
+  <% end %>
+</table>
+

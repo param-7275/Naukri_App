@@ -1,0 +1,147 @@
+<%= render partial: 'partials/header' %>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f7fa;
+  padding: 20px;
+}
+
+.job-form {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.form-input, .form-textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+}
+
+.form-input:focus, .form-textarea:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
+}
+
+.form-textarea {
+  height: 150px;
+}
+
+.form-submit {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #3498db;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-submit:hover {
+  background-color: #2980b9;
+}
+
+@media (max-width: 600px) {
+  .job-form {
+    padding: 20px;
+  }
+
+  .form-title {
+    font-size: 20px;
+  }
+
+  .form-input, .form-textarea {
+    font-size: 12px;
+  }
+
+  .form-submit {
+    font-size: 14px;
+  }
+}
+
+</style>
+<body>
+<%= form_with(model: @job, url: create_new_job_path, html: {class: 'job-form'}) do |form| %>
+    <div class="form-container">
+      <h2 class="form-title">Post a New Job</h2>
+  
+      <div class="form-group">
+        <%= form.label :title, class: 'form-label' %>
+        <%= form.text_field :title, class: 'form-input', placeholder: "Job Title" %>
+      </div>
+  
+      <div class="form-group">
+        <%= form.label :description, class: 'form-label' %>
+        <%= form.text_area :description, class: 'form-textarea', placeholder: "Job Description" %>
+      </div>
+  
+      <div class="form-group">
+        <%= form.label :company_name, class: 'form-label' %>
+        <%= form.text_field :company_name, class: 'form-input', placeholder: "Company Name" %>
+      </div>
+  
+      <div class="form-group">
+        <%= form.label :vacancy, class: 'form-label' %>
+        <%= form.number_field :vacancy, class: 'form-input', placeholder: "Vacancy" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :location, class: 'form-label' %>
+        <%= form.text_field :location, class: 'form-input', placeholder: "Job Location" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :industry_type, class: 'form-label' %>
+        <%= form.text_field :industry_type, class: 'form-input', placeholder: "Industry Type" %>
+      </div>
+  
+      <div class="form-group">
+        <%= form.submit 'Post Job', class: 'form-submit' %>
+      </div>
+    </div>
+  <% end %>
+  
+</body>
+</html>
