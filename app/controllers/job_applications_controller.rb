@@ -3,9 +3,7 @@ class JobApplicationsController < ApplicationController
   before_action :set_job, only: [:new, :create]
 
   def applied_jobs
-    @applications = current_user.job_applications
-                                .includes(:job)
-                                .order(created_at: :desc)
+    @applications = current_user.job_applications.includes(:job).order(created_at: :desc)
   end
 
   def all_jobs

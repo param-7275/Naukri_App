@@ -1,12 +1,33 @@
 <%= render partial: 'partials/header' %>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<% if flash[:alert] %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <%= flash[:alert] %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
+
+<div class="job-form">
+  <h2 class="form-title">Apply To Job</h2>
+  <p><%= @job.title %></p>
+
+  <%= form_with(model: @apply_job, url: job_applications_path, html: { class: 'job-form' }) do |form| %>
+    <div class="form-group">
+      <%= form.label :about_yourself, class: 'form-label' %>
+      <%= form.text_field :about_yourself, class: 'form-input', placeholder: "About Yourself" %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :resume, "Attach Resume", class: 'form-label' %>
+      <%= form.file_field :resume, class: 'form-input' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.submit 'Apply Job', class: 'form-submit' %>
+    </div>
+  <% end %>
+</div>
+
 <style>
 * {
   margin: 0;
@@ -62,10 +83,6 @@ body {
   box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
 }
 
-.form-textarea {
-  height: 150px;
-}
-
 .form-submit {
   width: 100%;
   padding: 12px;
@@ -91,7 +108,7 @@ body {
     font-size: 20px;
   }
 
-  .form-input, .form-textarea {
+  .form-input {
     font-size: 12px;
   }
 
@@ -99,27 +116,4 @@ body {
     font-size: 14px;
   }
 }
-
 </style>
-<body>
-  <%= form_with(model: @apply_job, url: job_applications_path, html: {class: 'job-form'}) do |form| %>
-    <div class="form-container">
-    <h2 class="form-title">Apply To Job</h2>
-    <p @apply_job.job.title</p>
-      <div class="form-group">
-          <%= form.label :about_yourself, class: 'form-label' %>
-          <%= form.text_field :about_yourself, class: 'form-input', placeholder: "About Yourself" %>
-      </div>
-
-      <div class="form-group">
-          <%= form.label :description, class: 'form-label' %>
-          <%= form.file_field :resume, class: 'form-textarea', placeholder: "Attach Resume" %>
-      </div>
-
-      <div class="form-group">
-          <%= form.submit 'Apply Job', class: 'form-submit' %>
-      </div>
-    </div>
-  <% end %>
-</body>
-</html>
