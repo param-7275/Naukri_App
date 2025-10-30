@@ -43,6 +43,7 @@ en:
     lang_hi: "HI"
     lang_pa: 'PA'
   jobs:
+    status: 'Status'
     recruiter_home_title: "Recruiter Home Page"
     jobseeker_home_title: "Job Seeker Home Page"
     common:
@@ -91,11 +92,11 @@ en:
         select_for_interview: "Select for Interview"
         select_for_job: "Select for Job"
       about_empty: "—"
-      # status:
-      #   review: "Review"
-      #   reject: "Reject"
-      #   select_for_interview: "Selected for Interview"
-      #   select_for_job: "Selected For Job"
+      status:
+        review: "Review"
+        reject: "Reject"
+        select_for_interview: "Selected for Interview"
+        select_for_job: "Selected For Job"
     recruiter_posted:
       apply: "Apply"
   job_applications:

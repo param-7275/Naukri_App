@@ -67,7 +67,7 @@
             <% if job_application.status == 'reject' %>
               <p><%= t('jobs.index.can_apply_again') %></p>
             <% end %>
-
+            
           <% else %>
             <%= link_to t('jobs.index.apply_job'), new_job_application_path(job_id: job.id, locale: I18n.locale), class: 'edit-button' %>          <% end %>
         </div>

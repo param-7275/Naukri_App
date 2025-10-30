@@ -15,6 +15,7 @@ hi:
     lang_hi: "हिंदी"
     lang_pa: 'पंजाबी'
   jobs:
+    status: "स्थिति"
     recruiter_home_page: "भर्तीकर्ता होम पेज"
     jobseeker_home_page: "नौकरी चाहने वाले का होम पेज"
     common:
@@ -41,7 +42,6 @@ hi:
       edit_job: "संपादित करें"
       delete: "हटाएँ"
       already_applied: "पहले से आवेदन किया गया"
-      status: "स्थिति"
       can_apply_again: "आप 3 महीने बाद फिर से आवेदन कर सकते हैं"
       apply_job: "आवेदन करें"
     applicants:
@@ -50,7 +50,7 @@ hi:
       email: "ईमेल"
       phone: "फ़ोन"
       applied_for: "आवेदन की गई नौकरी"
-      about: "के बारे में"
+      about: "कर्मचारी के बारे में"
       status: "स्थिति"
       resume: "रिज़्यूमे"
       action: "कार्रवाई"

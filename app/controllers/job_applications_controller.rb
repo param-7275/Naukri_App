@@ -21,42 +21,55 @@ class JobApplicationsController < ApplicationController
     @job = Job.find_by(id: params[:job_id])
   end
 
+  # def change_application_status
+  #   unless @job_application && @job_application.job.recruiter_id == current_user.id
+  #     redirect_to recruiter_applicants_path, alert: 'You are not authorized to change this application.'
+  #     return
+  #   end
+  #   status = params.dig(:job_application, :status)
+  #   if status.present?
+  #     if @job_application.update(status: status)
+  #       redirect_to recruiter_applicants_path, notice: 'Status updated!'
+  #     else
+  #       redirect_to recruiter_applicants_path, alert: 'Status update failed.'
+  #     end
+  #   else
+  #     redirect_to recruiter_applicants_path, alert: 'Update failed. Missing parameters.'
+  #   end
+  # end
+
   def change_application_status
-    unless @job_application && @job_application.job.recruiter_id == current_user.id
-      redirect_to recruiter_applicants_path, alert: 'You are not authorized to change this application.'
-      return
-    end
-    status = params.dig(:job_application, :status)
-    if status.present?
-      if @job_application.update(status: status)
+    # binding.irb
+    @job_application = JobApplication.find_by(id: params[:id])
+    if @job_application.present?
+      if params[:job_application].present? && params[:job_application][:status].present?
+        @job_application.update(status: params[:job_application][:status])
         redirect_to recruiter_applicants_path, notice: 'Status updated!'
-      else
-        redirect_to recruiter_applicants_path, alert: 'Status update failed.'
       end
     else
-      redirect_to recruiter_applicants_path, alert: 'Update failed. Missing parameters.'
+      redirect_to recruiter_applicants_path, alert: 'Update failed.'
     end
   end
 
   def create
-    unless @job && @job.persisted?
-      redirect_to all_jobs_path, alert: 'Job not found.'
-      return
+    @job = Job.find_by(id: params[:job_id])
+    unless @job
+      return redirect_to recruiter_applicants_path, alert: "Job not found."
     end
-    if current_user.job_applications.find_by(job_id: @job.id)
-      redirect_to applied_jobs_path, alert: 'You have already applied for this job.'
-      return
-    end
-    @application = @job.job_applications.build(jobseeker_id: current_user.id)
-    @application.assign_attributes(job_application_params)
-    if @application.save
-      redirect_to applied_jobs_path, notice: "Applied successfully."
+
+    @job_application = current_user.job_applications.new(
+      job_id: @job.id,
+      status: 'review',
+      about_yourself: params[:about_yourself],
+      resume: params[:resume]
+    )
+
+    if @job_application.save
+      redirect_to applied_jobs_path, notice: "Application submitted!"
     else
-      flash.now[:alert] = @application.errors.full_messages.join(", ")
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
-  
 
   private
 
@@ -66,10 +79,6 @@ class JobApplicationsController < ApplicationController
 
   def set_job
     @job = Job.find_by(id: params[:job_id])
-  end
-
-  def job_application_params
-    params.require(:job_application).permit(:resume, :about_yourself)
   end
 
   def ensure_jobseeker!
