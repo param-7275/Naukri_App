@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
   scope "(:locale)", locale: /en|hi/ do
-    resources :users, only: [:show, :index]
 
     # Jobs Controller Routes
     get 'recruiter_index/', to: "jobs#recruiter_index", as: 'recruiter_home'
@@ -20,6 +19,7 @@ Rails.application.routes.draw do
     get  'job_applications/new/:job_id', to: 'job_applications#new', as: 'new_job_application'
     post 'job_applications/create/:job_id', to: 'job_applications#create', as: 'job_applications'
     match 'change_application_status/:id', to: "job_applications#change_application_status", as: 'change_job_status', via: [:patch, :put]
+
     # Users Controller Routes
     match '/logout(/:id)', to: "users#destroy", as: "user_logout", via: [:get, :delete]
     get "new_signup/" , to: "users#new_signup" , as: "new_signup"

@@ -5,6 +5,13 @@ class UsersController < ApplicationController
   end
 
   def user_signup
+    user_role = user_params[:role]
+    allowed_roles = User.roles.keys # ["jobseeker", "recruiter"]
+    unless allowed_roles.include?(user_role)
+      flash.now[:error] = "Role is invalid."
+      @user = User.new
+      render :new_signup, status: :unprocessable_entity and return
+    end
     @user = User.new(user_params)
 
     if @user.save
