@@ -6,7 +6,6 @@
 <head>
   <title>Items</title>
   <style>
-    /* Add CSS styles for item display */
     .container {
       display: flex;
       flex-wrap: wrap;
@@ -17,21 +16,21 @@
       width: 30%;
       margin: 10px;
       padding: 10px;
-      background-color: #f0f0f0; /* Light gray background */
+      background-color: #f0f0f0;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     h2 {
-      color: #333; /* Dark gray text color */
+      color: #333; 
     }
 
     p {
-      color: #666; /* Medium gray text color */
+      color: #666;
     }
 
     .price {
-      color: #009688; /* Green text color for price */
+      color: #009688;
       font-weight: bold;
     }
 
@@ -59,9 +58,9 @@
           <p><%= t('jobs.index.industry_type') %> : <%= job.industry_type %></p>
           <p><%= t('jobs.index.location') %> : <%= job.location %></p>
           <p><%= t('jobs.index.vacancy') %> : <%= job.vacancy %></p>
-          <%= link_to t('jobs.index.edit_job'), edit_job_path(job), class: 'edit-button' %>
+          <%= link_to t('jobs.index.edit_job'), edit_job_path(job, locale: I18n.locale), class: 'edit-button' %>
           </n>
-          <%= button_to t('jobs.index.delete'), delete_job_path(job), method: :delete %>
+          <%= button_to t('jobs.index.delete'), delete_job_path(job, locale: I18n.locale), method: :delete %>
         </div>
       <% end %>
     </div>  

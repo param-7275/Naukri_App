@@ -35,6 +35,11 @@
           <%= link_to t('nav.logout'), user_logout_path, method: :delete %>
         </li>
 
+        <li style="float: right;">
+          <%= link_to t('nav.lang_en'), url_for(locale: :en) %> 
+          <%= link_to t('nav.lang_hi'), url_for(locale: :hi) %>
+        </li>
+
         <% if current_user.role == 'recruiter' %>
           <li><%= link_to t('nav.home'), recruiter_home_path %></li>
           <li><%= link_to t('nav.post_job'), new_job_path %></li>
@@ -51,11 +56,7 @@
         <li><%= link_to t('nav.signup'), new_signup_path %></li>
         <li><%= link_to t('nav.login'), login_path %></li>
       <% end %>
-      <li style="float: right;">
-        <%= link_to t('nav.lang_en'), url_for(locale: :en) %> 
-        <%= link_to t('nav.lang_es'), url_for(locale: :es) %> 
-        <%= link_to t('nav.lang_hi'), url_for(locale: :hi) %>
-      </li>
+      
     </ul>
   </body>
 </html>

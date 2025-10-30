@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  scope "(:locale)", locale: /en|hi|es/ do
+  scope "(:locale)", locale: /en|hi/ do
     resources :users, only: [:show, :index]
 
     # Jobs Controller Routes
@@ -8,9 +8,9 @@ Rails.application.routes.draw do
     get 'new/', to: "jobs#new", as: 'new_job'
     post 'create/', to: "jobs#create", as: 'create_new_job'
     get 'index/', to: "jobs#index", as: 'recruiter_jobs'
-    get 'edit(/:id)', to: "jobs#edit", as: 'edit_job'
-    match 'update(/:id)', to: "jobs#update", as: 'update_job', via: [:patch , :put]
-    match 'destroy/(/:id)', to: "jobs#destroy", as: 'delete_job', via: [:delete]
+    get 'edit/:id', to: "jobs#edit", as: 'edit_job'
+    match '/update(/:id)', to: "jobs#update", as: 'update_job', via: [:get, :put, :patch]
+    match '/destroy(/:id)', to: "jobs#destroy", as: 'delete_job', via: [:delete]
     get 'recruiter_applicants', to: 'jobs#applicants', as: 'recruiter_applicants' 
     match 'change_application_status(/:id)', to: "jobs#change_application_status", as: 'change_job_status', via: [:put, :get, :patch]
 
@@ -18,8 +18,9 @@ Rails.application.routes.draw do
     get 'applied_jobs/', to: "job_applications#applied_jobs", as: 'applied_jobs'
     get 'jobseeker_index/', to: "job_applications#jobseeker_index", as: 'jobseeker_home'
     get 'all_jobs/', to: "job_applications#all_jobs", as: 'all_jobs'
-    get 'jobs/:job_id/job_applications/new', to: 'job_applications#new', as: 'new_job_application'
-    post 'jobs/:job_id/job_applications', to: 'job_applications#create', as: 'job_applications'
+    get  'job_applications/new/:job_id', to: 'job_applications#new', as: 'new_job_application'
+    post 'job_applications/create/:job_id', to: 'job_applications#create', as: 'job_applications'
+
 
     # Users Controller Routes
     match '/logout(/:id)', to: "users#destroy", as: "user_logout", via: [:get, :delete]

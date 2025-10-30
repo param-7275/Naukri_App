@@ -1,0 +1,100 @@
+pa:
+  nav:
+    home: "ਘਰ"
+    signup: "ਸਾਈਨ ਅੱਪ"
+    login: "ਲਾਗਇਨ"
+    logout: "ਲਾਗਆਊਟ"
+    post_job: "ਨੌਕਰੀ ਪੋਸਟ ਕਰੋ"
+    show_my_jobs: "ਮੇਰੀਆਂ ਨੌਕਰੀਆਂ ਵੇਖੋ"
+    show_applicants: "ਆਵੇਦਕ ਵੇਖੋ"
+    all_jobs: "ਸਾਰੀਆਂ ਨੌਕਰੀਆਂ"
+    applied_jobs: "ਲਗਾਈਆਂ ਨੌਕਰੀਆਂ"
+    logged_in_as: "ਲਾਗਇਨ ਕੀਤਾ:"
+    lang_en: "ਅੰਗ੍ਰੇਜ਼ੀ"
+    lang_es: "ਸਪੇਨੀ"
+    lang_hi: "ਹਿੰਦੀ"
+    lang_pa: 'ਪੰਜਾਬੀ'
+  jobs:
+    recruiter_home_title: "ਭਰਤੀਕਾਰ ਦਾ ਮੁੱਖ ਸਫ਼ਾ"
+    common:
+      placeholders:
+        title: "ਨੌਕਰੀ ਦਾ ਸਿਰਲੇਖ"
+        description: "ਨੌਕਰੀ ਦਾ ਵੇਰਵਾ"
+        company_name: "ਕੰਪਨੀ ਦਾ ਨਾਮ"
+        vacancy: "ਖਾਲੀ ਅਸਾਮੀ"
+        location: "ਨੌਕਰੀ ਦੀ ਥਾਂ"
+        industry_type: "ਉਦਯੋਗ ਕਿਸਮ"
+    new:
+      title: "ਨਵੀਂ ਨੌਕਰੀ ਪੋਸਟ ਕਰੋ"
+      submit: "ਨੌਕਰੀ ਪੋਸਟ ਕਰੋ"
+    edit:
+      title: "ਨੌਕਰੀ ਸੋਧੋ"
+      submit: "ਨੌਕਰੀ ਅਪਡੇਟ ਕਰੋ"
+    index:
+      job_title: "ਨੌਕਰੀ ਦਾ ਸਿਰਲੇਖ"
+      job_description: "ਨੌਕਰੀ ਦਾ ਵੇਰਵਾ"
+      company_name: "ਕੰਪਨੀ ਦਾ ਨਾਮ"
+      industry_type: "ਉਦਯੋਗ ਕਿਸਮ"
+      location: "ਸਥਿਤੀ"
+      vacancy: "ਖਾਲੀ ਅਸਾਮੀ"
+      edit_job: "ਨੌਕਰੀ ਸੋਧੋ"
+      delete: "ਹਟਾਓ"
+      already_applied: "ਪਹਿਲਾਂ ਹੀ ਅਪਲਾਈ ਕੀਤੀ"
+      status: "ਸਥਿਤੀ"
+      can_apply_again: "ਤੁਸੀਂ 3 ਮਹੀਨੇ ਬਾਅਦ ਦੁਬਾਰਾ ਅਰਜ਼ੀ ਦੇ ਸਕਦੇ ਹੋ"
+      apply_job: "ਨੌਕਰੀ ਲਈ ਅਰਜ਼ੀ ਦਿਓ"
+    applicants:
+      caption: "ਆਵੇਦਕ ਵੇਰਵੇ"
+      name: "ਨਾਮ"
+      email: "ਈਮੇਲ"
+      phone: "ਫ਼ੋਨ"
+      applied_for: "ਇਸ ਲਈ ਅਰਜ਼ੀ ਦਿੱਤੀ"
+      about: "ਬਾਰੇ"
+      status: "ਸਥਿਤੀ"
+      resume: "ਰੈਜ਼ਿਊਮੇ"
+      action: "ਕਾਰਵਾਈ"
+      download: "ਡਾਊਨਲੋਡ ਕਰੋ"
+      no_resume: "ਕੋਈ ਰੈਜ਼ਿਊਮੇ ਨਹੀਂ"
+      none_yet: "ਇਸ ਨੌਕਰੀ ਲਈ ਅਜੇ ਤੱਕ ਕੋਈ ਆਵੇਦਕ ਨਹੀਂ।"
+      status_options:
+        review: "ਸਮੀਖਿਆ ਕਰੋ"
+        reject: "ਅਸਵੀਕਾਰ ਕਰੋ"
+        select_for_interview: "ਸਾਕਾਤ ਲਈ ਚੁਣੋ"
+        select_for_job: "ਨੌਕਰੀ ਲਈ ਚੁਣੋ"
+      about_empty: "—"
+      status:
+        review: "ਸਮੀਖਿਆ ਵਿੱਚ"
+        reject: "ਅਸਵੀਕਾਰ ਕੀਤਾ ਗਿਆ"
+        select_for_interview: "ਸਾਕਾਤ ਲਈ ਚੁਣਿਆ ਗਿਆ"
+        select_for_job: "ਨੌਕਰੀ ਲਈ ਚੁਣਿਆ ਗਿਆ"
+    recruiter_posted:
+      apply: "ਅਰਜ਼ੀ ਦਿਓ"
+  job_applications:
+    new:
+      title: "ਨੌਕਰੀ ਲਈ ਅਰਜ਼ੀ ਦਿਓ"
+      about_yourself: "ਆਪਣੇ ਬਾਰੇ"
+      attach_resume: "ਰੈਜ਼ਿਊਮੇ ਜੋੜੋ"
+      apply: "ਅਰਜ਼ੀ ਦਿਓ"
+    applied_jobs:
+      empty: "ਤੁਸੀਂ ਅਜੇ ਤੱਕ ਕਿਸੇ ਨੌਕਰੀ ਲਈ ਅਰਜ਼ੀ ਨਹੀਂ ਦਿੱਤੀ, ਕਿਰਪਾ ਕਰਕੇ ਅਰਜ਼ੀ ਦਿਓ।"
+  users:
+    jobseeker_home_title: "ਨੌਕਰੀ ਖੋਜਣ ਵਾਲੇ ਦਾ ਮੁੱਖ ਸਫ਼ਾ"
+    signup:
+      title: "ਸਾਈਨ ਅੱਪ ਕਰੋ"
+      username: "ਯੂਜ਼ਰਨਾਮ"
+      email: "ਈਮੇਲ"
+      contact: "ਸੰਪਰਕ"
+      role: "ਭੂਮਿਕਾ"
+      job_seeker: "ਨੌਕਰੀ ਖੋਜਣ ਵਾਲਾ"
+      recruiter: "ਭਰਤੀਕਾਰ"
+      password: "ਪਾਸਵਰਡ"
+      confirm_password: "ਪਾਸਵਰਡ ਪੁਸ਼ਟੀ ਕਰੋ"
+      submit: "ਸਾਈਨ ਅੱਪ ਕਰੋ"
+      goto_home: "ਘਰ ਜਾਓ"
+      already_have_account: "ਪਹਿਲਾਂ ਹੀ ਖਾਤਾ ਹੈ? ਲਾਗਇਨ ਕਰੋ"
+    login:
+      title: "ਲਾਗਇਨ ਕਰੋ"
+      email: "ਈਮੇਲ"
+      password: "ਪਾਸਵਰਡ"
+      submit: "ਲਾਗਇਨ ਕਰੋ"
+      no_account_signup: "ਖਾਤਾ ਨਹੀਂ ਹੈ? ਸਾਈਨ ਅੱਪ ਕਰੋ"

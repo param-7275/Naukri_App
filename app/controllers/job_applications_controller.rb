@@ -15,7 +15,7 @@ class JobApplicationsController < ApplicationController
   end
 
   def new
-    @application = @job.job_applications.build
+    @job = Job.find_by(id: params[:job_id])
   end
 
   def create

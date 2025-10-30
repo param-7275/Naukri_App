@@ -44,6 +44,7 @@ class JobsController < ApplicationController
   def edit; end
 
   def update
+    # binding.irb
     if @job.update!(job_params)
       redirect_to recruiter_jobs_path, notice: "Job Updated."
     else

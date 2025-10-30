@@ -41,8 +41,10 @@ en:
     lang_en: "EN"
     lang_es: "ES"
     lang_hi: "HI"
+    lang_pa: 'PA'
   jobs:
     recruiter_home_title: "Recruiter Home Page"
+    jobseeker_home_title: "Job Seeker Home Page"
     common:
       placeholders:
         title: "Job Title"
@@ -89,18 +91,23 @@ en:
         select_for_interview: "Select for Interview"
         select_for_job: "Select for Job"
       about_empty: "—"
-      status:
-        review: "Review"
-        reject: "Reject"
-        select_for_interview: "Selected for Interview"
-        select_for_job: "Selected For Job"
+      # status:
+      #   review: "Review"
+      #   reject: "Reject"
+      #   select_for_interview: "Selected for Interview"
+      #   select_for_job: "Selected For Job"
+    recruiter_posted:
+      apply: "Apply"
   job_applications:
     new:
       title: "Apply To Job"
       about_yourself: "About Yourself"
       attach_resume: "Attach Resume"
       apply: "Apply Job"
+    applied_jobs:
+      empty: "You have not applied to any job yet, please apply for a job."
   users:
+
     signup:
       title: "Sign Up"
       username: "Username"

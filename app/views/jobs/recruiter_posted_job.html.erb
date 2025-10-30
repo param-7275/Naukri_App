@@ -6,7 +6,6 @@
 <head>
   <title>Items</title>
   <style>
-    /* Add CSS styles for item display */
     .container {
       display: flex;
       flex-wrap: wrap;
@@ -17,21 +16,21 @@
       width: 30%;
       margin: 10px;
       padding: 10px;
-      background-color: #f0f0f0; /* Light gray background */
+      background-color: #f0f0f0; 
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     h2 {
-      color: #333; /* Dark gray text color */
+      color: #333; 
     }
 
     p {
-      color: #666; /* Medium gray text color */
+      color: #666;
     }
 
     .price {
-      color: #009688; /* Green text color for price */
+      color: #009688; 
       font-weight: bold;
     }
 
@@ -53,13 +52,13 @@
       <% @jobs.each do |job| %>
         <div class="item">
         
-          <h2>Job Title : <%= job.title %></h2>
-          <h3>Job Description : <%= job.description %></h3>
-          <p>Company Name : <%= job.company_name %></p>
-          <p>Industry Type : <%= job.industry_type %></p>
-          <p>Location : <%= job.location %></p>
-          <p>Vacancy : <%= job.vacancy %></p>
-          <%= link_to 'Apply', job_applications_path(job), method: :post, class: 'btn btn-primary' %>
+          <h2><%= t('jobs.index.job_title') %> : <%= job.title %></h2>
+          <h3><%= t('jobs.index.job_description') %> : <%= job.description %></h3>
+          <p><%= t('jobs.index.company_name') %> : <%= job.company_name %></p>
+          <p><%= t('jobs.index.industry_type') %> : <%= job.industry_type %></p>
+          <p><%= t('jobs.index.location') %> : <%= job.location %></p>
+          <p><%= t('jobs.index.vacancy') %> : <%= job.vacancy %></p>
+          <%= link_to t('jobs.recruiter_posted.apply'), job_applications_path(job), method: :post, class: 'btn btn-primary' %>
         </div>
       <% end %>
     </div>  

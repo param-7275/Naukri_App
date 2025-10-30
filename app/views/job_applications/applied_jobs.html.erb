@@ -6,7 +6,6 @@
 <head>
   <title>Items</title>
   <style>
-    /* Add CSS styles for item display */
     .container {
       display: flex;
       flex-wrap: wrap;
@@ -17,21 +16,21 @@
       width: 30%;
       margin: 10px;
       padding: 10px;
-      background-color: #f0f0f0; /* Light gray background */
+      background-color: #f0f0f0;ßß
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     h2 {
-      color: #333; /* Dark gray text color */
+      color: #333;
     }
 
     p {
-      color: #666; /* Medium gray text color */
+      color: #666;
     }
 
     .price {
-      color: #009688; /* Green text color for price */
+      color: #009688;
       font-weight: bold;
     }
 
@@ -53,17 +52,17 @@
       <% if @applications.any? %>
         <% @applications.each do |application| %>
           <div class="item">
-            <h2>Job Title : <%= application.job.title %></h2>
-            <h3>Job Description : <%= application.job.description %></h3>
-            <p>Company Name : <%= application.job.company_name %></p>
-            <p>Industry Type : <%= application.job.industry_type %></p>
-            <p>Location : <%= application.job.location %></p>
-            <p>Vacancy : <%= application.job.vacancy %></p>
-            <p>Job Status : <%= application.status %></p>
+            <h2><%= t('jobs.index.job_title') %> : <%= application.job.title %></h2>
+            <h3><%= t('jobs.index.job_description') %> : <%= application.job.description %></h3>
+            <p><%= t('jobs.index.company_name') %> : <%= application.job.company_name %></p>
+            <p><%= t('jobs.index.industry_type') %> : <%= application.job.industry_type %></p>
+            <p><%= t('jobs.index.location') %> : <%= application.job.location %></p>
+            <p><%= t('jobs.index.vacancy') %> : <%= application.job.vacancy %></p>
+            <p><%= t('jobs.index.status') %> : <%= application.status %></p>
           </div>
         <% end %>
       <% else %>
-        <h1> You have not applying any job yet, please apply a job. </h1>
+        <h1> <%= t('job_applications.applied_jobs.empty') %> </h1>
       <% end %>
     </div>  
   </body>

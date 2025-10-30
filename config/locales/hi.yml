@@ -13,8 +13,10 @@ hi:
     lang_en: "अंग्रेज़ी"
     lang_es: "स्पेनिश"
     lang_hi: "हिंदी"
+    lang_pa: 'पंजाबी'
   jobs:
-    recruiter_home_title: "भर्तीकर्ता होम पेज"
+    recruiter_home_page: "भर्तीकर्ता होम पेज"
+    jobseeker_home_page: "नौकरी चाहने वाले का होम पेज"
     common:
       placeholders:
         title: "नौकरी शीर्षक"
@@ -61,18 +63,21 @@ hi:
         select_for_interview: "साक्षात्कार के लिए चयन करें"
         select_for_job: "नौकरी के लिए चयन करें"
       about_empty: "—"
-      status:
-        review: "समीक्षा"
-        reject: "अस्वीकृत"
-        select_for_interview: "साक्षात्कार के लिए चयनित"
-        select_for_job: "नौकरी के लिए चयनित"
+      # status:
+      #   review: "समीक्षा"
+      #   reject: "अस्वीकृत"
+      #   select_for_interview: "साक्षात्कार के लिए चयनित"
+      #   select_for_job: "नौकरी के लिए चयनित"
   job_applications:
     new:
       title: "नौकरी के लिए आवेदन करें"
       about_yourself: "अपने बारे में"
       attach_resume: "रिज़्यूमे संलग्न करें"
       apply: "आवेदन करें"
+    applied_jobs:
+      empty: "आपने अभी तक किसी नौकरी के लिए आवेदन नहीं किया है, कृपया किसी नौकरी के लिए आवेदन करें।"
   users:
+    recruiter_home_title: "भर्तीकर्ता होम पेज"
     signup:
       title: "साइन अप"
       username: "उपयोगकर्ता नाम"
@@ -92,3 +97,5 @@ hi:
       password: "पासवर्ड"
       submit: "लॉगिन"
       no_account_signup: "खाता नहीं है? साइन अप करें"
+    recruiter_posted:
+      apply: "आवेदन करें"

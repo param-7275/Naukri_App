@@ -48,7 +48,6 @@
             <th scope="col"><%= t('jobs.applicants.about') %></th>
             <th scope="col"><%= t('jobs.applicants.status') %></th>
             <th scope="col"><%= t('jobs.applicants.resume') %></th>
-            <th scope="col"><%= t('jobs.applicants.action') %></th>
         </tr>
     </thead>
     <tbody>
@@ -68,19 +67,7 @@
                 <%= t('jobs.applicants.no_resume') %>
               <% end %>
             </td>
-            <td>
-              <%= form_with url: change_job_status_path(app), method: :patch, data: { turbo: true }, local: true do |f| %>
-                <%= f.select :status, 
-                    [
-                      [t('jobs.applicants.status.review'), 'Review'],
-                      [t('jobs.applicants.status.reject'), 'Reject'], 
-                      [t('jobs.applicants.status.select_for_interview'), 'selected for Interview'], 
-                      [t('jobs.applicants.status.select_for_job'), 'Selected For Job']
-                    ], 
-                    { selected: app.status }, 
-                    { onchange: 'this.form.requestSubmit()' } %>
-              <% end %>
-            </td>
+            
           </tr>
         <% end %>
       </tr>
