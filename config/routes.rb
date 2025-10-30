@@ -12,7 +12,6 @@ Rails.application.routes.draw do
     match '/update(/:id)', to: "jobs#update", as: 'update_job', via: [:get, :put, :patch]
     match '/destroy(/:id)', to: "jobs#destroy", as: 'delete_job', via: [:delete]
     get 'recruiter_applicants', to: 'jobs#applicants', as: 'recruiter_applicants' 
-    match 'change_application_status(/:id)', to: "jobs#change_application_status", as: 'change_job_status', via: [:put, :get, :patch]
 
     # Job Applications Controller Routes
     get 'applied_jobs/', to: "job_applications#applied_jobs", as: 'applied_jobs'
@@ -20,8 +19,7 @@ Rails.application.routes.draw do
     get 'all_jobs/', to: "job_applications#all_jobs", as: 'all_jobs'
     get  'job_applications/new/:job_id', to: 'job_applications#new', as: 'new_job_application'
     post 'job_applications/create/:job_id', to: 'job_applications#create', as: 'job_applications'
-
-
+    match 'change_application_status/:id', to: "job_applications#change_application_status", as: 'change_job_status', via: [:patch, :put]
     # Users Controller Routes
     match '/logout(/:id)', to: "users#destroy", as: "user_logout", via: [:get, :delete]
     get "new_signup/" , to: "users#new_signup" , as: "new_signup"

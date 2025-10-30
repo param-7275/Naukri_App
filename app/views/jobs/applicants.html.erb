@@ -48,6 +48,7 @@
             <th scope="col"><%= t('jobs.applicants.about') %></th>
             <th scope="col"><%= t('jobs.applicants.status') %></th>
             <th scope="col"><%= t('jobs.applicants.resume') %></th>
+            <th scope="col"><%= t('jobs.applicants.action') %></th>
         </tr>
     </thead>
     <tbody>
@@ -58,7 +59,7 @@
             <td><%= app.jobseeker.email %></td>
             <td><%= app.jobseeker.phone_number %></td>
             <td><%= app.job.title %></td>
-            <td><%= app.about_yourself.presence || t('jobs.applicants.about_empty') %></td>
+            <td><%= app.about_yourself.present? ? app.about_yourself : t('jobs.applicants.about_empty') %></td>
             <td><%= t('jobs.applicants.status.' + app.status.downcase) rescue app.status.capitalize %></td>
             <td>
               <% if app.resume.attached? %>
@@ -67,7 +68,20 @@
                 <%= t('jobs.applicants.no_resume') %>
               <% end %>
             </td>
-            
+            <td>
+              <%= form_with(model: @job_application, url: change_job_status_path(app.id, locale: I18n.locale), method: :patch, local: true, html: { class: 'job-form' }) do |f| %>
+                <%= f.select :status,
+                  [
+                    [t('jobs.applicants.status.review'), 'review'],
+                    [t('jobs.applicants.status.reject'), 'reject'],
+                    [t('jobs.applicants.status.select_for_interview'), 'select_for_interview'],
+                    [t('jobs.applicants.status.select_for_job'), 'select_for_job']
+                  ],
+                  {selected: app.status},
+                  {onchange: 'this.form.submit();'}
+                %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tr>

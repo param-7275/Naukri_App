@@ -16,15 +16,6 @@ class JobsController < ApplicationController
   def recruiter_index
   end
 
-  def change_application_status
-    @job = JobApplication.find_by(id: params[:id])
-    if @job.present?
-      @job.update(status: params[:status])
-      redirect_to change_job_status_path
-    end
-  end
-
-
   def show
   end
 
@@ -44,7 +35,6 @@ class JobsController < ApplicationController
   def edit; end
 
   def update
-    # binding.irb
     if @job.update!(job_params)
       redirect_to recruiter_jobs_path, notice: "Job Updated."
     else

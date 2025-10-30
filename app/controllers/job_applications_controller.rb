@@ -18,6 +18,16 @@ class JobApplicationsController < ApplicationController
     @job = Job.find_by(id: params[:job_id])
   end
 
+  def change_application_status
+    @job_application = JobApplication.find_by(id: params[:id])
+    if @job_application.present?
+      @job_application.update(status: params[:status])
+      redirect_to recruiter_applicants_path, notice: 'Status updated!'
+    else
+      redirect_to recruiter_applicants_path, alert: 'Update failed.'
+    end
+  end
+
   def create
     @application = @job.job_applications.build(jobseeker_id: current_user.id)
     
