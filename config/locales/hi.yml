@@ -63,11 +63,6 @@ hi:
         select_for_interview: "साक्षात्कार के लिए चयन करें"
         select_for_job: "नौकरी के लिए चयन करें"
       about_empty: "—"
-      # status:
-      #   review: "समीक्षा"
-      #   reject: "अस्वीकृत"
-      #   select_for_interview: "साक्षात्कार के लिए चयनित"
-      #   select_for_job: "नौकरी के लिए चयनित"
   job_applications:
     new:
       title: "नौकरी के लिए आवेदन करें"
