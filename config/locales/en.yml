@@ -89,8 +89,8 @@ en:
       status_options:
         review: "Review"
         reject: "Reject"
-        select_for_interview: "Select for Interview"
-        select_for_job: "Select for Job"
+        selected_for_interview: "Selected for Interview"
+        selected_for_job: "Selected for Job"
       about_empty: "—"
       status:
         review: "Review"

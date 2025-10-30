@@ -1,19 +1,19 @@
-<turbo-stream target="status_<%= @job.id %>">
-  <template>
-    <%= @job.status.capitalize %><br>
+# <turbo-stream target="status_<%= @job.id %>">
+#   <template>
+#     <%= @job.status.capitalize %><br>
 
-    <%= form_with url: change_job_status_path(@job),
-                  method: :patch,
-                  data: { turbo_frame: "status_#{@job.id}" } do |f| %>
-      <%= f.select :status,
-        [
-          ['Review', 'Review'],
-          ['Reject', 'Reject'],
-          ['Select for Interview', 'Selected for Interview'],
-          ['Select for Job', 'Selected For Job']
-        ],
-        { selected: @job.status },
-        { onchange: 'this.form.requestSubmit()' } %>
-    <% end %>
-  </template>
-</turbo-stream>
+#     <%= form_with url: change_job_status_path(@job),
+#                   method: :patch,
+#                   data: { turbo_frame: "status_#{@job.id}" } do |f| %>
+#       <%= f.select :status,
+#         [
+#           ['Review', 'Review'],
+#           ['Reject', 'Reject'],
+#           ['Select for Interview', 'Selected for Interview'],
+#           ['Select for Job', 'Selected For Job']
+#         ],
+#         { selected: @job.status },
+#         { onchange: 'this.form.requestSubmit()' } %>
+#     <% end %>
+#   </template>
+# </turbo-stream>

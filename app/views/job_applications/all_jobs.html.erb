@@ -63,7 +63,8 @@
           <% if job_application.present? && job_application.updated_at > 3.months.ago %>
           
             <%= link_to t('jobs.index.already_applied'), '#', class: 'edit-button disabled' %>
-            <p><%= t('jobs.index.status') %> : <%= job_application.status %></p>
+            <p><%= t('jobs.index.status') %> : <%= t("jobs.applicants.status_options.#{job_application.status}") %></p>
+
             <% if job_application.status == 'reject' %>
               <p><%= t('jobs.index.can_apply_again') %></p>
             <% end %>

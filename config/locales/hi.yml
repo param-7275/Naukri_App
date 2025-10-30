@@ -33,6 +33,7 @@ hi:
       title: "नौकरी संपादित करें"
       submit: "नौकरी संपादित करें"
     index:
+      status: "स्थिति"
       job_title: "नौकरी शीर्षक"
       job_description: "नौकरी विवरण"
       company_name: "कंपनी का नाम"
@@ -60,8 +61,13 @@ hi:
       status_options:
         review: "समीक्षा"
         reject: "अस्वीकार करें"
-        select_for_interview: "साक्षात्कार के लिए चयन करें"
-        select_for_job: "नौकरी के लिए चयन करें"
+        selected_for_interview: "साक्षात्कार के लिए चयनित"
+        selected_for_job: "नौकरी के लिए चयनित"
+      status:
+        review: "समीक्षा"
+        reject: "अस्वीकार करें"
+        selected_for_interview: "साक्षात्कार के लिए चयनित"
+        selected_for_job: "नौकरी के लिए चयनित"
       about_empty: "—"
   job_applications:
     new:
