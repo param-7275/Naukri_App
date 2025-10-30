@@ -38,17 +38,17 @@
 
 <table class="table-with-caption">
   <% if @applications.any? %>
-    <caption>APPLICANT DETAILS</caption>
+    <caption><%= t('jobs.applicants.caption') %></caption>
     <thead>
         <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Applied For</th>
-            <th scope="col">About</th>
-            <th scope="col">Status</th>
-            <th scope="col">Resume</th>
-            <th scope="col">Action</th>
+            <th scope="col"><%= t('jobs.applicants.name') %></th>
+            <th scope="col"><%= t('jobs.applicants.email') %></th>
+            <th scope="col"><%= t('jobs.applicants.phone') %></th>
+            <th scope="col"><%= t('jobs.applicants.applied_for') %></th>
+            <th scope="col"><%= t('jobs.applicants.about') %></th>
+            <th scope="col"><%= t('jobs.applicants.status') %></th>
+            <th scope="col"><%= t('jobs.applicants.resume') %></th>
+            <th scope="col"><%= t('jobs.applicants.action') %></th>
         </tr>
     </thead>
     <tbody>
@@ -59,23 +59,23 @@
             <td><%= app.jobseeker.email %></td>
             <td><%= app.jobseeker.phone_number %></td>
             <td><%= app.job.title %></td>
-            <td><%= app.about_yourself.presence || "—" %></td>
-            <td><%= app.status.capitalize %></td>
+            <td><%= app.about_yourself.presence || t('jobs.applicants.about_empty') %></td>
+            <td><%= t('jobs.applicants.status.' + app.status.downcase) rescue app.status.capitalize %></td>
             <td>
               <% if app.resume.attached? %>
-                <%= link_to "Download", rails_blob_path(app.resume, disposition: "attachment"), class: "btn btn-sm btn-primary" %>
+                <%= link_to t('jobs.applicants.download'), rails_blob_path(app.resume, disposition: "attachment"), class: "btn btn-sm btn-primary" %>
               <% else %>
-                No Resume
+                <%= t('jobs.applicants.no_resume') %>
               <% end %>
             </td>
             <td>
               <%= form_with url: change_job_status_path(app), method: :patch, data: { turbo: true }, local: true do |f| %>
                 <%= f.select :status, 
                     [
-                      ['Review', 'Review'],
-                      ['Reject', 'Reject'], 
-                      ['Select for Interview', 'selected for Interview'], 
-                      ['Select for Job', 'Selected For Job']
+                      [t('jobs.applicants.status.review'), 'Review'],
+                      [t('jobs.applicants.status.reject'), 'Reject'], 
+                      [t('jobs.applicants.status.select_for_interview'), 'selected for Interview'], 
+                      [t('jobs.applicants.status.select_for_job'), 'Selected For Job']
                     ], 
                     { selected: app.status }, 
                     { onchange: 'this.form.requestSubmit()' } %>
@@ -86,7 +86,7 @@
       </tr>
     </tbody>
   <% else %>
-    <p>No applicants yet for this job.</p>
+    <p><%= t('jobs.applicants.none_yet') %></p>
   <% end %>
 </table>
 

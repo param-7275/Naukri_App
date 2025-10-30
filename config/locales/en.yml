@@ -26,6 +26,98 @@
 #     en:
 #       "yes": yup
 #       enabled: "ON"
-
 en:
-  hello: "Hello world"
+  nav:
+    home: "Home"
+    signup: "Signup"
+    login: "Login"
+    logout: "Logout"
+    post_job: "Post a Job"
+    show_my_jobs: "Show My Jobs"
+    show_applicants: "Show Applicants"
+    all_jobs: "All Jobs"
+    applied_jobs: "Applied Jobs"
+    logged_in_as: "Logged in as"
+    lang_en: "EN"
+    lang_es: "ES"
+    lang_hi: "HI"
+  jobs:
+    recruiter_home_title: "Recruiter Home Page"
+    common:
+      placeholders:
+        title: "Job Title"
+        description: "Job Description"
+        company_name: "Company Name"
+        vacancy: "Vacancy"
+        location: "Job Location"
+        industry_type: "Industry Type"
+    new:
+      title: "Post a New Job"
+      submit: "Post Job"
+    edit:
+      title: "Edit A Job"
+      submit: "Edit Job"
+    index:
+      job_title: "Job Title"
+      job_description: "Job Description"
+      company_name: "Company Name"
+      industry_type: "Industry Type"
+      location: "Location"
+      vacancy: "Vacancy"
+      edit_job: "Edit Job"
+      delete: "Delete"
+      already_applied: "Already Applied"
+      status: "Status"
+      can_apply_again: "You can apply again after 3 months"
+      apply_job: "Apply Job"
+    applicants:
+      caption: "APPLICANT DETAILS"
+      name: "Name"
+      email: "Email"
+      phone: "Phone"
+      applied_for: "Applied For"
+      about: "About"
+      status: "Status"
+      resume: "Resume"
+      action: "Action"
+      download: "Download"
+      no_resume: "No Resume"
+      none_yet: "No applicants yet for this job."
+      status_options:
+        review: "Review"
+        reject: "Reject"
+        select_for_interview: "Select for Interview"
+        select_for_job: "Select for Job"
+      about_empty: "—"
+      status:
+        review: "Review"
+        reject: "Reject"
+        select_for_interview: "Selected for Interview"
+        select_for_job: "Selected For Job"
+  job_applications:
+    new:
+      title: "Apply To Job"
+      about_yourself: "About Yourself"
+      attach_resume: "Attach Resume"
+      apply: "Apply Job"
+  users:
+    signup:
+      title: "Sign Up"
+      username: "Username"
+      email: "Email"
+      contact: "Contact"
+      role: "Role"
+      job_seeker: "Job Seeker"
+      recruiter: "Recruiter"
+      password: "Password"
+      confirm_password: "Confirm Password"
+      submit: "Sign Up"
+      goto_home: "GoTo Home"
+      already_have_account: "Already Have Account? Login"
+    login:
+      title: "Login"
+      email: "Email"
+      password: "Password"
+      submit: "Login"
+      no_account_signup: "Don't Have Account? Sign Up"
+  

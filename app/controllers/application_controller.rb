@@ -2,6 +2,18 @@ class ApplicationController < ActionController::Base
   # Make current_user available in views
   helper_method :current_user, :logged_in?
 
+  around_action :switch_locale
+
+  def switch_locale(&action)
+    locale = params[:locale] || extract_locale_from_tld || I18n.default_locale
+    I18n.with_locale(locale, &action)
+  end
+  
+  def extract_locale_from_tld
+    parsed_locale = request.host.split(".").last
+    I18n.available_locales.map(&:to_s).include?(parsed_locale) ? parsed_locale : nil
+  end
+  
   private
 
   # Returns the currently logged-in user (if any)

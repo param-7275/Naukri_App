@@ -1,0 +1,55 @@
+es:
+  nav:
+    home: "Inicio"
+    signup: "Registrarse"
+    login: "Iniciar sesión"
+    logout: "Cerrar sesión"
+    post_job: "Publicar empleo"
+    show_my_jobs: "Mis ofertas"
+    show_applicants: "Ver postulantes"
+    all_jobs: "Todas las ofertas"
+    applied_jobs: "Postulaciones"
+    logged_in_as: "Conectado como"
+  jobs:
+    recruiter_home_title: "Página de reclutador"
+    common:
+      placeholders:
+        title: "Título del puesto"
+        description: "Descripción del puesto"
+        company_name: "Nombre de la empresa"
+        vacancy: "Vacantes"
+        location: "Ubicación"
+        industry_type: "Tipo de industria"
+    new:
+      title: "Publicar oferta"
+      submit: "Publicar"
+    edit:
+      title: "Editar oferta"
+      submit: "Guardar cambios"
+    index:
+      job_title: "Título del puesto"
+      job_description: "Descripción"
+      company_name: "Empresa"
+      industry_type: "Industria"
+      location: "Ubicación"
+      vacancy: "Vacantes"
+      edit_job: "Editar"
+      delete: "Eliminar"
+    applicants:
+      caption: "DETALLES DE POSTULANTES"
+      name: "Nombre"
+      email: "Correo"
+      phone: "Teléfono"
+      applied_for: "Vacante"
+      about: "Acerca de"
+      status: "Estado"
+      resume: "CV"
+      action: "Acción"
+      download: "Descargar"
+      no_resume: "Sin CV"
+      none_yet: "Aún no hay postulantes para este trabajo."
+      status_options:
+        review: "Revisar"
+        reject: "Rechazar"
+        select_for_interview: "Seleccionar para entrevista"
+        select_for_job: "Seleccionar para el puesto"

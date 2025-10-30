@@ -105,40 +105,40 @@ body {
 <body>
 <%= form_with(model: @job, url: create_new_job_path, html: {class: 'job-form'}) do |form| %>
     <div class="form-container">
-      <h2 class="form-title">Post a New Job</h2>
+      <h2 class="form-title"><%= t('jobs.new.title') %></h2>
   
       <div class="form-group">
-        <%= form.label :title, class: 'form-label' %>
-        <%= form.text_field :title, class: 'form-input', placeholder: "Job Title" %>
+        <%= form.label :title, t('jobs.common.placeholders.title'), class: 'form-label' %>
+        <%= form.text_field :title, class: 'form-input', placeholder: t('jobs.common.placeholders.title') %>
       </div>
   
       <div class="form-group">
-        <%= form.label :description, class: 'form-label' %>
-        <%= form.rich_text_area :description, class: 'form-textarea', placeholder: "Job Description" %>
+        <%= form.label :description, t('jobs.common.placeholders.description'), class: 'form-label' %>
+        <%= form.rich_text_area :description, class: 'form-textarea', placeholder: t('jobs.common.placeholders.description') %>
       </div>
   
       <div class="form-group">
-        <%= form.label :company_name, class: 'form-label' %>
-        <%= form.text_field :company_name, class: 'form-input', placeholder: "Company Name" %>
+        <%= form.label :company_name, t('jobs.common.placeholders.company_name'), class: 'form-label' %>
+        <%= form.text_field :company_name, class: 'form-input', placeholder: t('jobs.common.placeholders.company_name') %>
       </div>
   
       <div class="form-group">
-        <%= form.label :vacancy, class: 'form-label' %>
-        <%= form.number_field :vacancy, class: 'form-input', placeholder: "Vacancy" %>
+        <%= form.label :vacancy, t('jobs.common.placeholders.vacancy'), class: 'form-label' %>
+        <%= form.number_field :vacancy, class: 'form-input', placeholder: t('jobs.common.placeholders.vacancy') %>
       </div>
 
       <div class="form-group">
-        <%= form.label :location, class: 'form-label' %>
-        <%= form.text_field :location, class: 'form-input', placeholder: "Job Location" %>
+        <%= form.label :location, t('jobs.common.placeholders.location'), class: 'form-label' %>
+        <%= form.text_field :location, class: 'form-input', placeholder: t('jobs.common.placeholders.location') %>
       </div>
 
       <div class="form-group">
-        <%= form.label :industry_type, class: 'form-label' %>
-        <%= form.text_field :industry_type, class: 'form-input', placeholder: "Industry Type" %>
+        <%= form.label :industry_type, t('jobs.common.placeholders.industry_type'), class: 'form-label' %>
+        <%= form.text_field :industry_type, class: 'form-input', placeholder: t('jobs.common.placeholders.industry_type') %>
       </div>
   
       <div class="form-group">
-        <%= form.submit 'Post Job', class: 'form-submit' %>
+        <%= form.submit t('jobs.new.submit'), class: 'form-submit' %>
       </div>
     </div>
   <% end %>

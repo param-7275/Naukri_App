@@ -30,27 +30,32 @@
   <body>
     <ul>
       <% if logged_in? %>
-        <li style="color: white;">
-          Logged in as <strong><%= current_user.username %></strong>
-          <%= link_to 'Logout', user_logout_path, method: :delete %>
+        <li style="color: white; float: right;">
+          <%= t('nav.logged_in_as') %> <strong><%= current_user.username %></strong>
+          <%= link_to t('nav.logout'), user_logout_path, method: :delete %>
         </li>
 
         <% if current_user.role == 'recruiter' %>
-          <li><%= link_to 'Home', recruiter_home_path %></li>
-          <li><%= link_to 'Post a Job', new_job_path %></li>
-          <li><%= link_to 'Show My Jobs', recruiter_jobs_path %></li>
-          <li><%= link_to 'Show Applicants', recruiter_applicants_path %></li>
+          <li><%= link_to t('nav.home'), recruiter_home_path %></li>
+          <li><%= link_to t('nav.post_job'), new_job_path %></li>
+          <li><%= link_to t('nav.show_my_jobs'), recruiter_jobs_path %></li>
+          <li><%= link_to t('nav.show_applicants'), recruiter_applicants_path %></li>
 
         <% else %>
-          <li><%= link_to 'Home', jobseeker_home_path %></li>
-          <li><%= link_to 'All Jobs', all_jobs_path %></li>
-          <li><%= link_to 'Applied Jobs', applied_jobs_path %></li>
+          <li><%= link_to t('nav.home'), jobseeker_home_path %></li>
+          <li><%= link_to t('nav.all_jobs'), all_jobs_path %></li>
+          <li><%= link_to t('nav.applied_jobs'), applied_jobs_path %></li>
         <% end %>
       <% else %>
-        <li><%= link_to 'Home', root_path %></li>
-        <li><%= link_to 'Signup', new_signup_path %></li>
-        <li><%= link_to 'Login', login_path %></li>
+        <li><%= link_to t('nav.home'), root_path %></li>
+        <li><%= link_to t('nav.signup'), new_signup_path %></li>
+        <li><%= link_to t('nav.login'), login_path %></li>
       <% end %>
+      <li style="float: right;">
+        <%= link_to t('nav.lang_en'), url_for(locale: :en) %> 
+        <%= link_to t('nav.lang_es'), url_for(locale: :es) %> 
+        <%= link_to t('nav.lang_hi'), url_for(locale: :hi) %>
+      </li>
     </ul>
   </body>
 </html>
