@@ -1,3 +1,200 @@
 <%= render partial: 'partials/header' %>
 
-<h1><%= t('jobs.jobseeker_home_title') %></h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jobseeker Dashboard</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f5f7fa;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                  url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=80") center/cover no-repeat;
+      color: white;
+      padding: 6rem 2rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .hero p {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      color: #f8f9fa;
+    }
+
+    .section {
+      padding: 4rem 8%;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      color: #882727;
+      margin-bottom: 2rem;
+      font-weight: 700;
+    }
+
+    .job-types {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .job-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      padding: 1.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      min-height: 220px;
+    }
+
+    .job-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(136, 39, 39, 0.2);
+    }
+
+    .job-card h3 {
+      color: #882727;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .job-card p {
+      color: #555;
+      font-size: 0.95rem;
+      max-height: 60px;
+      overflow-y: auto;
+    }
+
+    .companies {
+      background-color: #fff;
+      padding: 4rem 8%;
+      text-align: center;
+    }
+
+    .companies h2 {
+      color: #882727;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      font-weight: 700;
+    }
+
+    .company-logos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .company-logos img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      border-radius: 10px;
+      background: #fafafa;
+      padding: 1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .company-logos img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(136, 39, 39, 0.3);
+    }
+
+    footer {
+      background-color: #882727;
+      color: #fff;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.95rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .section h2 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <section class="hero">
+    <h1><%= t('jobs.jobseeker_home_title') %></h1>
+    <p>
+      Explore thousands of job opportunities, apply to top companies, and advance your career.
+      Your dream job is just a click away.
+    </p>
+  </section>
+
+  <!-- Job Categories Section -->
+  <section class="section">
+    <h2><%= t('jobs.job_categories') %></h2>
+    <div class="job-types">
+      <div class="job-card">
+        <h3>Full-Time Jobs</h3>
+        <p>Stable, high-paying full-time positions across multiple industries.</p>
+      </div>
+      <div class="job-card">
+        <h3>Part-Time Jobs</h3>
+        <p>Flexible work for students and professionals seeking extra income.</p>
+      </div>
+      <div class="job-card">
+        <h3>Remote Jobs</h3>
+        <p>Work from anywhere with remote opportunities worldwide.</p>
+      </div>
+      <div class="job-card">
+        <h3>Internships</h3>
+        <p>Gain experience and training through top internship programs.</p>
+      </div>
+      <div class="job-card">
+        <h3>Government & PSU Jobs</h3>
+        <p>Get updates on verified government and PSU job openings.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Top Companies Section -->
+  <section class="companies">
+    <h2><%= t('jobs.top_companies') %></h2>
+    <div class="company-logos">
+      <img src="https://imgs.search.brave.com/DCITYlQ5p99Nmgrpyq22PasnGIGBmNf3rn4NzpO4AMg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9jZG4u/bW9zLmNtcy5mdXR1/cmVjZG4ubmV0L2g0/OG44MjJBWHFIYVV6/cTRQam9VVDkuanBn" alt="Google">
+      <img src="https://imgs.search.brave.com/YuKXp7kkbYQaOLwIS7Q54a1uYq38E-d0DRjLTB6uvVk/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9sb2dv/d2lrLmNvbS9jb250/ZW50L3VwbG9hZHMv/aW1hZ2VzL3Rjcy10/YXRhLWNvbnN1bHRh/bmN5LXNlcnZpY2Vz/Mjc5Mi5sb2dvd2lr/LmNvbS53ZWJw" alt="TCS">
+      <img src="https://imgs.search.brave.com/w51PPyx1SbCMSUsrU5yIskmu3plL-CfYyTCTVE8KgYY/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzk3Lzgz/LzIyLzk3ODMyMjJl/OThiMGQ1MTQxNTE5/YjQxZTcyMDNmZjlh/LmpwZw" alt="Infosys">
+      <img src="https://imgs.search.brave.com/LFeqNIuBUazXEMGJ-qjU0iCsweLrnQrnoNW5dS7ZxDE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzNjL2Qw/L2U2LzNjZDBlNmUw/NjdhNjIzNDk1Mjc0/Y2ZkMTI1OTMyZTEy/LmpwZw" alt="Wipro">
+      <img src="https://imgs.search.brave.com/pZy9_V5hlG8tVw8zBsYKj3Kws6DbQBbLOtQpKEiP600/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9mYWJy/aWticmFuZHMuY29t/L3dwLWNvbnRlbnQv/dXBsb2Fkcy9JQk0t/TG9nby1IaXN0b3J5/LTgtMTIwMHg3NTAu/cG5n" alt="IBM">
+    </div>
+  </section>
+
+  <footer>
+    © 2025 YourJobPortal — Helping Jobseekers Find Their Dream Jobs.
+  </footer>
+
+</body>
+</html>

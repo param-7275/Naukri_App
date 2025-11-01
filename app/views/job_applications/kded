@@ -36,7 +36,7 @@
 
     .job-card {
       background: var(--white);
-      width: 480px;
+      width: 400px;
       padding: 1.8rem 1.5rem;
       border-radius: 14px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
@@ -46,7 +46,7 @@
       transition: all 0.3s ease;
       overflow: hidden;
       position: relative;
-      height: 440px;
+      height: 360px;
       margin-top: 13px;
     }
 
@@ -200,21 +200,6 @@
     background-color: #701f1f;
   }
 
-  .back-link {
-      display: block;
-      text-align: center;
-      margin-top: 1.2rem;
-      text-decoration: none;
-      color: var(--primary);
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: color 0.3s ease;
-    }
-
-  .back-link:hover {
-      color: var(--primary-light);
-      text-decoration: underline;
-    }
   </style>
 </head>
 <body>
@@ -232,8 +217,10 @@
           <p id="industry-<%= job.id %>"><%= t('jobs.index.industry_type') %> : <%= job.industry_type %></p>
           <p id="location-<%= job.id %>"><%= t('jobs.index.location') %> : <%= job.location %></p>
           <p class="vacancy" id="vacancy-<%= job.id %>"><%= t('jobs.index.vacancy') %> : <%= job.vacancy %></p>
-          <%= link_to 'View Job Description', job_description_path(job_id: job.id), class: 'back-link' %>
-          </div>
+        <%= link_to t('jobs.index.edit_job'), edit_job_path(job, locale: I18n.locale), class: 'edit-button' %>
+          </n>
+         <%= button_to t('jobs.index.delete'), delete_job_path(job, locale: I18n.locale), method: :delete %>
+        </div>
       <% end %>
     <% else %>
       <div class="no-jobs-message">
@@ -252,3 +239,22 @@
   </script>
 </body>
 </html>
+
+
+
+<%= link_to t('jobs.index.edit_job'), edit_job_path(job, locale: I18n.locale), class: 'edit-button' %>
+          </n>
+         <%= button_to t('jobs.index.delete'), delete_job_path(job, locale: I18n.locale), method: :delete %>
+
+
+<% job_application = job.job_applications.find_by(jobseeker_id: current_user.id) %>
+
+          <% if job_application.present? && job_application.updated_at > 3.months.ago %>
+            <span class="action-link disabled"><%= t('jobs.index.already_applied') %></span>
+            <p><strong><%= t('jobs.index.status') %>:</strong> <%= t("jobs.applicants.status_options.#{job_application.status}") %></p>
+            <% if job_application.status == 'reject' %>
+              <p><%= t('jobs.index.can_apply_again') %></p>
+            <% end %>
+          <% else %>
+            <%= link_to t('jobs.index.apply_job'), new_job_application_path(job_id: job.id, locale: I18n.locale), class: 'action-link' %>
+          <% end %>

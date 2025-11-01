@@ -1,119 +1,173 @@
 <%= render partial: 'partials/header' %>
+<%= render partial: 'partials/errors' %>
 
-<% if flash[:alert] %>
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <%= flash[:alert] %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-<% end %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= t('jobs.new.title') %></title>
 
-<div class="job-form">
-  <h2 class="form-title"><%= t('job_applications.new.title') %></h2>
-  <p><%= @job.title %></p>
+  <style>
+    :root {
+      --primary: #882727;
+      --primary-light: #a13b3b;
+      --bg-light: #f5f7fa;
+      --text-dark: #222;
+      --text-light: #555;
+      --white: #fff;
+    }
 
-  <%= form_with(model: @apply_job, url: job_applications_path, local: true, html: { class: 'job-form' }) do |form| %>
+    body {
+      background-color: var(--bg-light);
+      font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+      color: var(--text-dark);
+      margin: 0;
+      padding: 2rem;
+    }
+
+    .form-container {
+      max-width: 750px;
+      background: var(--white);
+      margin: 2rem auto;
+      padding: 2.5rem 2rem;
+      border-radius: 14px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .form-container:hover {
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-title {
+      text-align: center;
+      font-size: 2rem;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 1.8rem;
+      position: relative;
+    }
+
+    .form-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background-color: var(--primary);
+      border-radius: 3px;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: #fff;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(136, 39, 39, 0.15);
+      outline: none;
+    }
+
+    .form-textarea {
+      height: 150px;
+      resize: vertical;
+    }
+
+    .form-submit {
+      width: 100%;
+      background-color: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .form-submit:hover {
+      background-color: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(136, 39, 39, 0.25);
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 1.2rem;
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: var(--primary-light);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .form-container {
+        padding: 1.8rem 1.5rem;
+      }
+
+      .form-title {
+        font-size: 1.6rem;
+      }
+
+      .form-input, .form-textarea {
+        font-size: 0.95rem;
+      }
+
+      .form-submit {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <%= form_with(model: @apply_job, url: job_applications_path, html: { class: 'form-container' }) do |form| %>
+  <h2 class="form-title">Applying For <%= @job.title %></h2>
+
     <div class="form-group">
       <%= form.label :about_yourself, class: 'form-label' %>
-      <%= form.text_field :about_yourself, class: 'form-input', placeholder: t('job_applications.new.about_yourself') %>
+      <%= form.text_area :about_yourself, class: 'form-input', placeholder: t('job_applications.new.about_yourself'), required: true %>
     </div>
 
     <div class="form-group">
       <%= form.label :resume, t('job_applications.new.attach_resume'), class: 'form-label' %>
-      <%= form.file_field :resume, class: 'form-input' %>
+      <%= form.file_field :resume, class: 'form-input', required: true %>
     </div>
 
-    <div class="form-group">
-      <%= form.submit t('job_applications.new.apply'), class: 'form-submit' %>
-    </div>
+    <%= form.submit t('job_applications.new.apply'), class: 'form-submit' %>
+    <%= link_to t('jobs.edit.back'), all_jobs_path, class: 'back-link' %>
+
   <% end %>
-</div>
-
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f7fa;
-  padding: 20px;
-}
-
-.job-form {
-  max-width: 600px;
-  margin: 0 auto;
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.form-title {
-  text-align: center;
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-label {
-  font-size: 14px;
-  font-weight: bold;
-  color: #555;
-  margin-bottom: 8px;
-  display: block;
-}
-
-.form-input, .form-textarea {
-  width: 100%;
-  padding: 12px;
-  font-size: 14px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  outline: none;
-}
-
-.form-input:focus, .form-textarea:focus {
-  border-color: #3498db;
-  box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
-}
-
-.form-submit {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #3498db;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.form-submit:hover {
-  background-color: #2980b9;
-}
-
-@media (max-width: 600px) {
-  .job-form {
-    padding: 20px;
-  }
-
-  .form-title {
-    font-size: 20px;
-  }
-
-  .form-input {
-    font-size: 12px;
-  }
-
-  .form-submit {
-    font-size: 14px;
-  }
-}
-</style>
+</body>
+</html>

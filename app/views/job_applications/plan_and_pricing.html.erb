@@ -1,0 +1,141 @@
+<%= render partial: 'partials/header' %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing Plan Cards</title>
+  <style>
+    .plan-card {
+      background-color: #ffffff !important;
+      color: #111 !important;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      width: 280px;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+
+    .plan-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #111;
+    }
+
+    .plan-price {
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 0.25rem 0 0.75rem;
+      color: #000;
+    }
+
+    .plan-info {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 1rem;
+    }
+
+    .plan-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.5rem 0;
+      flex-grow: 1;
+    }
+
+    .plan-features li {
+      margin-bottom: 0.6rem;
+      color: #333;
+      font-size: 0.95rem;
+    }
+
+    .plan-card button {
+      background-color: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .plan-card button:hover {
+      background-color: #1e4db7;
+    }
+
+    .plan-card.best {
+      # border: 2px solid #2563eb;
+      background-color: #f8fbff;
+    }
+
+    .plans-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      align-items: flex-start;
+      margin-top: 2rem;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="plans-container">
+
+    <div class="plan-card best">
+        <div class="plan-title">Free</div>
+        <div class="plan-price">$0<span style="font-size:1rem;">/mo</span></div>
+        <div class="plan-info">Intelligence for everyday tasks</div>
+        <ul class="plan-features">
+        <p>Advanced reasoning with GPT-5</p>
+        <p>Limited messages & uploads</li>
+        <li>Limited and slower image generation</li>
+        <li>Limited deep research</li>
+        <li>Limited memory & context</li>
+        </ul>
+        <button>Get Free</button>
+    </div>
+
+    <div class="plan-card best">
+        <div class="plan-title">Plus</div>
+        <div class="plan-price">$20<span style="font-size:1rem;">/mo</span></div>
+        <div class="plan-info">More access to advanced intelligence</div>
+        <ul class="plan-features">
+        <li>Everything in Free and:</li>
+        <li>Expanded messaging & uploads</li>
+        <li>Expanded & faster image creation</li>
+        <li>Expanded deep research & agent mode</li>
+        <li>Expanded memory & context</li>
+        <li>Projects, tasks & custom GPTs</li>
+        </ul>
+        <button>Get Plus</button>
+    </div>
+
+    <div class="plan-card">
+        <div class="plan-title">Pro</div>
+        <div class="plan-price">$30<span style="font-size:1rem;">/mo</span></div>
+        <div class="plan-info">Full access to the best of ChatGPT</div>
+        <ul class="plan-features">
+        <li>Everything in Plus and:</li>
+        <li>Pro reasoning with GPT-5</li>
+        <li>Unlimited messages & uploads</li>
+        <li>Unlimited & faster image creation</li>
+        <li>Maximum deep research & agent mode</li>
+        <li>Maximum memory & context</li>
+        </ul>
+        <button>Get Pro</button>
+    </div>
+
+  </div>
+</body>
+</html>

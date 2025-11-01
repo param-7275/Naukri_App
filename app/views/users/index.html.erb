@@ -1,331 +1,196 @@
 <%= render partial: 'partials/header' %>
 
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://kit.fontawesome.com/71fda7b2a0.js" crossorigin="anonymous"></script>
-    
-<style>
-    *{
-    margin: 0;
-    padding: 0;
-    font-family: 'poppins', sans-serif;
-    box-sizing: border-box;
-}
-body{
-    background: #8b8990;
-    color: #fff;
- }
- header{
-     width: 100%;
-     height: 100vh;
-     background-image:url(images/rachael.png);
-     background-size:cover;
-     background-position: center;
- }
- .container{
-     padding: 10px 10%;
- }
- nav{
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     flex-wrap: wrap;
- }
- .logo{
-     width: 140px;
- }
- nav ul li{
-     display: inline-block;
-     list-style: none;
-     margin: 10px 20px;
- }
- nav ul li a{ 
- color: #fff;
- text-decoration: none;
- font-size: 18px;
- position: relative;
- }
- nav ul li a::after{
-     content: '';
-     width: 0%;
-     height: 3px;
-     background: #ff004f;
-     position: absolute;
-     left: 0;
-     bottom: -6px;
-     transform: 0.5s;
- }
- nav ul li a:hover::after{
-     width: 100%;
- }
- .header-text{
-     margin-top: 20%;
-     font-size: 30px;
- }
- .header-text h1{
-     font-size: 60px;
-     margin-top: 20px;
- }
- .header-text h1 span{
-     color: #ff004f;
- }
-About{
-    padding: 60px 0;
-    color: #ababab;
-}
-.row{
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-.About-col-1{
-    flex-basis: 35%;
-}
-.About-col-1 img{
-    width: 100%;
-    border-radius: 15px;
-}
-.About-col-2{
-    flex-basis: 60%;
-}
-.sub-title{
-    font-size: 60px;
-    font-weight: 600;
-    color: #fff;
-}
-.tab-titles{
-    display: flex;
-    margin: 20px 0 40px;
-}
-.tab-links{
-    margin-right: 50px;
-    font-size: 18px;
-    font-weight: 500;
-    cursor: pointer;
-    position: relative;
-}
-.tab-links::after{
-    content: '';
-    width: 0;
-    height: 3px;
-    background: #ff004f;
-    position: absolute;
-    left: 0;
-    bottom: -8px;
-    transition: 0.5s;
-}
-.tab-links.active-link::after{
-    width: 50%;
-}
-.tab-contents ul li{
-    list-style: none;
-    margin: 10px 0;
-}
-.tab-contents ul li span{
-    color: #b54769;
-    font-size: 14px;
-}
-.tab-contents{
-    display: none;
-}
-.tab-contents.active-tab{
-    display: block;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Portal Dashboard</title>
 
-Services{
-    padding: 30px 0;
-}
-.Services-List{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-gap: 40px;
-    margin-top: 50px;
-}
-.Services-List div{
-    background: #262626;
-    padding: 40px;
-    font-size: 13px;
-    font-weight: 300;
-    border-radius: 10px;
-    transition: background 0.5s, transform 0.5s;
-}
-.Services-List div i{
-    font-size: 50px;
-    margin-bottom: 30px;
-}
-.Services-List div h2{
-    font-size: 30px;
-    font-weight: 500;
-    margin-bottom: 15px;
-}
-.Services-List div a{
-    text-decoration: none;
-    color: #fff;
-    font-size: 12px;
-    margin-top: 20px;
-    display: inline-block;
-}
-.Services-List div:hover{
-    background: #ff004f;
-    transform: translateY(-10px);
-}
-Portfolio{
-    padding: 50px 0;
-}
-.work-list{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-gap: 40px;
-    margin-top: 50px;
-}
-.work{
-    border-radius: 10px;
-    position: relative;
-    overflow: hidden;
-}
-.work img{
-    width: 100%;
-    border-radius: 10px;
-    display: block;
-    transition: transform 0.5s;
-}
-.layer{
-    width: 100%;
-    height: 0%;
-    background: linear-gradient(rgba(0,0,0,0.6), #ff004f);
-    border-radius: 10px;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 0 40px;
-    text-align: center;
-    font-size: 14px;
-    transition: height 0.5s;
-}
-.layer h3{
-    font-weight: 500;
-    margin-bottom: 20px;
-}
-.work:hover img{
-    transform: scale(1.1);
-}
-.work:hover .layer{
-    height: 100%;
-}
-.contact-left{
-    flex-basis: 35%;
-}
-.contact-right{
-    flex-basis: 60%;
-}
-.contact-left p{
-    margin-top: 30px;
-}
-.contact-left p i{
-    color: #ff004f;
-    margin-right: 15px;
-    font-size: 25px;
-}
-.social-icons{
-    margin-top: 30px;
-}
-.social-icons a{
-    text-decoration: none;
-    font-size: 30px;
-    margin-right: 15px;
-    color: #ababab;
-    display: inline-block;
-    transition: transform 0.5s;
-}
-.social-icons a:hover{
-    color: #ff004f;
-    transform: translateY(-5px);
-}
-.download_btn{
-    margin: 10px 0;
-    padding: 10px 5px;
-    /* border: 1px solid white; 
-    background-color: #ff004f;
-    border-radius: 4px;
-    width: 150px;
-    text-align: center;
-}
-.download_btn a{
-    text-decoration: none;
-    font-weight: 300;
-    color: #fff;
-}
-</style>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f5f7fa;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    .hero {
+      background: linear-gradient(rgba(136, 39, 39, 0.85), rgba(136, 39, 39, 0.85)), 
+                  url("https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1400&q=80") center/cover no-repeat;
+      color: white;
+      padding: 6rem 2rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .hero p {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      color: #f8f9fa;
+    }
+
+    .section {
+      padding: 4rem 8%;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      color: #882727;
+      margin-bottom: 2rem;
+      font-weight: 700;
+    }
+
+    .job-types {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .job-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      padding: 1.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .job-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(136, 39, 39, 0.2);
+    }
+
+    .job-card h3 {
+      color: #882727;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .job-card p {
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    .companies {
+      background-color: #fff;
+      padding: 4rem 8%;
+      text-align: center;
+    }
+
+    .companies h2 {
+      color: #882727;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      font-weight: 700;
+    }
+
+    .company-logos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .company-logos img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      border-radius: 10px;
+      background: #fafafa;
+      padding: 1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .company-logos img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(136, 39, 39, 0.3);
+    }
+
+    footer {
+      background-color: #882727;
+      color: #fff;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.95rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .section h2 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <div id="header">
-    <div class="container">
-      <nav>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjAiI6aZjB-7abnIlPH35y0g7b7fmJu3zaCQ&usqp=CAU" width="160" height="150" class="logo">
-        <img src="https://imgs.search.brave.com/TBfLGC5AWiWdDzEkBFCfAwkxwa9N5zTaAfIFwG4Qu-g/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9jZG4u/ZHJpYmJibGUuY29t/L3VzZXJ1cGxvYWQv/MTY2MDA4OTcvZmls/ZS9vcmlnaW5hbC05/MDYzNDIxZTg1Mjhm/MDE2NzM4NWQ2MTkz/Y2U5ZGYwNi5qcGc_/Zm9ybWF0PXdlYnAm/cmVzaXplPTQwMHgz/MDAmdmVydGljYWw9/Y2VudGVy" width="160" height="150" class="logo">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRw84JTDQKO6BrcqnWiO0aqh0gjhOasQzngljV37pEWoQN3Mf8h4iMUk8JHycQ_aw3Tow&usqp=CAU" width="160" height="150" class="logo">
-        <img src="https://imgs.search.brave.com/cgu8FaitdC8EVIHqxHpP-2LsfbKvNoBhQzDZpM721-E/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMubmF1a2ltZy5j/b20vcy80LzExMC9p/LzE1NTI5OTg1MDVf/d2hhdC1yZWNydWl0/ZXItbG9vay1mb3It/aW4tY3YuanBlZw" width="160" height="150" class="logo">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBu84cqRpnR1b72ID7SBgFlY6L5MOtBNhTb0TdP3ngNVMo-yncUOLyI6CTmwDPRGdN4v8&usqp=CAU" width="160" height="150" class="logo">
-      </nav>
-    <div class="header-text">
-      <h1><span>JOB PORTAL:</span><br></h1><br>
-      <h4 style="color: white;">
-        “Find the perfect job opportunity that matches your skills and career goals! 
-        On our Naukri-style Job Portal, you can explore thousands of openings across 
-        industries, customize your profile, and connect directly with top recruiters. 
-        Build a strong resume, apply easily, and take your career to the next level with us.”
-      </h4>
-      <br>
 
-      <p style="color: white;">
-        A professional job profile is your gateway to new opportunities — it’s your first impression to employers.
-        On our portal, we make it simple to create, manage, and update your job applications so you can focus 
-        on what matters most: <b>your career growth.
-        </b>
-        <br><br>
-        <b>Types of Job Opportunities:</b><br>
-          1 - Full-Time Jobs <br>
-          2 - Part-Time Jobs <br>
-          3 - Freelance / Remote Work <br>
-          4 - Internship Opportunities <br>
+  <section class="hero">
+    <h1>Find Your Dream Job</h1>
+    <p>
+      Explore thousands of job listings, connect with top recruiters, and build your career.
+      From startups to Fortune 500 companies — your next opportunity starts here.
+    </p>
+  </section>
 
-          <br><b>(i) Featured Jobs:</b><br>
-          These are top openings from verified companies that are actively hiring. 
-          Get noticed by applying early and showcasing your skills.
-          <br><br>
-
-          <b>(ii) Walk-In Interviews:</b><br>
-          Apply for companies conducting direct interviews — no waiting, no delay! 
-          Check schedules and locations easily from your dashboard.
-          <br><br>
-
-          <b>(iii) Government & PSU Jobs:</b><br>
-          Stay updated with the latest openings in government sectors and public enterprises. 
-          We provide verified listings, eligibility criteria, and direct application links.
-          <br><br>
-
-          <b>(iv) Remote / Work-from-Home Roles:</b><br>
-          Explore flexible job options that let you work from anywhere. 
-          Perfect for freelancers, students, and professionals seeking better work-life balance.
-          <br><br>
-
-          Build your career with confidence — upload your resume, set up job alerts, and let recruiters find you today!
-      </p>
-      <hr>
+  <section class="section">
+    <h2>Explore Job Categories</h2>
+    <div class="job-types">
+      <div class="job-card">
+        <h3>Full-Time Jobs</h3>
+        <p>Find stable, high-paying full-time roles in your preferred field.</p>
+      </div>
+      <div class="job-card">
+        <h3>Part-Time Jobs</h3>
+        <p>Flexible working hours for students and professionals seeking extra income.</p>
+      </div>
+      <div class="job-card">
+        <h3>Remote / Freelance</h3>
+        <p>Work from anywhere with remote job listings across industries.</p>
+      </div>
+      <div class="job-card">
+        <h3>Internships</h3>
+        <p>Kickstart your career with top internship opportunities and training programs.</p>
+      </div>
+      <div class="job-card">
+        <h3>Government & PSU</h3>
+        <p>Stay updated on the latest verified government and PSU job openings.</p>
       </div>
     </div>
-  </div>
+  </section>
+
+  <section class="companies">
+    <h2>Top Hiring Companies</h2>
+    <div class="company-logos">
+      <img src="https://imgs.search.brave.com/DCITYlQ5p99Nmgrpyq22PasnGIGBmNf3rn4NzpO4AMg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9jZG4u/bW9zLmNtcy5mdXR1/cmVjZG4ubmV0L2g0/OG44MjJBWHFIYVV6/cTRQam9VVDkuanBn" alt="Google">
+      <img src="https://imgs.search.brave.com/YuKXp7kkbYQaOLwIS7Q54a1uYq38E-d0DRjLTB6uvVk/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9sb2dv/d2lrLmNvbS9jb250/ZW50L3VwbG9hZHMv/aW1hZ2VzL3Rjcy10/YXRhLWNvbnN1bHRh/bmN5LXNlcnZpY2Vz/Mjc5Mi5sb2dvd2lr/LmNvbS53ZWJw" alt="TCS">
+      <img src="https://imgs.search.brave.com/w51PPyx1SbCMSUsrU5yIskmu3plL-CfYyTCTVE8KgYY/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzk3Lzgz/LzIyLzk3ODMyMjJl/OThiMGQ1MTQxNTE5/YjQxZTcyMDNmZjlh/LmpwZw" alt="Infosys">
+      <img src="https://imgs.search.brave.com/LFeqNIuBUazXEMGJ-qjU0iCsweLrnQrnoNW5dS7ZxDE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzNjL2Qw/L2U2LzNjZDBlNmUw/NjdhNjIzNDk1Mjc0/Y2ZkMTI1OTMyZTEy/LmpwZw" alt="Wipro">
+      <img src="https://imgs.search.brave.com/pZy9_V5hlG8tVw8zBsYKj3Kws6DbQBbLOtQpKEiP600/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9mYWJy/aWticmFuZHMuY29t/L3dwLWNvbnRlbnQv/dXBsb2Fkcy9JQk0t/TG9nby1IaXN0b3J5/LTgtMTIwMHg3NTAu/cG5n" alt="IBM">
+      <img src="https://imgs.search.brave.com/uCytYmtoiqz60SB_tBumZ_oXS4BXt3pW6khslt9A0oA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzL2RmLzUx/LzU1L2RmNTE1NWQ4/YTgwZWZlZDE4MWFk/MGI0OGVhN2E4OWVl/LmpwZw" alt="Accenture">
+    </div>
+  </section>
+
+  <footer>
+    © 2025 YourJobPortal — Empowering Careers, One Click at a Time.
+  </footer>
+
 </body>
 </html>
- 

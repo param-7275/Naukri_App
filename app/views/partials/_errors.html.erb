@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= t('users.signup.title') %></title>
+
+  <style>
+    .toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .toast {
+        min-width: 250px;
+        background-color: #f8d7da;
+        color: #842029;
+        padding: 1rem 1.5rem;
+        border-left: 5px solid #f5c2c7;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        animation: slideIn 0.5s, fadeOut 0.5s 4.5s forwards;
+    }
+
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateX(100); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes fadeOut {
+        to { opacity: 0; transform: translateX(100); }
+    }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const toasts = document.querySelectorAll(".toast");
+        toasts.forEach(toast => {
+        toast.addEventListener("click", () => toast.remove());
+        });
+    });
+  </script>
+</head>
+<body>
+  <div class="toast-container">
+    <% if flash[:error].present? %>
+      <% Array(flash[:error]).each do |msg| %>
+      <div class="toast"><%= msg %></div>
+      <% end %>
+    <% end %>
+
+    <% if flash[:success].present? %>
+      <% Array(flash[:success]).each do |msg| %>
+      <div class="toast"><%= msg %></div>
+      <% end %>
+    <% end %>
+  </div>
+</body>
+</html>

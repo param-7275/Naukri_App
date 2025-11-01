@@ -21,25 +21,10 @@ class JobApplicationsController < ApplicationController
     @job = Job.find_by(id: params[:job_id])
   end
 
-  # def change_application_status
-  #   unless @job_application && @job_application.job.recruiter_id == current_user.id
-  #     redirect_to recruiter_applicants_path, alert: 'You are not authorized to change this application.'
-  #     return
-  #   end
-  #   status = params.dig(:job_application, :status)
-  #   if status.present?
-  #     if @job_application.update(status: status)
-  #       redirect_to recruiter_applicants_path, notice: 'Status updated!'
-  #     else
-  #       redirect_to recruiter_applicants_path, alert: 'Status update failed.'
-  #     end
-  #   else
-  #     redirect_to recruiter_applicants_path, alert: 'Update failed. Missing parameters.'
-  #   end
-  # end
+  def plan_and_pricing
+  end
 
   def change_application_status
-    # binding.irb
     @job_application = JobApplication.find_by(id: params[:id])
     if @job_application.present?
       if params[:job_application].present? && params[:job_application][:status].present?
@@ -65,8 +50,10 @@ class JobApplicationsController < ApplicationController
     )
 
     if @job_application.save
-      redirect_to applied_jobs_path, notice: "Application submitted!"
+      flash[:success] = "Application submitted!"
+      redirect_to applied_jobs_path
     else
+      flash.now[:error] = @job_application.errors.full_messages
       render :new, status: :unprocessable_entity
     end
   end

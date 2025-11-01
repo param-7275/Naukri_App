@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   scope "(:locale)", locale: /en|hi/ do
 
     # Jobs Controller Routes
@@ -11,7 +10,8 @@ Rails.application.routes.draw do
     match '/update(/:id)', to: "jobs#update", as: 'update_job', via: [:get, :put, :patch]
     match '/destroy(/:id)', to: "jobs#destroy", as: 'delete_job', via: [:delete]
     get 'recruiter_applicants', to: 'jobs#applicants', as: 'recruiter_applicants' 
-
+    get 'view_job_description/(:id)', to: "jobs#view_job_description", as: 'job_description'
+    
     # Job Applications Controller Routes
     get 'applied_jobs/', to: "job_applications#applied_jobs", as: 'applied_jobs'
     get 'jobseeker_index/', to: "job_applications#jobseeker_index", as: 'jobseeker_home'
@@ -19,7 +19,8 @@ Rails.application.routes.draw do
     get  'job_applications/new/:job_id', to: 'job_applications#new', as: 'new_job_application'
     post 'job_applications/create/:job_id', to: 'job_applications#create', as: 'job_applications'
     match 'change_application_status/:id', to: "job_applications#change_application_status", as: 'change_job_status', via: [:patch, :put]
-
+    get 'plan_and_pricing/', to: "job_applications#plan_and_pricing", as: 'pricing'
+    
     # Users Controller Routes
     match '/logout(/:id)', to: "users#destroy", as: "user_logout", via: [:get, :delete]
     get "new_signup/" , to: "users#new_signup" , as: "new_signup"

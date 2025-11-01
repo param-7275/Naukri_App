@@ -1,7 +1,6 @@
 class Job < ApplicationRecord
   belongs_to :recruiter, class_name: 'User'
   has_many :job_applications, dependent: :destroy
-  has_rich_text :description
   validates :title, presence: true
   validates :description, presence: true
   validates :vacancy, presence: true, numericality: { only_integer: true, greater_than: 0 }

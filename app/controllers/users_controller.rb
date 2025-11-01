@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   def user_signup
     user_role = user_params[:role]
-    allowed_roles = User.roles.keys # ["jobseeker", "recruiter"]
+    allowed_roles = User.roles.keys 
     unless allowed_roles.include?(user_role)
       flash.now[:error] = "Role is invalid."
       @user = User.new
@@ -28,11 +28,13 @@ class UsersController < ApplicationController
   end
 
   def user_login
-    @user = User.find_by(email: params[:user][:email])
+    email_param = params.dig(:user, :email) || params[:email]
+    password_param = params.dig(:user, :password) || params[:password]
+    @user = User.find_by(email: email_param)
 
-    if @user&.valid_password?(params[:user][:password])
+    if @user&.valid_password?(password_param)
       session[:user_id] = @user.id
-      flash[:success] = "Login successful!"
+      flash[:success] = "Login successfully!"
       
       redirect_path = case @user.role
                       when "recruiter" then recruiter_home_path

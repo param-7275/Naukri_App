@@ -26,25 +26,34 @@ class JobsController < ApplicationController
   def create
     @job = current_user.jobs.build(job_params)
     if @job.save
-      redirect_to recruiter_jobs_path, notice: "Job posted."
+      flash[:success] = "Job Posted successfully."
+      redirect_to recruiter_jobs_path
     else
-      render :new
+      flash.now[:error] = @job.errors.full_messages
+      render :new, status: :unprocessable_entity
     end
+  end
+
+  def view_job_description
+    @job = Job.find_by(id: params[:job_id])
   end
 
   def edit; end
 
   def update
-    if @job.update!(job_params)
-      redirect_to recruiter_jobs_path, notice: "Job Updated."
+    if @job.update(job_params)
+      flash[:success] = "Job Updated successfully."
+      redirect_to recruiter_jobs_path
     else
-      render :edit
+      flash.now[:error] = @job.errors.full_messages
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @job.destroy
-    redirect_to recruiter_jobs_path, notice: "Deleted."
+    flash[:success] = "Job Deleted successfully."
+    redirect_to recruiter_jobs_path
   end
 
   private

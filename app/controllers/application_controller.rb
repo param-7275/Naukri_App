@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   helper_method :current_user, :logged_in?
 
-  around_action :switch_locale
+  # around_action :switch_locale
 
   def switch_locale(&action)
     locale = params[:locale] || extract_locale_from_tld || I18n.default_locale

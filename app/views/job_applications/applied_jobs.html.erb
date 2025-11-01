@@ -1,69 +1,151 @@
 <%= render partial: 'partials/header' %>
 
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-  <title>Items</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Listings</title>
+
   <style>
-    .container {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f5f7fa;
+      color: #222;
+      line-height: 1.6;
+      padding: 2rem 4%;
+    }
+
+    .job-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .job-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      padding: 1.5rem;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      min-height: 380px;
     }
 
-    .item {
-      width: 30%;
-      margin: 10px;
-      padding: 10px;
-      background-color: #f0f0f0;ßß
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    .job-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(136, 39, 39, 0.2);
     }
 
-    h2 {
-      color: #333;
+    .job-card h2 {
+      color: #882727;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
     }
 
-    p {
-      color: #666;
+    .job-card h3 {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 0.5rem;
+      max-height: 3em;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .price {
-      color: #009688;
-      font-weight: bold;
+    .job-card p {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 0.4rem;
     }
 
-    @media screen and (max-width: 992px) {
-      .item {
-        width: 45%;
-      }
+    .job-card .description {
+      flex: 1;
+      overflow-y: auto;
+      max-height: 130px;
+      margin-bottom: 0.5rem;
     }
 
-    @media screen and (max-width: 600px) {
-      .item {
-        width: 90%;
-      }
+    .job-card .action-link {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: #882727;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 0.5rem;
+      text-align: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .job-card .action-link:hover {
+      background-color: #aa2b2b;
+    }
+
+    .job-card .disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 1rem 2; }
+    }
+
+    .no-jobs-message {
+      text-align: center;
+      padding: 4rem 2rem;
+      background-color: #fdf6f0;
+      border: 2px dashed #882727;
+      border-radius: 12px;
+      margin: 2rem auto;
+      max-width: 600px;
     }
   </style>
 </head>
-  <body>
-    <div class="container">
-      <% if @applications.any? %>
-        <% @applications.each do |application| %>
-          <div class="item">
-            <h2><%= t('jobs.index.job_title') %> : <%= application.job.title %></h2>
-            <h3><%= t('jobs.index.job_description') %> : <%= application.job.description %></h3>
-            <p><%= t('jobs.index.company_name') %> : <%= application.job.company_name %></p>
-            <p><%= t('jobs.index.industry_type') %> : <%= application.job.industry_type %></p>
-            <p><%= t('jobs.index.location') %> : <%= application.job.location %></p>
-            <p><%= t('jobs.index.vacancy') %> : <%= application.job.vacancy %></p>
-            <p><%= t('jobs.index.status') %> : <%= application.status %></p>
+
+<body>
+  <h1 style="text-align:center; color:#882727; margin-bottom:2rem;">Applied Job Listings</h1>
+  <% if @applications.any? %>
+    <div class="job-container">
+      <% @applications.each do |application| %>
+        <div class="job-card">
+          <h2><%= t('jobs.index.job_title') %> : <%= application.job.title %></h2><br>
+          <div class="description">
+            <p><%= t('jobs.index.job_description') %> : <%= application.job.description %></p><br>
           </div>
-        <% end %>
-      <% else %>
-        <h1> <%= t('job_applications.applied_jobs.empty') %> </h1>
+          <p><strong><%= t('jobs.index.company_name') %>:</strong> <%= application.job.company_name %></p><br>
+          <p><strong><%= t('jobs.index.industry_type') %>:</strong> <%= application.job.industry_type %></p><br>
+          <p><strong><%= t('jobs.index.location') %>:</strong> <%= application.job.location %></p><br>
+          <p><strong><%= t('jobs.index.vacancy') %>:</strong> <%= application.job.vacancy %></p><br>
+          <% job_application = @applications.find_by(jobseeker_id: current_user.id) %>
+
+          <% if job_application.present? && job_application.updated_at > 3.months.ago %>
+            <span class="action-link disabled"><%= t('jobs.index.already_applied') %></span>
+            <p><strong><%= t('jobs.index.status') %>:</strong> <%= t("jobs.applicants.status_options.#{job_application.status}") %></p>
+            <% if job_application.status == 'reject' %>
+              <p><%= t('jobs.index.can_apply_again') %></p>
+            <% end %>
+          <% else %>
+            <%= link_to t('jobs.index.apply_job'), new_job_application_path(job_id: job.id, locale: I18n.locale), class: 'action-link' %>
+          <% end %>
+        </div>
       <% end %>
-    </div>  
-  </body>
+    </div>
+  <% else %>
+    <div class="no-jobs-message">
+      <h2><%= t('jobs.index.no_jobs_title', default: "No Jobs Found") %></h2>
+      <p><%= t('jobs.index.no_jobs_message', default: "You haven't applied any jobs yet. Start by applying a new job to attract Recruiters!") %></p>
+      <%= link_to t('jobs.index.add_job', default: "Apply New Job"), all_jobs_path, class: "add-job-button" %>
+    </div>
+  <% end %>
+</body>
 </html>

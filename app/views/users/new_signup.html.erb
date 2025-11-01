@@ -1,205 +1,218 @@
-<%= render "partials/errors", object: @user %>
+<%= render partial: 'partials/errors' %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= t('users.signup.title') %></title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+      background-color: #f5f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 460px;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.5rem;
+    }
+
+    #Heading {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #882727;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.25rem;
+      display: inline-block;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      background-color: #f8f9fb;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .row:focus-within {
+      border-color: #882727;
+      box-shadow: 0 0 0 3px rgba(136, 39, 39, 0.15);
+    }
+
+    .icon {
+      flex: 0 0 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #882727;
+      margin-right: 0.5rem;
+    }
+
+    .row input,
+    .row select {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 1rem;
+      padding: 0.6rem 0;
+      outline: none;
+    }
+
+    .row select {
+      color: #333;
+      cursor: pointer;
+    }
+
+    button {
+      background-color: #882727;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.9rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    button:hover {
+      background-color: #701f1f;
+      transform: translateY(-1px);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button[type="button"] {
+      background-color: #f0f0f0;
+      color: #333;
+      border: 1px solid #ccc;
+    }
+
+    button[type="button"]:hover {
+      background-color: #e4e4e4;
+    }
+
+    a {
+      color: #882727;
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-block;
+      margin-top: 0.8rem;
+      text-align: center;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 500px) {
+      form {
+        padding: 2rem 1.5rem;
+      }
+    }
+
+  </style>
 </head>
-<style>
-    *{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-body{
-    display: flex;
-    height: 100vh;
-    background-color: #343a40;
-}
-#container{
-    margin:auto;
-    display: flex;
-    color:#f8f9fa;
-    flex-direction: column;
-    width:500px;
-    box-shadow: 1px 2px 71px -6px rgba(0,0,0,0.67);
-    height:fit-content;
-    font-family:sans-serif;
-    background-color: #212529;
-    padding:25px 20px;
-    border-radius: 10px;
-}
-#Heading{
-    padding:15px;
-    text-align: center;
-    font-size: 2.5em;
-    font-weight: 900;
-}
-label{
-    font-size: 1.1em;
-    font-weight: 500;
-    margin:10px 0px;
-}
-input{
-    padding:10px;
-    border-top-right-radius: 10px;
-    height: 50px;
-    background-color: #6c757d;
-    border-bottom-right-radius:10px;
-    outline: none;
-    border: none;
-    font-size:19px;
-    transition-duration: 0.15s;
-    
-    color:#f8f9fa;
-}
-input:focus{
-    outline: none;
-    background-color: none;
-}
-input::placeholder{
-    color:#f8f9fa;
-    font-size: 19.2px;
-}
-.row:not(.name){
-    width:100%;
-    height:fit-content;
-    display: grid;
-    grid-template-columns: 10% 90%;
-    grid-template-rows: 50px;
-}
-.name{
-    width:100%;
-    height: fit-content;
-    display: flex;
-    margin-top:20px;
 
-}
-.name>input{
-    width:calc(50% - 5px);
-    margin:5px;
-    border-radius: 10px;;
-}
-.icon{
-    height: 50px;
-    background-color: #6c757d;
-    border-top-left-radius: 10px;
-    padding:10px;
-    margin-right:1px;
-    border-bottom-left-radius: 10px;
-    fill:white;
-}
-button{
-    width:fit-content;
-    margin:20px auto;
-    padding:10px 20px;
-    outline: none;
-    border: none;
-    border-radius: 20px;
-    font-weight: 700;
-    color:white;
-    background-color: #248277;
-    font-family:sans-serif;
-    font-size: 1.1em;
-    cursor: pointer;
-    transition-duration: 0.25s;
-}
-button:hover{
-    background-color: #036666;
-}
-span{
-    display: flex;
-    justify-content: flex-end;
-
-}
-a{
-    text-decoration: none;
-    color:#99e2b4;
-}
-span>span>a{
-    margin:0px 5px
-}
-a:hover{
-    color: #06d6a0;
-}
-#MsgBx{
-    width:100%;
-    position: absolute;
-    top:0px;
-    left:0px;
-    height:auto;
-    padding:20px;
-}
-#MsgBx>li{
-    list-style: none;
-    color: white;
-    border-radius: 5px;
-    padding:10px;
-    background-color: #036666;
-    width:fit-content;
-    font-family: 'Ubuntu', sans-serif;
-    position: relative;
-    animation: enteranceError 1s ease;
-    margin:5px;
-}
-input:focus{
-    border:5px solid #06d6a0;
-    height: 49px;
-    margin-top:2px;
-}
-
-</style>
 <body>
-<%= form_with(model: @user ,url: user_signup_path ) do |form| %>
-  <h3 id="Heading"><%= t('users.signup.title') %></h3>
+  <%= form_with(model: @user, url: user_signup_path) do |form| %>
+    <h3 id="Heading"><%= t('users.signup.title') %></h3>
 
-  <%= form.label :username %>
-  <div class="row">
-    <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="100%"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg></div>
-    <%= form.text_field :username, placeholder: t('users.signup.username'), required: true %>
-  </div>
-  <br>
-  
-  <%= form.label :email %>
-  <div class="row">
-    <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></svg></div>
-    <%= form.email_field :email, placeholder: t('users.signup.email'), required: true %>
-  </div>
-  <br>
-  <%= form.label :contact %>
-  <div class="row">
-    <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="100%"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg></div>
-    <%= form.text_field :phone_number, placeholder: t('users.signup.contact'), required: true %>
-  </div>
+    <!-- Username -->
+    <%= form.label :username %>
+    <div class="row">
+      <div class="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="18px"><path fill="#882727" d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
+      </div>
+      <%= form.text_field :username, placeholder: t('users.signup.username'), required: true %>
+    </div>
 
-  <%= form.label :role %>
-  <div class="row">
-    <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="100%"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg></div>
-    <%= form.select :role, options_for_select([[t('users.signup.job_seeker'), 'jobseeker'], [t('users.signup.recruiter'), 'recruiter']]), placeholder: t('users.signup.role'), required: true %>
-  </div>
+    <!-- Email -->
+    <%= form.label :email %>
+    <div class="row">
+      <div class="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="18px"><path fill="#882727" d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></svg>
+      </div>
+      <%= form.email_field :email, placeholder: t('users.signup.email'), required: true %>
+    </div>
 
-  <br>
-  <%= form.label :password %>
-  <div class="row">
-    <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="30px"><path d="M336 352c97.2 0 176-78.8 176-176S433.2 0 336 0S160 78.8 160 176c0 18.7 2.9 36.8 8.3 53.7L7 391c-4.5 4.5-7 10.6-7 17v80c0 13.3 10.7 24 24 24h80c13.3 0 24-10.7 24-24V448h40c13.3 0 24-10.7 24-24V384h40c6.4 0 12.5-2.5 17-7l33.3-33.3c16.9 5.4 35 8.3 53.7 8.3zM376 96a40 40 0 1 1 0 80 40 40 0 1 1 0-80z"/></svg></div>
-    <%= form.password_field :password, placeholder: t('users.signup.password'), required: true %>
-  </div>
-  <br>
-  <%= form.label :password_confirmation %>
-  <div class="row">
-    <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="30px"><path d="M336 352c97.2 0 176-78.8 176-176S433.2 0 336 0S160 78.8 160 176c0 18.7 2.9 36.8 8.3 53.7L7 391c-4.5 4.5-7 10.6-7 17v80c0 13.3 10.7 24 24 24h80c13.3 0 24-10.7 24-24V448h40c13.3 0 24-10.7 24-24V384h40c6.4 0 12.5-2.5 17-7l33.3-33.3c16.9 5.4 35 8.3 53.7 8.3zM376 96a40 40 0 1 1 0 80 40 40 0 1 1 0-80z"/></svg></div>
-    <%= form.password_field :password_confirmation, placeholder: t('users.signup.confirm_password'), required: true %>
-  </div>
-  <br>
-  <button type="submit"><%= t('users.signup.submit') %></button>
-  <%= link_to root_path do %>
-    <button type="button"><%= t('users.signup.goto_home') %></button>
+    <!-- Contact -->
+    <%= form.label :contact %>
+    <div class="row">
+      <div class="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="18px"><path fill="#882727" d="M511.1 387l-108-108c-12-12-31.4-12-43.3 0l-49.5 49.5c-6.1 6.1-15.8 6.1-21.9 0l-53.7-53.7c-6.1-6.1-6.1-15.8 0-21.9l49.5-49.5c12-12 12-31.4 0-43.3l-108-108c-12-12-31.4-12-43.3 0L50.6 73.6C13.2 111 0 164.1 0 217.7C0 378 134 512 294.3 512c53.6 0 106.7-13.2 144.1-50.6l27.3-27.3c12-11.9 12-31.3-.3-43.1z"/></svg>
+      </div>
+      <%= form.text_field :phone_number, placeholder: t('users.signup.contact'), required: true %>
+    </div>
+
+    <!-- Role -->
+    <%= form.label :role %>
+    <div class="row">
+      <div class="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="18px"><path fill="#882727" d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
+      </div>
+      <%= form.select :role, options_for_select([[t('users.signup.job_seeker'), 'jobseeker'], [t('users.signup.recruiter'), 'recruiter']]), required: true %>
+    </div>
+
+    <!-- Password -->
+    <%= form.label :password %>
+    <div class="row">
+      <div class="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="18px"><path fill="#882727" d="M336 352c97.2 0 176-78.8 176-176S433.2 0 336 0S160 78.8 160 176c0 18.7 2.9 36.8 8.3 53.7L7 391c-4.5 4.5-7 10.6-7 17v80c0 13.3 10.7 24 24 24h80c13.3 0 24-10.7 24-24V448h40c13.3 0 24-10.7 24-24V384h40c6.4 0 12.5-2.5 17-7l33.3-33.3c16.9 5.4 35 8.3 53.7 8.3zM376 96a40 40 0 1 1 0 80 40 40 0 1 1 0-80z"/></svg>
+      </div>
+        <%= form.password_field :password, placeholder: t('users.signup.password'), required: true %>
+      </div>
+      <small style="color: #882727;">Password must be at least 8 characters, including 1 number and 1 special character.</small>
+
+    <!-- Password confirmation -->
+    <%= form.label :password_confirmation %>
+    <div class="row">
+      <div class="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="18px"><path fill="#882727" d="M336 352c97.2 0 176-78.8 176-176S433.2 0 336 0S160 78.8 160 176c0 18.7 2.9 36.8 8.3 53.7L7 391c-4.5 4.5-7 10.6-7 17v80c0 13.3 10.7 24 24 24h80c13.3 0 24-10.7 24-24V448h40c13.3 0 24-10.7 24-24V384h40c6.4 0 12.5-2.5 17-7l33.3-33.3c16.9 5.4 35 8.3 53.7 8.3zM376 96a40 40 0 1 1 0 80 40 40 0 1 1 0-80z"/></svg>
+      </div>
+      <%= form.password_field :password_confirmation, placeholder: t('users.signup.confirm_password'), required: true %>
+    </div>
+
+    <!-- Buttons -->
+    <button type="submit"><%= t('users.signup.submit') %></button>
+
+    <%= link_to root_path do %>
+      <button type="button"><%= t('users.signup.goto_home') %></button>
+    <% end %>
+
+    <%= link_to t('users.signup.already_have_account'), login_path %>
   <% end %>
-  
-  <br>
-  <%= link_to t('users.signup.already_have_account'), login_path %>
-<% end %>
 </body>
 </html>

@@ -8,6 +8,13 @@
   <title>Job Listings</title>
 
   <style>
+    .job-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -109,36 +116,63 @@
       margin: 2rem auto;
       max-width: 600px;
     }
+
+    .edit-button {
+      display: inline-block;
+      background-color: #2e7d32;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+
+    .delete-button {
+      background-color: #b71c1c;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+
+    .delete-button:hover {
+      background-color: #d32f2f;
+    }
   </style>
 </head>
 <body>
-  <h1 style="text-align:center; color:#882727; margin-bottom:2rem;">All Jobs Listing</h1>
-  <% if @jobs.any? %>
-    <div class="job-container">
-      <% @jobs.each do |job|%>
-        <div class="job-card">
-          <h2><%= t('jobs.index.job_title') %> : <%= job.title %></h2><br>
-          <div class="description">
-            <p><%= t('jobs.index.job_description') %> : <%= job.description %></p><br><br>
-          </div>
-          <p><strong><%= t('jobs.index.company_name') %>:</strong> <%= job.company_name %></p><br>
-          <p><strong><%= t('jobs.index.industry_type') %>:</strong> <%= job.industry_type %></p><br>
-          <p><strong><%= t('jobs.index.location') %>:</strong> <%= job.location %></p><br>
-          <p><strong><%= t('jobs.index.vacancy') %>:</strong> <%= job.vacancy %></p><br>
-          <% job_application = job.job_applications.find_by(jobseeker_id: current_user.id) %>
+  <h1 style="text-align:center; color:#882727; margin-bottom:2rem;">View Job Description</h1>
 
-          <% if job_application.present? && job_application.updated_at > 3.months.ago %>
-            <span class="action-link disabled"><%= t('jobs.index.already_applied') %></span>
-          <% else %>
-            <%= link_to t('jobs.index.apply_job'), new_job_application_path(job_id: job.id, locale: I18n.locale), class: 'action-link' %>
-          <% end %> 
+  <% if @job.present? %>
+    <div class="job-container">
+        <div class="job-card">
+          <h2><%= t('jobs.index.job_title') %> : <%= @job.title %></h2><br>
+          <div class="description">
+            <p><%= t('jobs.index.job_description') %> : <%= @job.description %></p><br><br>
+          </div>
+          <p><strong><%= t('jobs.index.company_name') %>:</strong> <%= @job.company_name %></p><br>
+          <p><strong><%= t('jobs.index.industry_type') %>:</strong> <%= @job.industry_type %></p><br>
+          <p><strong><%= t('jobs.index.location') %>:</strong> <%= @job.location %></p><br>
+          <p><strong><%= t('jobs.index.vacancy') %>:</strong> <%= @job.vacancy %></p><br>
+
+        <div class="job-actions">
+          <%= link_to t('jobs.index.edit_job'), edit_job_path(@job, locale: I18n.locale), class: 'edit-button' %>
+
+          <%= button_to t('jobs.index.delete'),
+                        delete_job_path(@job, locale: I18n.locale),
+                        method: :delete,
+                        data: { confirm: t('jobs.index.confirm_delete') },
+                        class: 'delete-button' %>
         </div>
-      <% end %>
+      </div>
     </div>
   <% else %>
     <div class="no-jobs-message">
-      <h2><%= t('jobs.index.no_jobs_title', default: "No Jobs Found") %></h2>
-      <p><%= t('jobs.index.no_jobs_message', default: "Recruiter haven't posted any jobs yet. Please try after some times! ") %></p>
+      <p><%= t('jobs.index.no_job_found') %></p>
     </div>
   <% end %>
 </body>

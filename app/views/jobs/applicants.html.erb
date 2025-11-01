@@ -1,93 +1,233 @@
 <%= render partial: 'partials/header' %>
 
 <!DOCTYPE html>
-<title>My Example</title>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Applicants Dashboard</title>
 
-<style>
-.table-with-caption {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: sans-serif;
-    margin-top: 1.5rem; 
-}
+  <style>
+    :root {
+      --primary: #882727;
+      --primary-light: #a74545;
+      --bg-light: #f5f7fa;
+      --text-dark: #222;
+      --text-light: #555;
+    }
 
-.table-with-caption caption {
-    caption-side: top;ßß
-    
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-align: left;
-    color: #333;
-    padding-bottom: 10px;
-}
+    body {
+      background-color: var(--bg-light);
+      font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 2rem;
+      color: var(--text-dark);
+    }
 
-.table-with-caption thead th {
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    padding: 10px;
-    text-align: left;
-}
+    .dashboard-container {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 2rem auto;
+    }
 
-.table-with-caption td {
-    border: 1px solid #dee2e6;
-    padding: 10px;
-    background: white;
-}
-</style>
+    .dashboard-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+    }
 
+    .dashboard-header h2 {
+      color: var(--primary);
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
 
-<table class="table-with-caption">
-  <% if @applications.any? %>
-    <caption><%= t('jobs.applicants.caption') %></caption>
-    <thead>
-        <tr>
-            <th scope="col"><%= t('jobs.applicants.name') %></th>
-            <th scope="col"><%= t('jobs.applicants.email') %></th>
-            <th scope="col"><%= t('jobs.applicants.phone') %></th>
-            <th scope="col"><%= t('jobs.applicants.applied_for') %></th>
-            <th scope="col"><%= t('jobs.applicants.about') %></th>
-            <th scope="col"><%= t('jobs.status') %></th>
-            <th scope="col"><%= t('jobs.applicants.resume') %></th>
-            <th scope="col"><%= t('jobs.applicants.action') %></th>
-        </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <% @applications.each do |app| %>
+    .dashboard-header p {
+      font-size: 0.95rem;
+      color: var(--text-light);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    thead {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    th {
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #fafafa;
+    }
+
+    tr:hover td {
+      background-color: #fff3f3;
+    }
+
+    select {
+      border: 1px solid var(--primary);
+      border-radius: 6px;
+      padding: 6px 8px;
+      font-size: 0.9rem;
+      color: var(--primary);
+      background: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    select:hover {
+      background: #fdf3f3;
+    }
+
+    .btn-download {
+      background-color: var(--primary);
+      color: #fff !important;
+      padding: 6px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: background 0.3s ease;
+    }
+
+    .btn-download:hover {
+      background-color: var(--primary-light);
+    }
+
+    .no-applicants {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #777;
+      padding: 2rem 0;
+    }
+
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tr {
+        margin-bottom: 1rem;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        overflow: hidden;
+      }
+
+      td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 15px;
+        font-size: 0.9rem;
+        border-bottom: 1px solid #eee;
+      }
+
+      td:last-child {
+        border-bottom: none;
+      }
+
+      td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--primary);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="dashboard-container">
+    <div class="dashboard-header">
+      <div>
+        <h2><%= t('jobs.applicants.caption') %></h2>
+        <p>Manage all job applications and review candidate details below.</p>
+      </div>
+    </div>
+
+    <% if @applications.any? %>
+      <table>
+        <thead>
           <tr>
-            <td><%= app.jobseeker.username %></td>
-            <td><%= app.jobseeker.email %></td>
-            <td><%= app.jobseeker.phone_number %></td>
-            <td><%= app.job.title %></td>
-            <td><%= app.about_yourself.present? ? app.about_yourself.to_s.html_safe : t('jobs.applicants.about_empty') %></td>
-            <td><%= t('jobs.applicants.status.' + app.status.downcase) rescue app.status.capitalize %></td>
-            <td>
-              <% if app.resume.attached? %>
-                <%= link_to t('jobs.applicants.download'), rails_blob_path(app.resume, disposition: "attachment"), class: "btn btn-sm btn-primary" %>
-              <% else %>
-                <%= t('jobs.applicants.no_resume') %>
-              <% end %>
-            </td>
-            <td>
-              <%= form_with(model: app, url: change_job_status_path(app.id, locale: I18n.locale), method: :patch, local: true, html: { class: 'job-form' }) do |f| %>
-                <%= f.select :status,
-                  [
-                    [t('jobs.applicants.status.review'), 'review'],
-                    [t('jobs.applicants.status.reject'), 'reject'],
-                    [t('jobs.applicants.status.selected_for_interview'), 'selected_for_interview'],
-                    [t('jobs.applicants.status.selected_for_job'), 'selected_for_job']
-                  ],
-                  { selected: app.status },
-                  { onchange: 'this.form.submit();' }
-                %>
-              <% end %>
-            </td>
+            <th><%= t('jobs.applicants.name') %></th>
+            <th><%= t('jobs.applicants.email') %></th>
+            <th><%= t('jobs.applicants.phone') %></th>
+            <th><%= t('jobs.applicants.applied_for') %></th>
+            <th><%= t('jobs.applicants.about') %></th>
+            <th><%= t('jobs.status') %></th>
+            <th><%= t('jobs.applicants.resume') %></th>
+            <th><%= t('jobs.applicants.action') %></th>
           </tr>
-        <% end %>
-      </tr>
-    </tbody>
-  <% else %>
-    <p><%= t('jobs.applicants.none_yet') %></p>
-  <% end %>
-</table>
-
+        </thead>
+        <tbody>
+          <% @applications.each do |app| %>
+            <tr>
+              <td data-label="<%= t('jobs.applicants.name') %>"><%= app.jobseeker.username %></td>
+              <td data-label="<%= t('jobs.applicants.email') %>"><%= app.jobseeker.email %></td>
+              <td data-label="<%= t('jobs.applicants.phone') %>"><%= app.jobseeker.phone_number %></td>
+              <td data-label="<%= t('jobs.applicants.applied_for') %>"><%= app.job.title %></td>
+              <td data-label="<%= t('jobs.applicants.about') %>">
+                <%= app.about_yourself.present? ? app.about_yourself.to_s.html_safe : t('jobs.applicants.about_empty') %>
+              </td>
+              <td data-label="<%= t('jobs.status') %>">
+                <%= t('jobs.applicants.status.' + app.status.downcase) rescue app.status.capitalize %>
+              </td>
+              <td data-label="<%= t('jobs.applicants.resume') %>">
+                <% if app.resume.attached? %>
+                  <%= link_to t('jobs.applicants.download'), rails_blob_path(app.resume, disposition: "attachment"), class: "btn-download" %>
+                <% else %>
+                  <%= t('jobs.applicants.no_resume') %>
+                <% end %>
+              </td>
+              <td data-label="<%= t('jobs.applicants.action') %>">
+                <%= form_with(model: app, url: change_job_status_path(app.id, locale: I18n.locale), method: :patch, local: true, html: { class: 'job-form' }) do |f| %>
+                  <%= f.select :status,
+                    [
+                      [t('jobs.applicants.status.review'), 'review'],
+                      [t('jobs.applicants.status.reject'), 'reject'],
+                      [t('jobs.applicants.status.selected_for_interview'), 'selected_for_interview'],
+                      [t('jobs.applicants.status.selected_for_job'), 'selected_for_job']
+                    ],
+                    { selected: app.status },
+                    { onchange: 'this.form.submit();' }
+                  %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <div class="no-applicants">
+        <%= t('jobs.applicants.none_yet') %>
+      </div>
+    <% end %>
+  </div>
+</body>
+</html>

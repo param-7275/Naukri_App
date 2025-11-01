@@ -58,7 +58,7 @@
           <p><%= t('jobs.index.industry_type') %> : <%= job.industry_type %></p>
           <p><%= t('jobs.index.location') %> : <%= job.location %></p>
           <p><%= t('jobs.index.vacancy') %> : <%= job.vacancy %></p>
-          <%= link_to t('jobs.recruiter_posted.apply'), job_applications_path(job), method: :post, class: 'btn btn-primary' %>
+          <%= link_to t('jobs.recruiter_posted.apply'), job_applications_path(job_id: job), method: :post, class: 'btn btn-primary' %>
         </div>
       <% end %>
     </div>  

@@ -1,146 +1,191 @@
 <%= render partial: 'partials/header' %>
+<%= render partial: 'partials/errors' %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= t('jobs.edit.title') %></title>
+
+  <style>
+    :root {
+      --primary: #882727;
+      --primary-light: #a13b3b;
+      --bg-light: #f5f7fa;
+      --text-dark: #222;
+      --text-light: #555;
+      --white: #fff;
+    }
+
+    body {
+      background-color: var(--bg-light);
+      font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+      color: var(--text-dark);
+      margin: 0;
+      padding: 2rem;
+    }
+
+    .form-container {
+      max-width: 750px;
+      background: var(--white);
+      margin: 2rem auto;
+      padding: 2.5rem 2rem;
+      border-radius: 14px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .form-container:hover {
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-title {
+      text-align: center;
+      font-size: 2rem;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 1.8rem;
+      position: relative;
+    }
+
+    .form-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background-color: var(--primary);
+      border-radius: 3px;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .form-input, .form-textarea, .trix-content {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: #fff;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus, .form-textarea:focus, .trix-content:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(136, 39, 39, 0.15);
+      outline: none;
+    }
+
+    .form-textarea {
+      height: 150px;
+      resize: vertical;
+    }
+
+    .form-submit {
+      width: 100%;
+      background-color: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .form-submit:hover {
+      background-color: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(136, 39, 39, 0.25);
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 1.2rem;
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: var(--primary-light);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .form-container {
+        padding: 1.8rem 1.5rem;
+      }
+
+      .form-title {
+        font-size: 1.6rem;
+      }
+
+      .form-input, .form-textarea {
+        font-size: 0.95rem;
+      }
+
+      .form-submit {
+        font-size: 1rem;
+      }
+    }
+  </style>
 </head>
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f7fa;
-  padding: 20px;
-}
-
-.job-form {
-  max-width: 600px;
-  margin: 0 auto;
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.form-title {
-  text-align: center;
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-label {
-  font-size: 14px;
-  font-weight: bold;
-  color: #555;
-  margin-bottom: 8px;
-  display: block;
-}
-
-.form-input, .form-textarea {
-  width: 100%;
-  padding: 12px;
-  font-size: 14px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  outline: none;
-}
-
-.form-input:focus, .form-textarea:focus {
-  border-color: #3498db;
-  box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
-}
-
-.form-textarea {
-  height: 150px;
-}
-
-.form-submit {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #3498db;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.form-submit:hover {
-  background-color: #2980b9;
-}
-
-@media (max-width: 600px) {
-  .job-form {
-    padding: 20px;
-  }
-
-  .form-title {
-    font-size: 20px;
-  }
-
-  .form-input, .form-textarea {
-    font-size: 12px;
-  }
-
-  .form-submit {
-    font-size: 14px;
-  }
-}
-
-</style>
 <body>
-<%= form_with(model: @job, url: update_job_path(@job.id, locale: I18n.locale), method: :patch, html: { class: 'job-form' }) do |form| %>
-  <div class="form-container">
+  <%= form_with(model: @job, url: update_job_path(@job.id, locale: I18n.locale), method: :patch, html: { class: 'form-container' }) do |form| %>
     <h2 class="form-title"><%= t('jobs.edit.title') %></h2>
-  
-      <div class="form-group">
-        <%= form.label :title, t('jobs.common.placeholders.title'), class: 'form-label' %>
-        <%= form.text_field :title, class: 'form-input', placeholder: t('jobs.common.placeholders.title') %>
-      </div>
-  
-      <div class="form-group">
-        <%= form.label :description, t('jobs.common.placeholders.description'), class: 'form-label' %>
-        <%= form.rich_text_area :description, class: 'form-textarea', placeholder: t('jobs.common.placeholders.description') %>
-      </div>
-  
-      <div class="form-group">
-        <%= form.label :company_name, t('jobs.common.placeholders.company_name'), class: 'form-label' %>
-        <%= form.text_field :company_name, class: 'form-input', placeholder: t('jobs.common.placeholders.company_name') %>
-      </div>
-  
-      <div class="form-group">
-        <%= form.label :vacancy, t('jobs.common.placeholders.vacancy'), class: 'form-label' %>
-        <%= form.number_field :vacancy, class: 'form-input', placeholder: t('jobs.common.placeholders.vacancy') %>
-      </div>
 
-      <div class="form-group">
-        <%= form.label :location, t('jobs.common.placeholders.location'), class: 'form-label' %>
-        <%= form.text_field :location, class: 'form-input', placeholder: t('jobs.common.placeholders.location') %>
-      </div>
-
-      <div class="form-group">
-        <%= form.label :industry_type, t('jobs.common.placeholders.industry_type'), class: 'form-label' %>
-        <%= form.text_field :industry_type, class: 'form-input', placeholder: t('jobs.common.placeholders.industry_type') %>
-      </div>
-  
-      <div class="form-group">
-        <%= form.submit t('jobs.edit.submit'), class: 'form-submit' %>
-      </div>
+    <div class="form-group">
+      <%= form.label :title, t('jobs.common.placeholders.title'), class: 'form-label' %>
+      <%= form.text_field :title, class: 'form-input', placeholder: t('jobs.common.placeholders.title') %>
     </div>
+
+    <div class="form-group">
+      <%= form.label :description, t('jobs.common.placeholders.description'), class: 'form-label' %>
+      <%= form.text_area :description, class: 'form-textarea', placeholder: t('jobs.common.placeholders.description') %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :company_name, t('jobs.common.placeholders.company_name'), class: 'form-label' %>
+      <%= form.text_field :company_name, class: 'form-input', placeholder: t('jobs.common.placeholders.company_name') %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :vacancy, t('jobs.common.placeholders.vacancy'), class: 'form-label' %>
+      <%= form.number_field :vacancy, class: 'form-input', placeholder: t('jobs.common.placeholders.vacancy') %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :location, t('jobs.common.placeholders.location'), class: 'form-label' %>
+      <%= form.text_field :location, class: 'form-input', placeholder: t('jobs.common.placeholders.location') %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :industry_type, t('jobs.common.placeholders.industry_type'), class: 'form-label' %>
+      <%= form.text_field :industry_type, class: 'form-input', placeholder: t('jobs.common.placeholders.industry_type') %>
+    </div>
+
+    <%= form.submit t('jobs.edit.submit'), class: 'form-submit' %>
+    <%= link_to t('jobs.edit.back'), recruiter_home_path, class: 'back-link' %>
   <% end %>
-  
 </body>
 </html>

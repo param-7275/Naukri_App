@@ -2,61 +2,254 @@
 <html>
   <head>
     <style>
-      ul {
-        list-style-type: none;
+      * {
         margin: 0;
         padding: 0;
-        overflow: hidden;
-        background-color: #882727;
+        box-sizing: border-box;
       }
 
-      li {
-        float: left;
+      body {
+        font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: #f5f7fa;
+        color: #111;
       }
 
-      li a {
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
+      nav {
+        background-color: #882727; /* Main color */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 2rem;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-left,
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+      }
+
+      nav a {
+        color: #ffffff;
         text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease, background-color 0.2s ease;
+        padding: 8px 10px;
+        border-radius: 4px;
       }
 
-      li a:hover {
-        background-color: #111;
+      nav a:hover {
+        background-color: #691e1e;
+      }
+
+      .nav-username {
+        color: #fff;
+        font-weight: 600;
+      }
+
+      .lang-switch {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .lang-switch a {
+        font-size: 0.9rem;
+        background-color: rgba(255, 255, 255, 0.15);
+        padding: 5px 10px;
+        border-radius: 3px;
+      }
+
+      .lang-switch a:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+
+      @media (max-width: 768px) {
+        nav {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.5rem;
+        }
+
+        .nav-left,
+        .nav-right {
+          flex-wrap: wrap;
+          gap: 0.75rem;
+        }
+      }
+
+      .nav-right {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
+
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      .dropdown-toggle {
+        background-color: #882727;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .dropdown-toggle:hover {
+        background-color: #aa2b2b;
+      }
+
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 100%;
+        background-color: white;
+        min-width: 180px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        border-radius: 8px;
+        margin-top: 8px;
+        overflow: hidden;
+        z-index: 1000;
+      }
+
+      .dropdown-item {
+        display: block;
+        padding: 10px 14px;
+        color: #333;
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: background-color 0.2s ease;
+      }
+
+      .dropdown-item:hover:not(.disabled) {
+        background-color: #f5f5f5;
+      }
+
+      .dropdown-item.logout {
+        color: #b71c1c;
+        font-weight: 600;
+      }
+
+      .dropdown-item.logout:hover {
+        background-color: #fdeaea;
+      }
+
+      .dropdown-item.disabled {
+        color: #777;
+        cursor: default;
+        background-color: #fafafa;
+        pointer-events: none;
+      }
+
+      .dropdown.open .dropdown-menu {
+        display: block;
       }
     </style>
   </head>
-  <body>
-    <ul>
-      <% if logged_in? %>
-        <li style="color: white; float: right;">
-          <%= t('nav.logged_in_as') %> <strong><%= current_user.username %></strong>
-          <%= link_to t('nav.logout'), user_logout_path, method: :delete %>
-        </li>
+  <script>
+    let globalClickHandler = null;
+    
+    function initDropdown() {
+      const dropdown = document.querySelector('.dropdown');
+      const toggle = document.querySelector('.dropdown-toggle');
 
-        <li style="float: right;">
-          <%= link_to t('nav.lang_en'), url_for(locale: :en) %> 
-          <%= link_to t('nav.lang_hi'), url_for(locale: :hi) %>
-        </li>
+      if (!dropdown || !toggle) {
+        if (globalClickHandler) {
+          document.removeEventListener('click', globalClickHandler);
+          globalClickHandler = null;
+        }
+        return;
+      }
 
-        <% if current_user.role == 'recruiter' %>
-          <li><%= link_to t('nav.home'), recruiter_home_path %></li>
-          <li><%= link_to t('nav.post_job'), new_job_path %></li>
-          <li><%= link_to t('nav.show_my_jobs'), recruiter_jobs_path %></li>
-          <li><%= link_to t('nav.show_applicants'), recruiter_applicants_path %></li>
+      if (globalClickHandler) {
+        document.removeEventListener('click', globalClickHandler);
+        globalClickHandler = null;
+      }
 
-        <% else %>
-          <li><%= link_to t('nav.home'), jobseeker_home_path %></li>
-          <li><%= link_to t('nav.all_jobs'), all_jobs_path %></li>
-          <li><%= link_to t('nav.applied_jobs'), applied_jobs_path %></li>
-        <% end %>
-      <% else %>
-        <li><%= link_to t('nav.home'), root_path %></li>
-        <li><%= link_to t('nav.signup'), new_signup_path %></li>
-        <li><%= link_to t('nav.login'), login_path %></li>
-      <% end %>
+      if (toggle.dataset.dropdownInitialized === 'true') {
+        return;
+      }
+
+      toggle.dataset.dropdownInitialized = 'true';
+
+      toggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        dropdown.classList.toggle('open');
+      });
+
+      globalClickHandler = function(e) {
+        const currentDropdown = document.querySelector('.dropdown');
+        if (currentDropdown && !currentDropdown.contains(e.target)) {
+          currentDropdown.classList.remove('open');
+        }
+      };
       
-    </ul>
+      document.addEventListener('click', globalClickHandler);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initDropdown);
+    } else {
+      setTimeout(initDropdown, 10);
+    }
+
+    document.addEventListener('turbo:load', function() {
+      setTimeout(initDropdown, 10);
+    });
+    document.addEventListener('turbo:render', function() {
+      setTimeout(initDropdown, 10);
+    });
+  </script>
+
+  <body>
+    <nav>
+      <div class="nav-left">
+        <% if logged_in? %>
+          <% if current_user.role == 'recruiter' %>
+            <%= link_to t('nav.home'), recruiter_home_path %>
+            <%= link_to t('nav.post_job'), new_job_path %>
+            <%= link_to t('nav.show_my_jobs'), recruiter_jobs_path %>
+            <%= link_to t('nav.show_applicants'), recruiter_applicants_path %>
+          <% else %>
+            <%= link_to t('nav.home'), jobseeker_home_path %>
+            <%= link_to t('nav.all_jobs'), all_jobs_path %>
+            <%= link_to t('nav.applied_jobs'), applied_jobs_path %>
+          <% end %>
+        <% else %>
+          <%= link_to t('nav.home'), root_path %>
+          <%= link_to t('nav.signup'), new_signup_path %>
+          <%= link_to t('nav.login'), login_path %>
+        <% end %>
+      </div>
+
+      <div class="nav-right">
+        <% if logged_in? %>
+          <div class="dropdown">
+            <button class="dropdown-toggle">
+              <%= current_user.username %> ⌄
+            </button>
+
+            <div class="dropdown-menu">
+              <span class="dropdown-item disabled">
+                <%= t('nav.logged_in_as') %> <strong><%= current_user.username %></strong>
+              </span>
+              <%= link_to t('nav.logout'),
+                          user_logout_path,
+                          method: :delete,
+                          data: { confirm: t('nav.logout_confirm') },
+                          class: 'dropdown-item logout' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+    </nav>
   </body>
 </html>
