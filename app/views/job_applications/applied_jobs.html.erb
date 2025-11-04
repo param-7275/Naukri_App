@@ -121,22 +121,58 @@
           <h2><%= t('jobs.index.job_title') %> : <%= application.job.title %></h2><br>
           <div class="description">
             <p><%= t('jobs.index.job_description') %> : <%= application.job.description %></p><br>
+            <p><strong>Role Category:</strong> <%= application.job.role_category.presence || "Not specified" %></p>
+            <p><strong>Employment Type:</strong> <%= application.job.employment_type.presence || "Not specified" %></p>
+            <p><strong>Experience Range:</strong> <%= application.job.experience_range.presence || "Not specified" %></p>
+            <p><strong>Education:</strong> <%= application.job.education.presence || "Not specified" %></p>
+            <p><strong>Work Mode:</strong> <%= application.job.work_mode.presence || "Not specified" %></p>
+            <p><strong>Salary:</strong> <%= application.job.salary.presence || "Not Disclosed" %></p>
+            <p><strong>Skills:</strong> <%= application.job.skills.presence || "Not specified" %></p><br>
+            <p><strong>About Company:</strong> <%= application.job.company_description.presence || "Not available" %></p>
           </div>
+
           <p><strong><%= t('jobs.index.company_name') %>:</strong> <%= application.job.company_name %></p><br>
           <p><strong><%= t('jobs.index.industry_type') %>:</strong> <%= application.job.industry_type %></p><br>
           <p><strong><%= t('jobs.index.location') %>:</strong> <%= application.job.location %></p><br>
           <p><strong><%= t('jobs.index.vacancy') %>:</strong> <%= application.job.vacancy %></p><br>
-          <% job_application = @applications.find_by(jobseeker_id: current_user.id) %>
-
-          <% if job_application.present? && job_application.updated_at > 3.months.ago %>
-            <span class="action-link disabled"><%= t('jobs.index.already_applied') %></span>
-            <p><strong><%= t('jobs.index.status') %>:</strong> <%= t("jobs.applicants.status_options.#{job_application.status}") %></p>
-            <% if job_application.status == 'reject' %>
-              <p><%= t('jobs.index.can_apply_again') %></p>
+          <p>
+            <strong><%= t('jobs.index.status') %>:</strong>
+            <%= t("jobs.applicants.status_options.#{application.status}") %>
+            <% if application.status == 'reject' && application.updated_at > 3.months.ago %>
+              <span>→  You can apply again after 3 months</span>
             <% end %>
+          </p>
+
+
+          <% job_application = @applications.find_by(jobseeker_id: current_user.id, job_id: application.job.id) %>
+
+        <% if job_application.present? %>
+          <% status = job_application.status %>
+          <% if status == 'review' || status == 'selected_for_interview' || status == 'selected_for_job' %>
+            <span class="action-link disabled"><%= t('jobs.index.already_applied') %></span>
+
+          <% elsif status == 'reject' %>
+            <% if job_application.updated_at <= 3.months.ago %>
+              <%= link_to t('jobs.index.apply_job'),
+                  new_job_application_path(job_id: application.job.id, locale: I18n.locale),
+                  class: 'action-link' %>
+            <% else %>
+              <span class="action-link disabled"><%= t('jobs.index.already_applied') %></span>
+            <% end %>
+
           <% else %>
-            <%= link_to t('jobs.index.apply_job'), new_job_application_path(job_id: job.id, locale: I18n.locale), class: 'action-link' %>
+            <%= link_to t('jobs.index.apply_job'),
+                new_job_application_path(job_id: job_application.id, locale: I18n.locale),
+                class: 'action-link' %>
           <% end %>
+
+        <% else %>
+          <%= link_to t('jobs.index.apply_job'),
+              new_job_application_path(job_id: job_application.id, locale: I18n.locale),
+              class: 'action-link' 
+          %>
+        <% end %>
+
         </div>
       <% end %>
     </div>

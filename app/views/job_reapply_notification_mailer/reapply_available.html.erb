@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <style>
+      body {
+        background-color: #f5f6fa;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        overflow: hidden;
+      }
+      .header {
+        background-color: #28a745;
+        color: #ffffff;
+        text-align: center;
+        padding: 30px 20px;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 24px;
+        letter-spacing: 0.5px;
+      }
+      .content {
+        padding: 30px;
+        line-height: 1.6;
+      }
+      .job-title {
+        font-size: 20px;
+        color: #28a745;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+      .details {
+        background: #f9f9f9;
+        border-radius: 6px;
+        padding: 15px;
+        margin-top: 15px;
+      }
+      .details p {
+        margin: 8px 0;
+      }
+      .cta-button {
+        display: inline-block;
+        background-color: #28a745;
+        color: #ffffff !important;
+        text-decoration: none;
+        padding: 12px 20px;
+        border-radius: 6px;
+        font-weight: bold;
+        margin-top: 25px;
+      }
+      .cta-button:hover {
+        background-color: #218838;
+      }
+      .footer {
+        text-align: center;
+        font-size: 13px;
+        color: #888;
+        padding: 15px;
+        border-top: 1px solid #eee;
+      }
+      a {
+        color: #28a745;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>💼 You Can Apply Again!</h1>
+      </div>
+
+      <div class="content">
+        <p>Hi <%= @user.username %>,</p>
+
+        <p>
+          Good news! It’s been 3 months since your last application for the position below, and you’re now eligible to apply again.
+        </p>
+
+        <div class="details">
+          <div class="job-title"><%= @job.title %></div>
+          <p><strong>Company:</strong> <%= @job.company_name %></p>
+          <p><strong>Location:</strong> <%= @job.location %></p>
+          <p><strong>Recruiter:</strong> <%= @job.recruiter.full_name rescue "N/A" %></p>
+        </div>
+
+        <p style="margin-top: 20px;">
+          We encourage you to reapply if you’re still interested. Click below to apply again:
+        </p>
+
+        <p>
+          <a href="<%= edit_reapply_application_url(id: @job_application.id, host: 'localhost:3000') %>" class="cta-button">
+            Apply Again
+          </a>
+        </p>
+      </div>
+
+      <div class="footer">
+        <p>You’re receiving this email because you previously applied for this position.</p>
+        <p>© <%= Time.current.year %> JobPortal — All Rights Reserved.</p>
+      </div>
+    </div>
+  </body>
+</html>

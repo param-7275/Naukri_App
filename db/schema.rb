@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_10_29_122443) do
+ActiveRecord::Schema[7.1].define(version: 2025_11_03_154431) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -56,6 +56,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_29_122443) do
     t.text "about_yourself"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "rejected_at"
+    t.boolean "reapply_allowed", default: false
     t.index ["job_id"], name: "index_job_applications_on_job_id"
     t.index ["jobseeker_id"], name: "index_job_applications_on_jobseeker_id"
   end
@@ -70,6 +72,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_29_122443) do
     t.string "company_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "experience_range"
+    t.string "salary"
+    t.string "work_mode"
+    t.string "employment_type"
+    t.string "role_category"
+    t.string "education"
+    t.text "skills"
+    t.text "company_description"
     t.index ["recruiter_id"], name: "index_jobs_on_recruiter_id"
   end
 

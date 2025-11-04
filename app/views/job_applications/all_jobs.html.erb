@@ -12,134 +12,504 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
     }
 
     body {
-      background-color: #f5f7fa;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+      font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+      padding: 2rem 1rem;
       color: #222;
-      line-height: 1.6;
-      padding: 2rem 4%;
     }
 
-    .job-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
+    .page-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .page-header h1 {
+      color: #882727;
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .page-header p {
+      color: #666;
+      font-size: 1rem;
+    }
+
+    .jobs-carousel-container {
+      position: relative;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 3rem;
+    }
+
+    .jobs-carousel {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
+      padding: 1.5rem 0;
+      scrollbar-width: thin;
+      scrollbar-color: #882727 #f0f0f0;
+      -ms-overflow-style: none;
+    }
+
+    .jobs-carousel::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .jobs-carousel::-webkit-scrollbar-track {
+      background: #f0f0f0;
+      border-radius: 10px;
+    }
+
+    .jobs-carousel::-webkit-scrollbar-thumb {
+      background: #882727;
+      border-radius: 10px;
     }
 
     .job-card {
+      min-width: 380px;
+      max-width: 380px;
       background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      padding: 1.5rem;
+      border-radius: 16px;
+      padding: 1.8rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      border: 2px solid transparent;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      min-height: 380px;
+      gap: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .job-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #882727 0%, #aa2b2b 100%);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
     }
 
     .job-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(136, 39, 39, 0.2);
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(136, 39, 39, 0.2);
+      border-color: #882727;
     }
 
-    .job-card h2 {
+    .job-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .job-title {
+      font-size: 1.4rem;
+      font-weight: 700;
       color: #882727;
-      font-size: 1.3rem;
       margin-bottom: 0.5rem;
-      line-height: 1.2;
-    }
-
-    .job-card h3 {
-      font-size: 1rem;
-      color: #555;
-      margin-bottom: 0.5rem;
-      max-height: 3em;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       overflow: hidden;
-      text-overflow: ellipsis;
     }
 
-    .job-card p {
+    .job-description {
       font-size: 0.95rem;
       color: #555;
-      margin-bottom: 0.4rem;
-    }
-
-    .job-card .description {
-      flex: 1;
-      overflow-y: auto;
-      max-height: 130px;
+      line-height: 1.6;
       margin-bottom: 0.5rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-height: 5rem;
     }
 
-    .job-card .action-link {
-      display: inline-block;
-      padding: 8px 16px;
-      background-color: #882727;
+    .job-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-top: auto;
+    }
+
+    .job-detail-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .job-detail-item svg {
+      width: 18px;
+      height: 18px;
+      color: #882727;
+      flex-shrink: 0;
+    }
+
+    .job-detail-item strong {
+      color: #333;
+      min-width: 100px;
+    }
+
+    .vacancy-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: linear-gradient(135deg, #009688 0%, #00796b 100%);
       color: white;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 500;
+      padding: 0.4rem 0.9rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
       margin-top: 0.5rem;
+      width: fit-content;
+    }
+
+    .action-section {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .apply-btn {
+      flex: 1;
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(135deg, #882727 0%, #aa2b2b 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
       text-align: center;
-      transition: background-color 0.3s ease;
+      text-decoration: none;
+      display: block;
     }
 
-    .job-card .action-link:hover {
-      background-color: #aa2b2b;
+    .apply-btn:hover {
+      background: linear-gradient(135deg, #aa2b2b 0%, #882727 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(136, 39, 39, 0.3);
     }
 
-    .job-card .disabled {
-      background-color: #ccc;
+    .view-details-btn {
+      padding: 0.75rem 1rem;
+      background: white;
+      color: #882727;
+      border: 2px solid #882727;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      flex: 1;
+    }
+
+    .view-details-btn:hover {
+      background: #882727;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .already-applied-badge {
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+      color: white;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .already-applied-badge svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: white;
+      border: 2px solid #882727;
+      color: #882727;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      z-index: 10;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .carousel-nav:hover {
+      background: #882727;
+      color: white;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .carousel-nav.prev {
+      left: 0;
+    }
+
+    .carousel-nav.next {
+      right: 0;
+    }
+
+    .carousel-nav:disabled {
+      opacity: 0.3;
       cursor: not-allowed;
     }
 
-    @media (max-width: 768px) {
-      body { padding: 1rem 2; }
+    .no-jobs-container {
+      text-align: center;
+      padding: 5rem 2rem;
+      background: white;
+      border-radius: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     }
 
-    .no-jobs-message {
-      text-align: center;
-      padding: 4rem 2rem;
-      background-color: #fdf6f0;
-      border: 2px dashed #882727;
-      border-radius: 12px;
-      margin: 2rem auto;
-      max-width: 600px;
+    .no-jobs-container h2 {
+      color: #882727;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .no-jobs-container p {
+      color: #666;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      .jobs-carousel-container {
+        padding: 0 1rem;
+      }
+
+      .carousel-nav {
+        display: none;
+      }
+
+      .job-card {
+        min-width: 300px;
+        max-width: 300px;
+      }
+
+      .page-header h1 {
+        font-size: 1.6rem;
+      }
+
+      .action-section {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .job-card {
+        min-width: 280px;
+        max-width: 280px;
+      }
+
+      body {
+        padding: 1rem 0.5rem;
+      }
     }
   </style>
 </head>
 <body>
-  <h1 style="text-align:center; color:#882727; margin-bottom:2rem;">All Jobs Listing</h1>
-  <% if @jobs.any? %>
-    <div class="job-container">
-      <% @jobs.each do |job|%>
-        <div class="job-card">
-          <h2><%= t('jobs.index.job_title') %> : <%= job.title %></h2><br>
-          <div class="description">
-            <p><%= t('jobs.index.job_description') %> : <%= job.description %></p><br><br>
-          </div>
-          <p><strong><%= t('jobs.index.company_name') %>:</strong> <%= job.company_name %></p><br>
-          <p><strong><%= t('jobs.index.industry_type') %>:</strong> <%= job.industry_type %></p><br>
-          <p><strong><%= t('jobs.index.location') %>:</strong> <%= job.location %></p><br>
-          <p><strong><%= t('jobs.index.vacancy') %>:</strong> <%= job.vacancy %></p><br>
-          <% job_application = job.job_applications.find_by(jobseeker_id: current_user.id) %>
+  <div class="page-header">
+    <h1>All Job Listings</h1>
+    <p>Explore exciting career opportunities</p>
+  </div>
 
-          <% if job_application.present? && job_application.updated_at > 3.months.ago %>
-            <span class="action-link disabled"><%= t('jobs.index.already_applied') %></span>
-          <% else %>
-            <%= link_to t('jobs.index.apply_job'), new_job_application_path(job_id: job.id, locale: I18n.locale), class: 'action-link' %>
-          <% end %> 
-        </div>
-      <% end %>
+  <% if @jobs.any? %>
+    <div class="jobs-carousel-container">
+      <button class="carousel-nav prev" onclick="scrollCarousel('prev')">‹</button>
+      
+      <div class="jobs-carousel" id="jobsCarousel">
+        <% @jobs.each do |job| %>
+          <% job_application = job.job_applications.find_by(jobseeker_id: current_user.id) %>
+          <% is_applied = job_application.present? && job_application.updated_at > 3.months.ago %>
+          
+          <div class="job-card" onclick="if(!event.target.closest('.apply-btn') && !event.target.closest('.view-details-btn')) { window.location.href='<%= job_description_path(job_id: job.id) %>'; }">
+            <h2 class="job-title"><%= job.title %></h2>
+            
+            <p class="job-description">
+              <%= truncate(job.description, length: 150, separator: ' ') %>
+            </p>
+            
+            <div class="job-details">
+              <div class="job-detail-item">
+                <svg fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 01.557 1.04l1.54 4.4a1 1 0 01-.286 1.06l-1.57 1.569a1 1 0 01-1.106.217l-2.845-1.04a1 1 0 00-.888 0l-2.845 1.04a1 1 0 01-1.106-.217l-1.57-1.569a1 1 0 01-.286-1.06l1.54-4.4a1 1 0 01.557-1.04l1.94-.831-.667-1.714a1 1 0 110-1.838l-4-1.714a1 1 0 01-.356-.257L2.894 7.081a1 1 0 000-1.838l7-3z"/>
+                </svg>
+                <strong>Company:</strong>
+                <span><%= job.company_name %></span>
+              </div>
+              
+              <div class="job-detail-item">
+                <svg fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                </svg>
+                <strong>Location:</strong>
+                <span><%= job.location %></span>
+              </div>
+              
+              <div class="job-detail-item">
+                <svg fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                  <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+                </svg>
+                <strong>Industry:</strong>
+                <span><%= job.industry_type %></span>
+              </div>
+              
+              <div class="vacancy-badge">
+                <svg fill="currentColor" viewBox="0 0 20 20" style="width:16px;height:16px;">
+                  <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                </svg>
+                <%= t('jobs.index.vacancy') %>: <%= job.vacancy %>
+              </div>
+            </div>
+            
+            <% if is_applied %>
+              <div class="already-applied-badge">
+                <svg fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <%= t('jobs.index.already_applied') %>
+              </div>
+            <% else %>
+              <div class="action-section">
+                <%= link_to t('jobs.index.apply_job'), new_job_application_path(job_id: job.id, locale: I18n.locale), class: 'apply-btn', onclick: 'event.stopPropagation()' %>
+                <a href="<%= job_description_path(job_id: job.id) %>" class="view-details-btn" onclick="event.stopPropagation()">
+                  View →
+                </a>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      
+      <button class="carousel-nav next" onclick="scrollCarousel('next')">›</button>
     </div>
   <% else %>
-    <div class="no-jobs-message">
+    <div class="no-jobs-container">
       <h2><%= t('jobs.index.no_jobs_title', default: "No Jobs Found") %></h2>
       <p><%= t('jobs.index.no_jobs_message', default: "Recruiter haven't posted any jobs yet. Please try after some times! ") %></p>
     </div>
   <% end %>
+
+  <script>
+    const carousel = document.getElementById('jobsCarousel');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    if (carousel) {
+      carousel.addEventListener('mousedown', (e) => {
+        isDown = true;
+        carousel.style.cursor = 'grabbing';
+        startX = e.pageX - carousel.offsetLeft;
+        scrollLeft = carousel.scrollLeft;
+      });
+
+      carousel.addEventListener('mouseleave', () => {
+        isDown = false;
+        carousel.style.cursor = 'grab';
+      });
+
+      carousel.addEventListener('mouseup', () => {
+        isDown = false;
+        carousel.style.cursor = 'grab';
+      });
+
+      carousel.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - carousel.offsetLeft;
+        const walk = (x - startX) * 2;
+        carousel.scrollLeft = scrollLeft - walk;
+      });
+
+      let touchStartX = 0;
+      let touchScrollLeft = 0;
+
+      carousel.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].pageX - carousel.offsetLeft;
+        touchScrollLeft = carousel.scrollLeft;
+      });
+
+      carousel.addEventListener('touchmove', (e) => {
+        const x = e.touches[0].pageX - carousel.offsetLeft;
+        const walk = (x - touchStartX) * 1.5;
+        carousel.scrollLeft = touchScrollLeft - walk;
+      });
+
+      carousel.addEventListener('scroll', updateNavButtons);
+      updateNavButtons();
+    }
+
+    function scrollCarousel(direction) {
+      if (!carousel) return;
+      const cardWidth = 380 + 24; // card width + gap
+      const scrollAmount = cardWidth * 2; // scroll 2 cards at a time
+      
+      if (direction === 'prev') {
+        carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      } else {
+        carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+      
+      setTimeout(updateNavButtons, 300);
+    }
+
+    function updateNavButtons() {
+      if (!carousel) return;
+      const prevBtn = document.querySelector('.carousel-nav.prev');
+      const nextBtn = document.querySelector('.carousel-nav.next');
+      
+      if (prevBtn) {
+        prevBtn.disabled = carousel.scrollLeft <= 0;
+      }
+      
+      if (nextBtn) {
+        const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+        nextBtn.disabled = carousel.scrollLeft >= maxScroll - 10;
+      }
+    }
+
+    // Run on Turbo navigation
+    document.addEventListener('turbo:load', function() {
+      if (carousel) {
+        updateNavButtons();
+      }
+    });
+  </script>
 </body>
 </html>

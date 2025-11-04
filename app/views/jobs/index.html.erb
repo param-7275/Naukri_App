@@ -8,247 +8,350 @@
   <title><%= t('jobs.index.title') %></title>
 
   <style>
-    :root {
-      --primary: #3498db;
-      --primary-dark: #2980b9;
-      --bg-light: #f5f7fa;
-      --text-dark: #222;
-      --text-light: #555;
-      --white: #fff;
-      --danger: #e74c3c;
-      --danger-dark: #c0392b;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-      background-color: var(--bg-light);
+      background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
       font-family: "Inter", "Segoe UI", Roboto, sans-serif;
-      margin: 0;
-      padding: 2rem;
-      color: var(--text-dark);
+      padding: 2rem 1rem;
+      color: #222;
     }
 
-    .container {
-      display: flex;
-      flex-wrap: wrap;
+    .page-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .page-header h1 {
+      color: #882727;
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .page-header p {
+      color: #666;
+      font-size: 1rem;
+    }
+
+    .jobs-grid-container {
+      max-width: 1800px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .jobs-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
       gap: 1.5rem;
-      justify-content: center;
+      padding: 1.5rem 0;
     }
 
     .job-card {
-      background: var(--white);
-      width: 480px;
-      padding: 1.8rem 1.5rem;
-      border-radius: 14px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      border: 2px solid transparent;
       display: flex;
       flex-direction: column;
       gap: 0.8rem;
-      transition: all 0.3s ease;
-      overflow: hidden;
       position: relative;
-      height: 440px;
-      margin-top: 13px;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .job-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #882727 0%, #aa2b2b 100%);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
     }
 
     .job-card:hover {
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-      transform: translateY(-2px);
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(136, 39, 39, 0.2);
+      border-color: #882727;
     }
 
-    .job-card h2 {
+    .job-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .job-title {
       font-size: 1.1rem;
-      color: var(--primary);
+      font-weight: 700;
+      color: #882727;
       margin-bottom: 0.4rem;
+      line-height: 1.3;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
-      text-overflow: ellipsis;
     }
 
-    .job-card h2.show-more {
-      -webkit-line-clamp: unset;
-    }
-
-    .job-card h3 {
-      font-size: 0.95rem;
-      color: var(--text-dark);
+    .job-description {
+      font-size: 0.85rem;
+      color: #555;
+      line-height: 1.5;
       margin-bottom: 0.4rem;
       display: -webkit-box;
-      -webkit-line-clamp: 5;
+      -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
+      min-height: 3.5rem;
     }
 
-    .job-card h3.show-more {
-      -webkit-line-clamp: unset;
-    }
-
-    .job-card p {
-      font-size: 0.9rem;
-      color: var(--text-light);
-      margin: 2px 0;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .job-card p.show-more {
-      -webkit-line-clamp: unset;
-    }
-
-    .job-card .vacancy {
-      font-weight: 600;
-      color: #009688;
-    }
-
-    .button-group {
+    .job-details {
       display: flex;
-      gap: 0.5rem;
+      flex-direction: column;
+      gap: 0.6rem;
       margin-top: auto;
     }
 
-    .job-card a.edit-button, .job-card button.delete-button {
+    .job-detail-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      color: #666;
+    }
+
+    .job-detail-item svg {
+      width: 16px;
+      height: 16px;
+      color: #882727;
+      flex-shrink: 0;
+    }
+
+    .job-detail-item strong {
+      color: #333;
+      min-width: 70px;
+      font-size: 0.75rem;
+    }
+
+    .job-detail-item span {
+      font-size: 0.8rem;
       flex: 1;
-      text-align: center;
-      padding: 0.6rem 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .vacancy-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: linear-gradient(135deg, #009688 0%, #00796b 100%);
+      color: white;
+      padding: 0.3rem 0.7rem;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-top: 0.3rem;
+      width: fit-content;
+    }
+
+    .vacancy-badge svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .view-details-btn {
+      margin-top: auto;
+      padding: 0.6rem 1rem;
+      background: linear-gradient(135deg, #882727 0%, #aa2b2b 100%);
+      color: white;
+      border: none;
       border-radius: 8px;
       font-weight: 600;
-      font-size: 0.95rem;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      border: none;
-    }
-
-    .job-card a.edit-button {
-      background-color: var(--primary);
-      color: var(--white);
-    }
-
-    .job-card a.edit-button:hover {
-      background-color: var(--primary-dark);
-    }
-
-    .job-card button.delete-button {
-      background-color: var(--danger);
-      color: var(--white);
-    }
-
-    .job-card button.delete-button:hover {
-      background-color: var(--danger-dark);
-    }
-
-    .read-more {
-      color: var(--primary);
       font-size: 0.85rem;
       cursor: pointer;
-      margin-top: 0.3rem;
-      user-select: none;
+      transition: all 0.3s ease;
+      text-align: center;
+      text-decoration: none;
+      display: block;
     }
 
-    @media (max-width: 768px) {
-      .job-card {
-        width: 90%;
-        height: auto;
+    .view-details-btn:hover {
+      background: linear-gradient(135deg, #aa2b2b 0%, #882727 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(136, 39, 39, 0.3);
+    }
+
+
+    .no-jobs-container {
+      text-align: center;
+      padding: 5rem 2rem;
+      background: white;
+      border-radius: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .no-jobs-container h2 {
+      color: #882727;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .no-jobs-container p {
+      color: #666;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+
+    .add-job-button {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, #882727 0%, #aa2b2b 100%);
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .add-job-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(136, 39, 39, 0.3);
+    }
+
+    @media (max-width: 1600px) {
+      .jobs-grid {
+        grid-template-columns: repeat(5, 1fr);
       }
     }
 
-    .job-card h3 {
-      font-size: 0.95rem;
-      color: var(--text-dark);
-      margin-bottom: 0.4rem;
-      height: 100px;          
-      overflow-y: auto;       
-      overflow-x: hidden;     
-      padding-right: 4px;
+    @media (max-width: 1400px) {
+      .jobs-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
     }
 
-  .no-jobs-message {
-    text-align: center;
-    padding: 4rem 2rem;
-    background-color: #fdf6f0;
-    border: 2px dashed #882727;
-    border-radius: 12px;
-    margin: 2rem auto;
-    max-width: 600px;
-  }
+    @media (max-width: 1024px) {
+      .jobs-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
 
-  .no-jobs-message h2 {
-    color: #882727;
-    margin-bottom: 1rem;
-  }
-
-  .no-jobs-message p {
-    color: #555;
-    margin-bottom: 1.5rem;
-  }
-
-  .add-job-button {
-    background-color: #882727;
-    color: #fff;
-    padding: 0.8rem 1.2rem;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: 600;
-  }
-
-  .add-job-button:hover {
-    background-color: #701f1f;
-  }
-
-  .back-link {
-      display: block;
-      text-align: center;
-      margin-top: 1.2rem;
-      text-decoration: none;
-      color: var(--primary);
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: color 0.3s ease;
+      .jobs-grid-container {
+        padding: 0 1.5rem;
+      }
     }
 
-  .back-link:hover {
-      color: var(--primary-light);
-      text-decoration: underline;
+    @media (max-width: 768px) {
+      .jobs-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+
+      .jobs-grid-container {
+        padding: 0 1rem;
+      }
+
+      .page-header h1 {
+        font-size: 1.6rem;
+      }
+
+      .job-card {
+        padding: 1.2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .jobs-grid {
+        grid-template-columns: 1fr;
+      }
+
+      body {
+        padding: 1rem 0.5rem;
+      }
+
+      .job-card {
+        padding: 1rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <% if @recruiter_jobs.any? %>
-      <% @recruiter_jobs.each do |job| %>
-        <div class="job-card">
-          <h2 id="title-<%= job.id %>"><%= job.title %></h2>
-          <span class="read-more" onclick="toggleText('title-<%= job.id %>')"></span>
-
-          <h3 id="desc-<%= job.id %>"><%= job.description %></h3>
-          <span class="read-more" onclick="toggleText('desc-<%= job.id %>')"></span>
-
-          <p id="company-<%= job.id %>"><%= t('jobs.index.company_name') %> : <%= job.company_name %></p>
-          <p id="industry-<%= job.id %>"><%= t('jobs.index.industry_type') %> : <%= job.industry_type %></p>
-          <p id="location-<%= job.id %>"><%= t('jobs.index.location') %> : <%= job.location %></p>
-          <p class="vacancy" id="vacancy-<%= job.id %>"><%= t('jobs.index.vacancy') %> : <%= job.vacancy %></p>
-          <%= link_to 'View Job Description', job_description_path(job_id: job.id), class: 'back-link' %>
-          </div>
-      <% end %>
-    <% else %>
-      <div class="no-jobs-message">
-        <h2><%= t('jobs.index.no_jobs_title', default: "No Jobs Found") %></h2>
-        <p><%= t('jobs.index.no_jobs_message', default: "You haven't posted any jobs yet. Start by adding a new job to attract candidates!") %></p>
-        <%= link_to t('jobs.index.add_job', default: "Post New Job"), new_job_path, class: "add-job-button" %>
-      </div>
-    <% end %>
+  <div class="page-header">
+    <h1>My Posted Jobs</h1>
+    <p>Manage and view all your job postings</p>
   </div>
 
-  <script>
-    function toggleText(id) {
-      const el = document.getElementById(id);
-      el.classList.toggle('show-more');
-    }
-  </script>
+  <% if @recruiter_jobs.any? %>
+    <div class="jobs-grid-container">
+      <div class="jobs-grid">
+        <% @recruiter_jobs.each do |job| %>
+          <div class="job-card" onclick="window.location.href='<%= job_description_path(job_id: job.id) %>'">
+            <h2 class="job-title"><%= job.title %></h2>
+            
+            <p class="job-description">
+              <%= truncate(job.description, length: 120, separator: ' ') %>
+            </p>
+            
+            <div class="job-details">
+              <div class="job-detail-item">
+                <svg fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 01.557 1.04l1.54 4.4a1 1 0 01-.286 1.06l-1.57 1.569a1 1 0 01-1.106.217l-2.845-1.04a1 1 0 00-.888 0l-2.845 1.04a1 1 0 01-1.106-.217l-1.57-1.569a1 1 0 01-.286-1.06l1.54-4.4a1 1 0 01.557-1.04l1.94-.831-.667-1.714a1 1 0 110-1.838l-4-1.714a1 1 0 01-.356-.257L2.894 7.081a1 1 0 000-1.838l7-3z"/>
+                </svg>
+                <strong>Company:</strong>
+                <span><%= job.company_name %></span>
+              </div>
+              
+              <div class="job-detail-item">
+                <svg fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                </svg>
+                <strong>Location:</strong>
+                <span><%= job.location %></span>
+              </div>
+              
+              <div class="job-detail-item">
+                <svg fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                  <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+                </svg>
+                <strong>Industry:</strong>
+                <span><%= job.industry_type %></span>
+              </div>
+              
+              <div class="vacancy-badge">
+                <svg fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                </svg>
+                <%= t('jobs.index.vacancy') %>: <%= job.vacancy %>
+              </div>
+            </div>
+            
+            <a href="<%= job_description_path(job_id: job.id) %>" class="view-details-btn" onclick="event.stopPropagation()">
+              View Details →
+            </a>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% else %>
+    <div class="no-jobs-container">
+      <h2><%= t('jobs.index.no_jobs_title', default: "No Jobs Found") %></h2>
+      <p><%= t('jobs.index.no_jobs_message', default: "You haven't posted any jobs yet. Start by adding a new job to attract candidates!") %></p>
+      <%= link_to t('jobs.index.add_job', default: "Post New Job"), new_job_path, class: "add-job-button" %>
+    </div>
+  <% end %>
+
 </body>
 </html>

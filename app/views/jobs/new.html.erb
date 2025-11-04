@@ -147,6 +147,32 @@
         font-size: 1rem;
       }
     }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 1rem;
+      font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: #fff;
+      transition: all 0.2s ease;
+      color: var(--text-dark);
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(136, 39, 39, 0.15);
+      outline: none;
+    }
+
+    .form-textarea {
+      height: 150px;
+      resize: vertical;
+    }
+
   </style>
 </head>
 
@@ -182,6 +208,46 @@
     <div class="form-group">
       <%= form.label :industry_type, t('jobs.common.placeholders.industry_type'), class: 'form-label' %>
       <%= form.text_field :industry_type, class: 'form-input', placeholder: t('jobs.common.placeholders.industry_type'), required: true %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :experience_range, t('jobs.common.placeholders.experience_range'), class: 'form-label' %>
+      <%= form.text_field :experience_range, class: 'form-input', placeholder: t('jobs.common.placeholders.experience_range'), required: true %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :salary, t('jobs.common.placeholders.salary'), class: 'form-label' %>
+      <%= form.text_field :salary, class: 'form-input', placeholder: t('jobs.common.placeholders.salary') %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :work_mode, t('jobs.common.placeholders.work_mode'), class: 'form-label' %>
+      <%= form.text_field :work_mode, class: 'form-input', placeholder: t('jobs.common.placeholders.work_mode'), required: true %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :employment_type, t('jobs.common.placeholders.employment_type'), class: 'form-label' %>
+      <%= form.text_field :employment_type, class: 'form-input', placeholder: t('jobs.common.placeholders.employment_type'), required: true %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :role_category, t('jobs.common.placeholders.role_category'), class: 'form-label' %>
+      <%= form.text_field :role_category, class: 'form-input', placeholder: t('jobs.common.placeholders.role_category'), required: true %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :education, t('jobs.common.placeholders.education'), class: 'form-label' %>
+      <%= form.text_field :education, class: 'form-input', placeholder: t('jobs.common.placeholders.education'), required: true %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :skills, t('jobs.common.placeholders.skills'), class: 'form-label' %>
+      <%= form.text_area :skills, class: 'form-input', placeholder: t('jobs.common.placeholders.skills'), required: true %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :company_description, t('jobs.common.placeholders.company_description'), class: 'form-label' %>
+      <%= form.text_area :company_description, class: 'form-input', placeholder: t('jobs.common.placeholders.company_description'), required: true %>
     </div>
 
     <%= form.submit t('jobs.new.submit'), class: 'form-submit' %>

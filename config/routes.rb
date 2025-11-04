@@ -1,5 +1,8 @@
+require "sidekiq/web"
+
 Rails.application.routes.draw do
   scope "(:locale)", locale: /en|hi/ do
+    mount Sidekiq::Web => '/sidekiq'
 
     # Jobs Controller Routes
     get 'recruiter_index/', to: "jobs#recruiter_index", as: 'recruiter_home'
@@ -20,6 +23,10 @@ Rails.application.routes.draw do
     post 'job_applications/create/:job_id', to: 'job_applications#create', as: 'job_applications'
     match 'change_application_status/:id', to: "job_applications#change_application_status", as: 'change_job_status', via: [:patch, :put]
     get 'plan_and_pricing/', to: "job_applications#plan_and_pricing", as: 'pricing'
+
+    get 'job_applications/:id/reapply/edit', to: 'job_applications#edit_reapply', as: 'edit_reapply_application'
+    patch 'job_applications/:id/reapply', to: 'job_applications#reapply_application', as: 'reapply_application'
+
     
     # Users Controller Routes
     match '/logout(/:id)', to: "users#destroy", as: "user_logout", via: [:get, :delete]

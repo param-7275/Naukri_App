@@ -25,7 +25,7 @@ module JobPortal
     # config.eager_load_paths << Rails.root.join("extras")
 
     #sidekiq configuration
-    # config.active_job.queue_adapter = :sidekiq
+    config.active_job.queue_adapter = :sidekiq
 
     # i18n configuration
     config.i18n.available_locales = [:en, :es, :hi, :pa]

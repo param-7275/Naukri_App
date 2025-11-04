@@ -52,6 +52,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem 'letter_opener'
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
@@ -66,4 +67,8 @@ group :test do
   gem "selenium-webdriver"
 end
 gem 'devise'
-gem 'sidekiq'
+gem "redis"
+gem "sidekiq"
+gem "sidekiq-scheduler"
+gem "whenever"
+gem 'sidekiq-cron'

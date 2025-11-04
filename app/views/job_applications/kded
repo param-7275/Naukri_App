@@ -258,3 +258,6 @@
           <% else %>
             <%= link_to t('jobs.index.apply_job'), new_job_application_path(job_id: job.id, locale: I18n.locale), class: 'action-link' %>
           <% end %>
+
+
+          ab recruiter view job pe click kr rha to @view_job_description.html.erb file pe details dikh rhi and jab jobseeker view job pe click kr rha to 

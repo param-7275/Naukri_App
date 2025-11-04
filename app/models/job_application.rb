@@ -4,7 +4,11 @@ class JobApplication < ApplicationRecord
   has_one_attached :resume
   validates :about_yourself, presence: true
   validates :resume, presence: true
-  validates :job_id, uniqueness: { scope: :jobseeker_id, message: "already applied" }
+  validates :job_id,
+    uniqueness: {
+      scope: :jobseeker_id,
+      message: "already applied"
+    }, unless: :reapply_allowed
   validate :is_pdf
 
   private

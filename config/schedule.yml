@@ -1,0 +1,3 @@
+reapply_unlock_job:
+  cron: "* * * * *"
+  class: "ReapplyUnlockJob"
