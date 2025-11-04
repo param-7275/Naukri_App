@@ -13,6 +13,11 @@ class JobApplicationsController < ApplicationController
     @jobs = Job.all
   end
 
+  def view_employee_details
+    @job_application = JobApplication.find_by(id: params[:id])
+    @user_details = @job_application.jobseeker
+    @job = @job_application.job
+  end
     
   def jobseeker_index
   end
@@ -54,8 +59,8 @@ class JobApplicationsController < ApplicationController
       reapply_allowed: false,
     )
 
-  if new_application.save
-    redirect_to applied_jobs_path, notice: "You have successfully reapplied!"
+    if new_application.save
+      redirect_to applied_jobs_path, notice: "You have successfully reapplied!"
     else
       flash.now[:alert] = new_application.errors.full_messages.to_sentence
       render :edit_reapply, status: :unprocessable_entity

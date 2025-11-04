@@ -29,7 +29,7 @@
       border-radius: 12px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
       padding: 2rem;
-      max-width: 1200px;
+      max-width: 1306px;
       margin: 2rem auto;
     }
 
@@ -183,6 +183,7 @@
             <th><%= t('jobs.status') %></th>
             <th><%= t('jobs.applicants.resume') %></th>
             <th><%= t('jobs.applicants.action') %></th>
+            <th><%= t('jobs.applicants.view') %></th>
           </tr>
         </thead>
         <tbody>
@@ -193,7 +194,7 @@
               <td data-label="<%= t('jobs.applicants.phone') %>"><%= app.jobseeker.phone_number %></td>
               <td data-label="<%= t('jobs.applicants.applied_for') %>"><%= app.job.title %></td>
               <td data-label="<%= t('jobs.applicants.about') %>">
-                <%= app.about_yourself.present? ? app.about_yourself.to_s.html_safe : t('jobs.applicants.about_empty') %>
+                <%= app.about_yourself.present? ? truncate(app.about_yourself, length: 20).html_safe : t('jobs.applicants.about_empty') %>
               </td>
               <td data-label="<%= t('jobs.status') %>">
                 <%= t('jobs.applicants.status.' + app.status.downcase) rescue app.status.capitalize %>
@@ -218,6 +219,9 @@
                     { onchange: 'this.form.submit();' }
                   %>
                 <% end %>
+              </td>
+              <td data-label="<%= t('jobs.applicants.action') %>">
+                <%= link_to t('jobs.applicants.view1'),view_employee_details_path(id: app.id), class: "btn-view" %>
               </td>
             </tr>
           <% end %>

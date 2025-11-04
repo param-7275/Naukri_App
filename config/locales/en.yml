@@ -92,6 +92,8 @@ en:
       status: "Status"
       resume: "Resume"
       action: "Action"
+      view: "View Employee"
+      view1: "View Details"
       download: "Download"
       no_resume: "No Resume"
       none_yet: "No applicants yet for this job."

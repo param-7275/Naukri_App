@@ -26,6 +26,7 @@ Rails.application.routes.draw do
 
     get 'job_applications/:id/reapply/edit', to: 'job_applications#edit_reapply', as: 'edit_reapply_application'
     patch 'job_applications/:id/reapply', to: 'job_applications#reapply_application', as: 'reapply_application'
+    get 'job_applications/:id/view_employee_details', to: 'job_applications#view_employee_details', as: 'view_employee_details'
 
     
     # Users Controller Routes

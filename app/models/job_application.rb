@@ -2,7 +2,7 @@ class JobApplication < ApplicationRecord
   belongs_to :job
   belongs_to :jobseeker, class_name: 'User'
   has_one_attached :resume
-  validates :about_yourself, presence: true
+  validates :about_yourself, presence: true, length: { minimum: 200, maximum: 1000 }
   validates :resume, presence: true
   validates :job_id,
     uniqueness: {
