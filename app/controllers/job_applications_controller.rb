@@ -29,8 +29,6 @@ class JobApplicationsController < ApplicationController
   def plan_and_pricing
   end
 
-
-
   def edit_reapply
     @apply_job = JobApplication.find(params[:id])
     @job = @apply_job.job
@@ -92,7 +90,6 @@ class JobApplicationsController < ApplicationController
       redirect_to recruiter_applicants_path, alert: 'Update failed.'
     end
   end
-
 
   def create
     @job = Job.find_by(id: params[:job_id])
