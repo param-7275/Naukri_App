@@ -7,3 +7,4 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+Plan.find_or_create_by(plan_name: 'Premium', plan_price: 499) if Plan.count == 0

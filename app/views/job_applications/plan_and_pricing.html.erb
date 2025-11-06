@@ -1,48 +1,87 @@
 <%= render partial: 'partials/header' %>
+<%= render partial: 'partials/errors' %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pricing Plan Cards</title>
+  <title>Job Application Plans</title>
   <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafb;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 10px;
+      color: #111;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    p.subtext {
+      text-align: center;
+      color: #666;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+
+    .plans-container {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
     .plan-card {
-      background-color: #ffffff !important;
-      color: #111 !important;
-      border: 1px solid #e0e0e0;
-      border-radius: 10px;
-      width: 280px;
+      background-color: #fff9f3;
+      border: 2px solid #882727;
+      border-radius: 12px;
+      width: 320px;
+      min-height: 420px;
       display: flex;
       flex-direction: column;
       padding: 1.5rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
     .plan-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+      transform: translateY(-6px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    }
+
+    .plan-card.premium {
+      border: 2px solid #882727;
+      background-color: #fff9f3;
     }
 
     .plan-title {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       font-weight: 600;
-      margin-bottom: 0.5rem;
       color: #111;
+      margin-bottom: 0.25rem;
+      text-align: center;
     }
 
     .plan-price {
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-weight: bold;
-      margin: 0.25rem 0 0.75rem;
-      color: #000;
+      color: #882727;
+      text-align: center;
+      margin: 0.5rem 0 1rem;
     }
 
     .plan-info {
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: #555;
       margin-bottom: 1rem;
+      text-align: center;
     }
 
     .plan-features {
@@ -56,10 +95,21 @@
       margin-bottom: 0.6rem;
       color: #333;
       font-size: 0.95rem;
+      position: relative;
+      padding-left: 1.2rem;
+    }
+
+    .plan-features li::before {
+      content: "✔";
+      color: #22c55e;
+      position: absolute;
+      left: 0;
+      font-size: 0.9rem;
+      top: 0;
     }
 
     .plan-card button {
-      background-color: #2563eb;
+      background-color: #a34646;
       color: #fff;
       border: none;
       border-radius: 6px;
@@ -70,72 +120,71 @@
     }
 
     .plan-card button:hover {
-      background-color: #1e4db7;
+      background-color: #882727;
     }
 
-    .plan-card.best {
-      # border: 2px solid #2563eb;
-      background-color: #f8fbff;
+    @media (max-width: 700px) {
+      .plans-container {
+        flex-direction: column;
+        align-items: center;
+      }
     }
 
-    .plans-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      justify-content: center;
-      align-items: flex-start;
-      margin-top: 2rem;
+    .upgrade-button {
+      display: inline-block;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      background-color: #a34646;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .upgrade-button:hover {
+      background-color: #882727;
     }
 
   </style>
 </head>
 <body>
+  <h1>Upgrade Your Job Application</h1>
+  <p class="subtext">Boost your visibility to recruiters by upgrading to Premium.</p>
+
   <div class="plans-container">
-
-    <div class="plan-card best">
-        <div class="plan-title">Free</div>
-        <div class="plan-price">$0<span style="font-size:1rem;">/mo</span></div>
-        <div class="plan-info">Intelligence for everyday tasks</div>
-        <ul class="plan-features">
-        <p>Advanced reasoning with GPT-5</p>
-        <p>Limited messages & uploads</li>
-        <li>Limited and slower image generation</li>
-        <li>Limited deep research</li>
-        <li>Limited memory & context</li>
-        </ul>
-        <button>Get Free</button>
+    <div class="plan-card" onclick="window.location.href='<%= all_jobs_path %>'" style="cursor: pointer;">
+      <div class="plan-title">Free</div>
+      <div class="plan-price">₹0</div>
+      <div class="plan-info">Apply to jobs with standard visibility and got placed.</div>
+      <ul class="plan-features">
+        <li>Apply to unlimited jobs</li>
+        <li>Regular recruiter visibility</li>
+        <li>Email job alerts</li>
+        <li>Access to job recommendations</li>
+        <li>Standard support</li>
+      </ul>
+      <button>Continue Free</button>
     </div>
 
-    <div class="plan-card best">
-        <div class="plan-title">Plus</div>
-        <div class="plan-price">$20<span style="font-size:1rem;">/mo</span></div>
-        <div class="plan-info">More access to advanced intelligence</div>
-        <ul class="plan-features">
-        <li>Everything in Free and:</li>
-        <li>Expanded messaging & uploads</li>
-        <li>Expanded & faster image creation</li>
-        <li>Expanded deep research & agent mode</li>
-        <li>Expanded memory & context</li>
-        <li>Projects, tasks & custom GPTs</li>
-        </ul>
-        <button>Get Plus</button>
+    <div class="plan-card premium">
+      <div class="plan-title">Premium</div>
+      <div class="plan-price">₹499<span style="font-size:1rem;"> / 30days</span></div>
+      <div class="plan-info">Get noticed first and stand out in recruiter searches.</div>
+      <ul class="plan-features">
+        <li>Highlighted job applications</li>
+        <li>Top visibility in recruiter search</li>
+        <li>Premium profile tag</li>
+        <li>3x more profile views</li>
+        <li>Priority customer support</li>
+      </ul>
+      <% if current_user.is_premium? %>
+        <%= link_to "Already Premium User", "#", disabled: true, class: "btn btn-secondary upgrade-button" %>
+      <% else %>
+        <%= link_to "Upgrade to Premium", new_subscription_path, method: :get, data: { turbo: false }, class: "btn btn-primary upgrade-button" %>
+      <% end %>
     </div>
-
-    <div class="plan-card">
-        <div class="plan-title">Pro</div>
-        <div class="plan-price">$30<span style="font-size:1rem;">/mo</span></div>
-        <div class="plan-info">Full access to the best of ChatGPT</div>
-        <ul class="plan-features">
-        <li>Everything in Plus and:</li>
-        <li>Pro reasoning with GPT-5</li>
-        <li>Unlimited messages & uploads</li>
-        <li>Unlimited & faster image creation</li>
-        <li>Maximum deep research & agent mode</li>
-        <li>Maximum memory & context</li>
-        </ul>
-        <button>Get Pro</button>
-    </div>
-
   </div>
 </body>
 </html>

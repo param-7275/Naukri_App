@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_11_03_154431) do
+ActiveRecord::Schema[7.1].define(version: 2025_11_06_090219) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -19,6 +19,20 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_03_154431) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
+
+  create_table "active_admin_comments", force: :cascade do |t|
+    t.string "namespace"
+    t.text "body"
+    t.string "resource_type"
+    t.integer "resource_id"
+    t.string "author_type"
+    t.integer "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author"
+    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
+    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource"
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -83,6 +97,25 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_03_154431) do
     t.index ["recruiter_id"], name: "index_jobs_on_recruiter_id"
   end
 
+  create_table "plans", force: :cascade do |t|
+    t.string "plan_name"
+    t.integer "plan_price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "stripe_subscription_id"
+    t.string "status"
+    t.datetime "started_at"
+    t.datetime "ended_at"
+    t.integer "price_cents"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -94,6 +127,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_03_154431) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_premium", default: false, null: false
+    t.string "stripe_customer_id"
+    t.string "stripe_subscription_id"
+    t.string "stripe_payment_intent_id"
+    t.string "stripe_payment_method_id"
+    t.boolean "admin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -103,4 +142,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_03_154431) do
   add_foreign_key "job_applications", "jobs"
   add_foreign_key "job_applications", "users", column: "jobseeker_id"
   add_foreign_key "jobs", "users", column: "recruiter_id"
+  add_foreign_key "subscriptions", "users"
 end

@@ -10,7 +10,11 @@ class JobApplicationsController < ApplicationController
   end
 
   def all_jobs
-    @jobs = Job.all
+    if current_user&.is_premium?
+      @jobs = Job.order(created_at: :desc)
+    else
+      @jobs = Job.where("created_at <= ?", 6.days.ago).order(created_at: :desc)
+    end
   end
 
   def view_employee_details

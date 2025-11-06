@@ -1,0 +1,104 @@
+<%= render partial: 'partials/header' %>
+<%= render partial: 'partials/errors' %>
+
+<div class="checkout-container">
+  <h1 class="checkout-title">Upgrade to Premium</h1>
+  <p class="checkout-subtext">
+    Enter your payment information below to start your <strong>₹499/month</strong> subscription.
+  </p>
+
+  <div id="payment-form-wrapper">
+    <form id="payment-form">
+      <div id="payment-element"><!-- Stripe Elements will mount here --></div>
+      <div id="payment-errors" role="alert" class="payment-errors"></div>
+      <button id="submit" class="btn btn-submit">Subscribe ₹499/month</button>
+    </form>
+  </div>
+</div>
+
+<script src="https://js.stripe.com/v3"></script>
+<script type="text/javascript">
+  const stripe = Stripe("<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>");
+  const elements = stripe.elements({ clientSecret: "<%= @client_secret %>" });
+
+  const paymentElement = elements.create("payment");
+  paymentElement.mount("#payment-element");
+
+  const form = document.getElementById("payment-form");
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const {error, paymentIntent} = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: "<%= success_subscriptions_url %>"
+      }
+    });
+    if (error) {
+      document.getElementById("payment-errors").textContent = error.message;
+    }
+  });
+</script>
+
+<style>
+  .checkout-container {
+    max-width: 480px;
+    margin: 3rem auto;        
+    background-color: #ffffff;
+    padding: 2rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  }
+
+  .checkout-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #111;
+    text-align: center;
+  }
+
+  .checkout-subtext {
+    text-align: center;
+    color: #555;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+  }
+
+  #payment-form-wrapper {
+    margin-top: 1.5rem;
+  }
+
+  #payment-element {
+    margin-bottom: 1.25rem;
+  }
+
+  .payment-errors {
+    color: #d32f2f;
+    margin-bottom: 1rem;
+    min-height: 1.2em;
+    font-size: 0.9rem;
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 0.9rem;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #a34646;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .btn-submit:hover {
+    background-color: #882727;
+  }
+
+  @media (max-width: 600px) {
+    .checkout-container {
+      margin: 2rem 1rem;
+      padding: 1.5rem 1rem;
+    }
+  }
+</style>

@@ -14,7 +14,19 @@ class UsersController < ApplicationController
     end
     @user = User.new(user_params)
 
-    if @user.save
+    if @user.save 
+      if @user.role == 'jobseeker'
+        begin
+          Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+          stripe_customer = Stripe::Customer.create(
+            name: @user.username,
+            email: @user.email
+          )
+          @user.update(stripe_customer_id: stripe_customer.id)
+        rescue Stripe::StripeError => e
+          Rails.logger.error("Stripe error: #{e.message}")
+        end
+      end
       flash[:success] = "Account successfully created. Please log in."
       redirect_to login_path
     else
@@ -58,6 +70,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:username, :email, :phone_number, :password, :password_confirmation, :role)
+    params.require(:user).permit(:username, :email, :phone_number, :password, :password_confirmation, :role, :is_premium)
   end
 end

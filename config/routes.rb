@@ -1,6 +1,7 @@
 require "sidekiq/web"
 
 Rails.application.routes.draw do
+  get 'webhooks/stripe'
   scope "(:locale)", locale: /en|hi/ do
     mount Sidekiq::Web => '/sidekiq'
 
@@ -35,6 +36,23 @@ Rails.application.routes.draw do
     post "user_signup/" , to: "users#user_signup" , as: "user_signup"
     get "login/" , to: "users#new_login" , as: "login"
     post "login/" , to: "users#user_login" , as: "user_login"
+
+    #Subscriptions Controller Routes
+
+    # get 'subscriptions/new', to: "subscriptions#new", as: :new_subscription
+    # post 'create/', to: "subscriptions#create", as: 'create_subscription'
+
+    #If you want to use stripe checkout 
+    resources :subscriptions, only: [:new, :create] do
+      collection do
+        get 'success', to: 'subscriptions#success', as: :success
+        get 'cancel',  to: 'subscriptions#cancel',  as: :cancel
+      end
+    end
+
+    #Webhook Controller Routes
+
+    post '/webhooks/stripe', to: 'webhooks#stripe'
 
     # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

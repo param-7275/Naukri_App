@@ -72,3 +72,5 @@ gem "sidekiq"
 gem "sidekiq-scheduler"
 gem "whenever"
 gem 'sidekiq-cron'
+gem 'stripe'
+gem 'dotenv-rails'
