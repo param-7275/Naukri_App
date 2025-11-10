@@ -67,7 +67,7 @@
 #   end
 # end
 
-class SubscriptionsController < ApplicationController # rubocop:disable Style/Documentation
+class SubscriptionsController < ApplicationController
   before_action :require_login
 
   def plan_details
@@ -81,7 +81,7 @@ class SubscriptionsController < ApplicationController # rubocop:disable Style/Do
     # end
   end
 
-  def new # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
+  def new # rubocop:disable Metrics/AbcSize
     if current_user.stripe_customer_id.blank?
       stripe_customer = Stripe::Customer.create(
         name: current_user.username,
@@ -103,7 +103,7 @@ class SubscriptionsController < ApplicationController # rubocop:disable Style/Do
     redirect_to pricing_path
   end
 
-  def success # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
+  def success # rubocop:disable Metrics/AbcSize
     payment_intent_id = params[:payment_intent]
     pi = Stripe::PaymentIntent.retrieve(payment_intent_id)
     if pi.status == 'succeeded'
@@ -127,8 +127,8 @@ class SubscriptionsController < ApplicationController # rubocop:disable Style/Do
       local_subscription.update(
         stripe_subscription_id: subscription.id,
         status: subscription.status,
-        started_at: Time.at(subscription.start_date),
-        ended_at: Time.at(subscription.start_date) + 30.days,
+        started_at: Time.zone.at(subscription.start_date),
+        ended_at: Time.zone.at(subscription.start_date) + 30.days,
         price_cents: subscription.plan.amount
       )
       current_user.update(stripe_subscription_id: subscription.id)

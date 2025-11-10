@@ -119,9 +119,9 @@ en:
       attach_resume: "Attach Resume"
       apply: "Apply Job"
     applied_jobs:
+      already_applied: 'already applied'
       empty: "You have not applied to any job yet, please apply for a job."
   users:
-
     signup:
       title: "Sign Up"
       username: "Username"
@@ -132,6 +132,8 @@ en:
       recruiter: "Recruiter"
       password: "Password"
       confirm_password: "Confirm Password"
+      number_validation_message: "must be 10 digits"
+      password_validation_message: "must include at least one letter, one number, and one special character!"
       submit: "Sign Up"
       goto_home: "GoTo Home"
       already_have_account: "Already Have Account? Login"

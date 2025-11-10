@@ -9,13 +9,13 @@ class JobApplication < ApplicationRecord
   validates :job_id,
             uniqueness: {
               scope: :jobseeker_id,
-              message: 'already applied'
+              message: I18n.t('job_applications.applied_jobs.already_applied')
             }, unless: :reapply_allowed
-  validate :is_pdf
+  validate :pdf
 
   private
 
-  def is_pdf
+  def pdf
     return unless resume.attached? && !resume.content_type.in?('application/pdf')
 
     errors.add(:resume, 'should be PDF!')

@@ -5,9 +5,9 @@ class ApplicationController < ActionController::Base
 
   # around_action :switch_locale
 
-  def switch_locale(&action)
+  def switch_locale(&)
     locale = params[:locale] || extract_locale_from_tld || I18n.default_locale
-    I18n.with_locale(locale, &action)
+    I18n.with_locale(locale, &)
   end
 
   def extract_locale_from_tld
@@ -18,7 +18,9 @@ class ApplicationController < ActionController::Base
   private
 
   def current_user
-    @current_user ||= User.find_by(id: session[:user_id])
+    return @current_user if defined?(@current_user)
+
+    @current_user = User.find_by(id: session[:user_id])
   end
 
   def logged_in?

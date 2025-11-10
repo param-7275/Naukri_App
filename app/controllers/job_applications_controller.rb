@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class JobApplicationsController < ApplicationController # rubocop:disable Style/Documentation,Metrics/ClassLength
+class JobApplicationsController < ApplicationController # rubocop:disable Metrics/ClassLength
   before_action :require_login
   before_action :ensure_jobseeker!, only: %i[new create applied_jobs]
   before_action :ensure_recruiter!, only: [:change_application_status]
@@ -12,10 +12,10 @@ class JobApplicationsController < ApplicationController # rubocop:disable Style/
   end
 
   def all_jobs
-    @jobs = if current_user&.is_premium? && current_user&.subscription&.present?
+    @jobs = if current_user&.is_premium? && current_user&.subscription.present?
               Job.order(created_at: :desc)
             else
-              Job.where('created_at <= ?', 7.days.ago).order(created_at: :desc)
+              Job.where(created_at: ..7.days.ago).order(created_at: :desc)
             end
   end
 
@@ -40,9 +40,8 @@ class JobApplicationsController < ApplicationController # rubocop:disable Style/
     @job = @apply_job.job
   end
 
-  def reapply_application # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
+  def reapply_application
     old_application = current_user.job_applications.find(params[:id])
-
     unless old_application.reapply_allowed? && old_application.status == 'reject'
       redirect_to job_path(old_application.job_id), alert: "You can't reapply for this job yet."
       return
@@ -85,7 +84,7 @@ class JobApplicationsController < ApplicationController # rubocop:disable Style/
     # end
   end
 
-  def change_application_status # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+  def change_application_status # rubocop:disable Metrics/AbcSize
     @job_application = JobApplication.find_by(id: params[:id])
 
     if @job_application.present?
@@ -111,7 +110,7 @@ class JobApplicationsController < ApplicationController # rubocop:disable Style/
     end
   end
 
-  def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+  def create # rubocop:disable Metrics/AbcSize
     @job = Job.find_by(id: params[:job_id])
     return redirect_to recruiter_applicants_path, alert: 'Job not found.' unless @job
 
@@ -142,7 +141,7 @@ class JobApplicationsController < ApplicationController # rubocop:disable Style/
   end
 
   def ensure_jobseeker!
-    redirect_to root_path, alert: 'Only jobseekers can perform that action' unless current_user&.jobseeker?
+    redirect_to root_path, alert: 'Only jobseekers can perform that action' unless current_user&.job_seeker?
   end
 
   def ensure_recruiter!

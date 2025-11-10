@@ -12,14 +12,15 @@ class User < ApplicationRecord
   validates :phone_number,
             presence: true,
             uniqueness: true,
-            format: { with: /\A\d{10}\z/, message: 'must be 10 digits' }
+            format: { with: /\A\d{10}\z/, message: I18n.t('users.signup.number_validation_message') }
   validates :role, presence: true
 
-  enum role: { jobseeker: 'jobseeker', recruiter: 'recruiter' }
+  enum :role, { job_seeker: 'jobseeker', recruiter: 'recruiter' }
 
   validates :password, presence: true, length: { minimum: 8 }, format:
     {
       with: /\A(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
-      message: "must include at least one letter, one number, and one special character (!@\#$%^&*)"
+      message: I18n.t('users.signup.password_validation_message')
+      # message: "must include at least one letter, one number, and one special character (!@\#$%^&*)"
     }, if: :password
 end

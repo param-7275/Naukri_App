@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class WebhooksController < ApplicationController
-  skip_before_action :verify_authenticity_token
+  # skip_before_action :verify_authenticity_token
 
   def stripe
     payload = request.body.read
@@ -11,9 +11,9 @@ class WebhooksController < ApplicationController
     begin
       event = Stripe::Webhook.construct_event(payload, sig_header, endpoint_secret)
     rescue JSON::ParserError
-      render json: { error: 'Invalid payload' }, status: 400 and return
+      render json: { error: 'Invalid payload' }, status: :bad_request and return
     rescue Stripe::SignatureVerificationError
-      render json: { error: 'Invalid signature' }, status: 400 and return
+      render json: { error: 'Invalid signature' }, status: :bad_request and return
     end
 
     case event.type
@@ -36,7 +36,7 @@ class WebhooksController < ApplicationController
 
     local_sub.update!(
       status: sub.status,
-      ended_at: sub.ended_at ? Time.at(sub.ended_at) : nil
+      ended_at: sub.ended_at ? Time.zone.at(sub.ended_at) : nil
     )
   end
 
@@ -46,7 +46,7 @@ class WebhooksController < ApplicationController
 
     local_sub.update!(
       status: 'canceled',
-      ended_at: sub.ended_at ? Time.at(sub.ended_at) : Time.current
+      ended_at: sub.ended_at ? Time.zone.at(sub.ended_at) : Time.current
     )
   end
 end

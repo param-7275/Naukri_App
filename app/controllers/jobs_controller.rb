@@ -23,17 +23,18 @@ class JobsController < ApplicationController
     @job = current_user.jobs.build
   end
 
+  def edit; end
+
   def create
     @job = current_user.jobs.build(job_params)
     if @job.save
       users = User.where(role: 'jobseeker')
       users.find_each do |user|
         NotificationMailer.job_posted(user, @job).deliver_later
-        puts 'Email sent successfully!'
+        Rails.logger.debug 'Email sent successfully!'
       rescue StandardError => e
-        puts "Email failed: #{e.message}"
+        Rails.logger.debug { "Email failed: #{e.message}" }
       end
-
       flash[:success] = 'Job Posted successfully.'
       redirect_to recruiter_jobs_path
     else
@@ -45,8 +46,6 @@ class JobsController < ApplicationController
   def view_job_description
     @job = Job.find_by(id: params[:job_id])
   end
-
-  def edit; end
 
   def update
     if @job.update(job_params)
@@ -72,7 +71,8 @@ class JobsController < ApplicationController
 
   def job_params
     params.require(:job).permit(:title, :description, :company_name, :location, :industry_type, :vacancy,
-                                :experience_range, :salary, :work_mode, :employment_type, :role_category, :education, :skills, :company_description)
+                                :experience_range, :salary, :work_mode, :employment_type, :role_category,
+                                :education, :skills, :company_description)
   end
 
   def ensure_recruiter!
