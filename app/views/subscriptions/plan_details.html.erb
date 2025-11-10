@@ -1,0 +1,261 @@
+<%= render partial: 'partials/header' %>
+<%= render partial: 'partials/errors' %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Application Plans</title>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+      color: #111;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      margin-top: revert-layer;
+    }
+
+    .subtext {
+      text-align: center;
+      color: #666;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+
+    .plan-card {
+      max-width: 500px;
+      margin: 0 auto;
+      background: #fff9f3;
+      color: #222;
+      border: 2px solid #882727;
+      border-radius: 15px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      text-align: left;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+    }
+
+    .plan-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 15px;
+    }
+
+    .plan-header h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .plan-header .price {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .plan-header span {
+      font-size: 1rem;
+      color: #555;
+    }
+
+    .plan-info {
+      margin-bottom: 20px;
+      color: #444;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .plan-features {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 25px;
+    }
+
+    .plan-features li {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      font-size: 0.95rem;
+    }
+
+    .subscription-details {
+      margin-bottom: 20px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 6px 0;
+      font-size: 0.95rem;
+    }
+
+    .label {
+      color: #555;
+      font-weight: 500;
+    }
+
+    .value {
+      font-weight: 600;
+    }
+
+    .value.active {
+      color: #28a745;
+    }
+
+    .value.inactive,
+    .value.cancelled {
+      color: #dc3545;
+    }
+
+    .countdown-timer {
+      text-align: center;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    .upgrade-button {
+      display: block;
+      margin: 0 auto;
+      width: fit-content;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      background-color: #a34646;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .upgrade-button:hover {
+      background-color: #882727;
+    }
+
+    .no-plan-message {
+      text-align: center;
+      background: #FFF9F3;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      max-width: 480px;
+      margin: 40px auto;
+      padding: 40px 25px;
+    }
+
+    .no-plan-message h2 {
+      color: #222;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .no-plan-message p {
+      color: #555;
+      margin-bottom: 20px;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="subscription-section">
+    <% if current_user.subscription.present? %>
+      <h1>Your Active Subscription</h1>
+      <p class="subtext">You’re enjoying Premium benefits! Your subscription is active.</p>
+    <% else %>
+      <h1>No Active Subscription</h1>
+      <p class="subtext">You’re not enjoying Premium benefits! Your subscription is not active.</p>
+    <% end %>
+
+    <% if @plan_detail.present? && current_user.subscription.present? && current_user.subscription.ended_at.future?%>
+      <% subscription = current_user.subscription %>
+
+      <div class="plan-card premium">
+        <div class="plan-header">
+          <h2><%= @plan_detail.plan_name %></h2>
+          <p class="price">₹<%= @plan_detail.plan_price %> <span>/ 30 days</span></p>
+        </div>
+
+        <div class="plan-info">
+          <p>Get noticed first and stand out in recruiter searches.</p>
+        </div>
+
+        <ul class="plan-features">
+          <li>🌟 Highlighted job applications</li>
+          <li>📈 3x more profile views</li>
+          <li>💬 Priority customer support</li>
+        </ul>
+
+        <div class="subscription-details">
+          <div class="info-row">
+            <span class="label">Status:</span>
+            <span class="value <%= subscription.status %>"><%= subscription.status.capitalize %></span>
+          </div>
+          <div class="info-row">
+            <span class="label">Start Date:</span>
+            <span class="value"><%= subscription.started_at.strftime("%d %b %Y") %></span>
+          </div>
+          <div class="info-row">
+            <span class="label">End Date:</span>
+            <span class="value"><%= subscription.ended_at.strftime("%d %b %Y") %></span>
+          </div>
+        </div>
+
+        <div id="countdown">
+          <% if current_user.is_premium? && subscription.ended_at.future? %>
+            <div id="countdown-timer" class="countdown-timer"></div>
+            <%= link_to "Already Premium User", "#", disabled: true, class: "btn btn-secondary upgrade-button" %>
+
+            <script>
+              document.addEventListener("DOMContentLoaded", function() {
+                const countDownDate = new Date("<%= subscription.ended_at.utc.strftime('%Y-%m-%dT%H:%M:%SZ') %>").getTime();
+                const timerElement = document.getElementById("countdown-timer");
+
+                const timer = setInterval(function() {
+                  const now = new Date().getTime();
+                  const distance = countDownDate - now;
+
+                  if (distance <= 0) {
+                    clearInterval(timer);
+                    timerElement.innerHTML = "Subscription expired";
+                    return;
+                  }
+
+                  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                  timerElement.innerHTML = `Plan Expires in: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+                }, 1000);
+              });
+            </script>
+          <% else %>
+            <%= link_to "Upgrade to Premium", new_subscription_path, method: :get, data: { turbo: false }, class: "btn btn-primary upgrade-button" %>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <div class="no-plan-message">
+        <h2><%= t('jobs.index.no_active_plan', default: "No Active Plan Found") %></h2>
+        <p><%= t('jobs.index.no_active_plan_message', default: "You don't currently have an active subscription. Upgrade to Premium and unlock exclusive recruiter benefits!") %></p>
+        <%= link_to "Upgrade to Premium", new_subscription_path, method: :get, data: { turbo: false }, class: "btn btn-primary upgrade-button" %>
+      </div>
+    <% end %>
+  </div>
+</body>
+</html>

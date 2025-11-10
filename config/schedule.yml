@@ -1,3 +1,7 @@
 reapply_unlock_job:
   cron: "* * * * *"
   class: "ReapplyUnlockJob"
+
+premium_end_job:
+  cron: "* * * * *"
+  class: "PremiumEndJob"

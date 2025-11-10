@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddIsPremiumToUsers < ActiveRecord::Migration[7.1]
   def change
     add_column :users, :is_premium, :boolean, default: false, null: false

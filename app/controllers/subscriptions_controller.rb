@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # class SubscriptionsController < ApplicationController
 #   before_action :require_login
 
@@ -65,20 +67,31 @@
 #   end
 # end
 
-class SubscriptionsController < ApplicationController
+class SubscriptionsController < ApplicationController # rubocop:disable Style/Documentation
   before_action :require_login
 
-  def new
+  def plan_details
+    # binding.irb
+    @plan_detail = Plan.first
+    @subscription_plan_detail = Subscription.find_by(user_id: current_user.id)
+    # if @subscription_plan_detail.present?
+
+    # else
+
+    # end
+  end
+
+  def new # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
     if current_user.stripe_customer_id.blank?
-      customer = Stripe::Customer.create(
+      stripe_customer = Stripe::Customer.create(
         name: current_user.username,
         email: current_user.email
       )
-      current_user.update!(stripe_customer_id: customer.id)
+      current_user.update!(stripe_customer_id: stripe_customer.id)
     end
 
     payment_intent = Stripe::PaymentIntent.create(
-      amount: 49900,              
+      amount: 49_900,
       currency: 'inr',
       customer: current_user.stripe_customer_id,
       setup_future_usage: 'off_session'
@@ -90,40 +103,40 @@ class SubscriptionsController < ApplicationController
     redirect_to pricing_path
   end
 
-
-  def success
+  def success # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
     payment_intent_id = params[:payment_intent]
     pi = Stripe::PaymentIntent.retrieve(payment_intent_id)
     if pi.status == 'succeeded'
-      current_user.update!(is_premium: true, stripe_payment_intent_id: pi.id,stripe_payment_method_id: pi.payment_method)
+      current_user.update!(is_premium: true, stripe_payment_intent_id: pi.id,
+                           stripe_payment_method_id: pi.payment_method)
       plan_details = Plan.first
-      
+
       price = Stripe::Price.create({
-        currency: 'usd',
-        unit_amount: plan_details.plan_price,
-        recurring: {interval: 'month'},
-        product_data: {name: plan_details.plan_name},
-      })
-      
+                                     currency: 'usd',
+                                     unit_amount: plan_details.plan_price,
+                                     recurring: { interval: 'month' },
+                                     product_data: { name: plan_details.plan_name }
+                                   })
+
       subscription = Stripe::Subscription.create({
-        customer: current_user.stripe_customer_id,
-        items: [{ price: price.id }],
-        default_payment_method: pi.payment_method,
-      })
-      
+                                                   customer: current_user.stripe_customer_id,
+                                                   items: [{ price: price.id }],
+                                                   default_payment_method: pi.payment_method
+                                                 })
+
       local_subscription = Subscription.find_or_initialize_by(user_id: current_user.id)
       local_subscription.update(
-        stripe_subscription_id: subscription.id, 
-        status: subscription.status, 
-        started_at:  Time.at(subscription.start_date), 
-        ended_at:  Time.at(subscription.start_date) + 30.days, 
+        stripe_subscription_id: subscription.id,
+        status: subscription.status,
+        started_at: Time.at(subscription.start_date),
+        ended_at: Time.at(subscription.start_date) + 30.days,
         price_cents: subscription.plan.amount
       )
-
-      flash[:success] = "Subscription activated!"
+      current_user.update(stripe_subscription_id: subscription.id)
+      flash[:success] = 'Subscription activated!'
       redirect_to all_jobs_path
     else
-      flash[:alert] = "Payment not completed."
+      flash[:alert] = 'Payment not completed.'
       redirect_to pricing_path
     end
   rescue Stripe::StripeError => e
@@ -132,7 +145,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def cancel
-    flash[:notice] = "Payment cancelled."
+    flash[:notice] = 'Payment cancelled.'
     redirect_to pricing_path
   end
 end

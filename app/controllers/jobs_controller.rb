@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class JobsController < ApplicationController
-  before_action :ensure_recruiter!, only: [:new, :create, :edit, :update, :destroy]
-  before_action :set_job, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_recruiter!, only: %i[new create edit update destroy]
+  before_action :set_job, only: %i[show edit update destroy]
 
   def index
     @recruiter_jobs = Job.where(recruiter_id: current_user.id)
@@ -8,16 +10,14 @@ class JobsController < ApplicationController
 
   def applicants
     @applications = JobApplication.joins(:job)
-          .where(jobs: { recruiter_id: current_user.id })
-          .includes(:job, :jobseeker)
-          .order(created_at: :desc)
-  end
-    
-  def recruiter_index
+                                  .where(jobs: { recruiter_id: current_user.id })
+                                  .includes(:job, :jobseeker)
+                                  .order(created_at: :desc)
   end
 
-  def show
-  end
+  def recruiter_index; end
+
+  def show; end
 
   def new
     @job = current_user.jobs.build
@@ -28,15 +28,13 @@ class JobsController < ApplicationController
     if @job.save
       users = User.where(role: 'jobseeker')
       users.find_each do |user|
-        begin
-          NotificationMailer.job_posted(user, @job).deliver_later
-          puts "Email sent successfully!"
-        rescue => e
-          puts "Email failed: #{e.message}"
-        end
+        NotificationMailer.job_posted(user, @job).deliver_later
+        puts 'Email sent successfully!'
+      rescue StandardError => e
+        puts "Email failed: #{e.message}"
       end
 
-      flash[:success] = "Job Posted successfully."
+      flash[:success] = 'Job Posted successfully.'
       redirect_to recruiter_jobs_path
     else
       flash.now[:error] = @job.errors.full_messages
@@ -52,7 +50,7 @@ class JobsController < ApplicationController
 
   def update
     if @job.update(job_params)
-      flash[:success] = "Job Updated successfully."
+      flash[:success] = 'Job Updated successfully.'
       redirect_to recruiter_jobs_path
     else
       flash.now[:error] = @job.errors.full_messages
@@ -62,7 +60,7 @@ class JobsController < ApplicationController
 
   def destroy
     @job.destroy
-    flash[:success] = "Job Deleted successfully."
+    flash[:success] = 'Job Deleted successfully.'
     redirect_to recruiter_jobs_path
   end
 
@@ -73,10 +71,11 @@ class JobsController < ApplicationController
   end
 
   def job_params
-    params.require(:job).permit(:title, :description, :company_name, :location, :industry_type, :vacancy, :experience_range, :salary, :work_mode, :employment_type, :role_category, :education,:skills, :company_description)
+    params.require(:job).permit(:title, :description, :company_name, :location, :industry_type, :vacancy,
+                                :experience_range, :salary, :work_mode, :employment_type, :role_category, :education, :skills, :company_description)
   end
 
   def ensure_recruiter!
-    redirect_to root_path, alert: "Access denied" unless current_user&.recruiter?
+    redirect_to root_path, alert: 'Access denied' unless current_user&.recruiter?
   end
 end

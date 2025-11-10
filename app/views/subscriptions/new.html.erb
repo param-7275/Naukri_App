@@ -18,7 +18,7 @@
 
 <script src="https://js.stripe.com/v3"></script>
 <script type="text/javascript">
-  const stripe = Stripe("<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>");
+  const stripe = Stripe("<%= Rails.application.credentials.stripe[:public_key] %>");
   const elements = stripe.elements({ clientSecret: "<%= @client_secret %>" });
 
   const paymentElement = elements.create("payment");

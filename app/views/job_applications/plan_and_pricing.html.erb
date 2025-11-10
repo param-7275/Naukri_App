@@ -169,7 +169,7 @@
     </div>
 
     <div class="plan-card premium">
-      <div class="plan-title">Premium</div>
+      <div class="plan-title" >Premium</div>
       <div class="plan-price">₹499<span style="font-size:1rem;"> / 30days</span></div>
       <div class="plan-info">Get noticed first and stand out in recruiter searches.</div>
       <ul class="plan-features">
@@ -179,7 +179,7 @@
         <li>3x more profile views</li>
         <li>Priority customer support</li>
       </ul>
-      <% if current_user.is_premium? %>
+      <% if current_user.is_premium?  && current_user.subscription.present? && current_user.subscription.ended_at > Time.now%>
         <%= link_to "Already Premium User", "#", disabled: true, class: "btn btn-secondary upgrade-button" %>
       <% else %>
         <%= link_to "Upgrade to Premium", new_subscription_path, method: :get, data: { turbo: false }, class: "btn btn-primary upgrade-button" %>

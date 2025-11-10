@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class NotificationMailer < ApplicationMailer
-  default from: "paramjeet@poplify.com"
+  default from: 'paramjeet@poplify.com'
 
   def job_posted(user, job)
     return unless job.present?

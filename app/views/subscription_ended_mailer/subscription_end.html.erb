@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subscription Ended</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f5f6fa;
+    }
+
+    .email-container {
+      max-width: 600px;
+      margin: 20px auto;
+      background-color: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .header {
+      background-color: #4CAF50;
+      color: #ffffff;
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .body {
+      padding: 30px 20px;
+      color: #333333;
+      line-height: 1.6;
+    }
+
+    .body h2 {
+      color: #4CAF50;
+      font-size: 20px;
+      margin-top: 0;
+    }
+
+    .body p {
+      margin: 15px 0;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background-color: #4CAF50;
+      color: #ffffff;
+      padding: 12px 25px;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    .footer {
+      background-color: #f0f0f0;
+      color: #777777;
+      text-align: center;
+      font-size: 12px;
+      padding: 20px;
+    }
+
+    @media only screen and (max-width: 600px) {
+      .body, .header {
+        padding: 20px 15px;
+      }
+      .header h1 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="email-container">
+    <div class="header">
+      <h1>Subscription Ended</h1>
+    </div>
+    <div class="body">
+      <h2>Hello <%= @user.username %>,</h2>
+      <p>
+        We noticed that your subscription to <strong><%= @plan.plan_name %></strong> has ended. We hope you enjoyed our service!
+      </p>
+      <p>To continue enjoying uninterrupted access and exclusive features, please renew your subscription.</p>
+      <a href="<%= root_url %>" class="cta-button">Renew Now</a>
+      <p>If you have any questions or need assistance, feel free to contact our support team.</p>
+      <p>Thank you,<br>Naukri App</p>
+    </div>
+    <div class="footer">
+      &copy; <%= Time.current.year %> Poplify India. All rights reserved.<br>
+      Chandigarh, Panchkula | <a href="<%= root_url %>">Unsubscribe</a>
+    </div>
+  </div>
+</body>
+</html>

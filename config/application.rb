@@ -1,6 +1,8 @@
-require_relative "boot"
+# frozen_string_literal: true
 
-require "rails/all"
+require_relative 'boot'
+
+require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -14,7 +16,7 @@ module JobPortal
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w(assets tasks))
+    config.autoload_lib(ignore: %w[assets tasks])
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -24,13 +26,13 @@ module JobPortal
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    #sidekiq configuration
+    # sidekiq configuration
     config.active_job.queue_adapter = :sidekiq
 
     # i18n configuration
-    config.i18n.available_locales = [:en, :es, :hi, :pa]
+    config.i18n.available_locales = %i[en es hi pa]
     config.i18n.default_locale = :en
     config.i18n.enforce_available_locales = true
-    config.i18n.load_path += Dir[Rails.root.join("config", "locales", "*.{rb,yml}")]
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '*.{rb,yml}')]
   end
 end

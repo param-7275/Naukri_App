@@ -1,8 +1,10 @@
-class JobApplicationsController < ApplicationController
+# frozen_string_literal: true
+
+class JobApplicationsController < ApplicationController # rubocop:disable Style/Documentation,Metrics/ClassLength
   before_action :require_login
-  before_action :ensure_jobseeker!, only: [:new, :create, :applied_jobs]
+  before_action :ensure_jobseeker!, only: %i[new create applied_jobs]
   before_action :ensure_recruiter!, only: [:change_application_status]
-  before_action :set_job, only: [:new, :create]
+  before_action :set_job, only: %i[new create]
   before_action :set_job_application, only: [:change_application_status]
 
   def applied_jobs
@@ -10,11 +12,11 @@ class JobApplicationsController < ApplicationController
   end
 
   def all_jobs
-    if current_user&.is_premium?
-      @jobs = Job.order(created_at: :desc)
-    else
-      @jobs = Job.where("created_at <= ?", 6.days.ago).order(created_at: :desc)
-    end
+    @jobs = if current_user&.is_premium? && current_user&.subscription&.present?
+              Job.order(created_at: :desc)
+            else
+              Job.where('created_at <= ?', 7.days.ago).order(created_at: :desc)
+            end
   end
 
   def view_employee_details
@@ -22,15 +24,15 @@ class JobApplicationsController < ApplicationController
     @user_details = @job_application.jobseeker
     @job = @job_application.job
   end
-    
-  def jobseeker_index
-  end
+
+  def jobseeker_index; end
 
   def new
     @job = Job.find_by(id: params[:job_id])
   end
 
   def plan_and_pricing
+    @subscription = Subscription.find_by(user_id: current_user.id)
   end
 
   def edit_reapply
@@ -38,7 +40,7 @@ class JobApplicationsController < ApplicationController
     @job = @apply_job.job
   end
 
-  def reapply_application
+  def reapply_application # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
     old_application = current_user.job_applications.find(params[:id])
 
     unless old_application.reapply_allowed? && old_application.status == 'reject'
@@ -58,18 +60,18 @@ class JobApplicationsController < ApplicationController
       about_yourself: about,
       resume: resume,
       status: 'review',
-      reapply_allowed: false,
+      reapply_allowed: false
     )
 
     if new_application.save
-      redirect_to applied_jobs_path, notice: "You have successfully reapplied!"
+      redirect_to applied_jobs_path, notice: 'You have successfully reapplied!'
     else
       flash.now[:alert] = new_application.errors.full_messages.to_sentence
       render :edit_reapply, status: :unprocessable_entity
     end
   end
 
-  def change_application_status
+  def change_application_status # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     @job_application = JobApplication.find_by(id: params[:id])
 
     if @job_application.present?
@@ -95,11 +97,9 @@ class JobApplicationsController < ApplicationController
     end
   end
 
-  def create
+  def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     @job = Job.find_by(id: params[:job_id])
-    unless @job
-      return redirect_to recruiter_applicants_path, alert: "Job not found."
-    end
+    return redirect_to recruiter_applicants_path, alert: 'Job not found.' unless @job
 
     @job_application = current_user.job_applications.new(
       job_id: @job.id,
@@ -109,7 +109,7 @@ class JobApplicationsController < ApplicationController
     )
 
     if @job_application.save
-      flash[:success] = "Application submitted!"
+      flash[:success] = 'Application submitted!'
       redirect_to applied_jobs_path
     else
       flash.now[:error] = @job_application.errors.full_messages
@@ -128,10 +128,10 @@ class JobApplicationsController < ApplicationController
   end
 
   def ensure_jobseeker!
-    redirect_to root_path, alert: "Only jobseekers can perform that action" unless current_user&.jobseeker?
+    redirect_to root_path, alert: 'Only jobseekers can perform that action' unless current_user&.jobseeker?
   end
 
   def ensure_recruiter!
-    redirect_to root_path, alert: "Only recruiters can perform that action" unless current_user&.recruiter?
+    redirect_to root_path, alert: 'Only recruiters can perform that action' unless current_user&.recruiter?
   end
 end

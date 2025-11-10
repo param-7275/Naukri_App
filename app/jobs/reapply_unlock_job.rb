@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ReapplyUnlockJob
   include Sidekiq::Job
 
@@ -8,7 +10,6 @@ class ReapplyUnlockJob
       job_application.update(reapply_allowed: true)
 
       JobReapplyNotificationMailer.reapply_available(job_application).deliver_later
-
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   helper_method :current_user, :logged_in?
 
@@ -7,20 +9,13 @@ class ApplicationController < ActionController::Base
     locale = params[:locale] || extract_locale_from_tld || I18n.default_locale
     I18n.with_locale(locale, &action)
   end
-  
+
   def extract_locale_from_tld
-    parsed_locale = request.host.split(".").last
+    parsed_locale = request.host.split('.').last
     I18n.available_locales.map(&:to_s).include?(parsed_locale) ? parsed_locale : nil
   end
-  
-  # def authenticate_admin_user!
-  #   authenticate_admin_user!
-  #   redirect_to root_path, alert: "You are not authorized to view this page." unless current_user.admin?
-  # end
 
   private
-
-
 
   def current_user
     @current_user ||= User.find_by(id: session[:user_id])
@@ -31,10 +26,9 @@ class ApplicationController < ActionController::Base
   end
 
   def require_login
-    unless logged_in?
-      flash[:error] = "You must be logged in to access this section"
-      redirect_to login_path
-    end
+    return if logged_in?
+
+    flash[:error] = 'You must be logged in to access this section'
+    redirect_to login_path
   end
 end
-
