@@ -110,7 +110,6 @@ class SubscriptionsController < ApplicationController # rubocop:disable Style/Do
       current_user.update!(is_premium: true, stripe_payment_intent_id: pi.id,
                            stripe_payment_method_id: pi.payment_method)
       plan_details = Plan.first
-
       price = Stripe::Price.create({
                                      currency: 'usd',
                                      unit_amount: plan_details.plan_price,
