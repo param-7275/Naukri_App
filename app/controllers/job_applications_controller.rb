@@ -48,27 +48,41 @@ class JobApplicationsController < ApplicationController # rubocop:disable Style/
       return
     end
 
-    job_id = old_application.job_id
-    about  = params[:about_yourself]
-    resume = params[:resume]
-
-    old_application.destroy!
-
-    new_application = JobApplication.new(
-      job_id: job_id,
-      jobseeker_id: current_user.id,
-      about_yourself: about,
-      resume: resume,
+    old_application.assign_attributes(
+      about_yourself: params[:about_yourself],
+      resume: params[:resume],
       status: 'review',
       reapply_allowed: false
     )
 
-    if new_application.save
+    if old_application.save
       redirect_to applied_jobs_path, notice: 'You have successfully reapplied!'
     else
-      flash.now[:alert] = new_application.errors.full_messages.to_sentence
+      flash.now[:alert] = old_application.errors.full_messages.to_sentence
       render :edit_reapply, status: :unprocessable_entity
     end
+
+    # job_id = old_application.job_id
+    # about  = params[:about_yourself]
+    # resume = params[:resume]
+
+    # old_application.destroy!
+
+    # new_application = JobApplication.new(
+    #   job_id: job_id,
+    #   jobseeker_id: current_user.id,
+    #   about_yourself: about,
+    #   resume: resume,
+    #   status: 'review',
+    #   reapply_allowed: false
+    # )
+
+    # if new_application.save
+    #   redirect_to applied_jobs_path, notice: 'You have successfully reapplied!'
+    # else
+    #   flash.now[:alert] = new_application.errors.full_messages.to_sentence
+    #   render :edit_reapply, status: :unprocessable_entity
+    # end
   end
 
   def change_application_status # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
