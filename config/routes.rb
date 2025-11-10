@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'sidekiq/web'
-
 Rails.application.routes.draw do
   get 'webhooks/stripe'
   scope '(:locale)', locale: /en|hi/ do

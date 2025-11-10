@@ -151,9 +151,8 @@
 </head>
 
 <body>
-
-<%= form_with(url: reapply_application_path(id: @apply_job.id), method: :patch, html: { class: 'form-container', multipart: true }) do |form| %>
-  <h2 class="form-title">Applying For <%= @job.title %></h2>
+  <%= form_with(url: reapply_application_path(id: @apply_job.id), method: :patch, html: { class: 'form-container', multipart: true }) do |form| %>
+    <h2 class="form-title">Applying For <%= @job.title %></h2>
 
     <div class="form-group">
       <%= form.label :about_yourself, class: 'form-label' %>

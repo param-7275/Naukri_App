@@ -7,7 +7,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= t('jobs.new.title') %></title>
-
   <style>
     :root {
       --primary: #882727;
@@ -151,9 +150,8 @@
 </head>
 
 <body>
-
   <%= form_with(model: @apply_job, url: job_applications_path, html: { class: 'form-container' }) do |form| %>
-  <h2 class="form-title">Applying For <%= @job.title %></h2>
+    <h2 class="form-title">Applying For <%= @job.title %></h2>
 
     <div class="form-group">
       <%= form.label :about_yourself, class: 'form-label' %>

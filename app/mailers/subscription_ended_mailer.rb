@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SubscriptionEndedMailer < ApplicationMailer
+class SubscriptionEndedMailer < ApplicationMailer # rubocop:disable Style/Documentation
   default from: 'paramjeet@poplify.com'
 
   def subscription_end(subscription, user, plan)
