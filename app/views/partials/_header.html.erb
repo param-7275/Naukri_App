@@ -12,15 +12,26 @@
         font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         background-color: #f5f7fa;
         color: #111;
+        padding-top: 70px; /* space for fixed header */
       }
 
+      /* ---------- HEADER NAV ---------- */
       nav {
-        background-color: #882727;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(90deg, #8b2020, #b13232);
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 0.75rem 2rem;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        transition: box-shadow 0.3s ease, background-color 0.3s ease;
+      }
+
+      nav.scrolled {
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
       }
 
       .nav-left,
@@ -30,79 +41,57 @@
         gap: 1.25rem;
       }
 
+      /* ---------- LOGO ---------- */
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.25rem;
+        text-decoration: none;
+      }
+
+      .nav-logo img {
+        height: 36px;
+        width: 36px;
+        border-radius: 6px;
+      }
+
+      /* ---------- LINKS ---------- */
       nav a {
         color: #ffffff;
         text-decoration: none;
         font-weight: 500;
         transition: color 0.2s ease, background-color 0.2s ease;
-        padding: 8px 10px;
-        border-radius: 4px;
+        padding: 8px 12px;
+        border-radius: 6px;
       }
 
       nav a:hover {
-        background-color: #691e1e;
-      }
-
-      .nav-username {
-        color: #fff;
-        font-weight: 600;
-      }
-
-      .lang-switch {
-        display: flex;
-        gap: 0.5rem;
-      }
-
-      .lang-switch a {
-        font-size: 0.9rem;
         background-color: rgba(255, 255, 255, 0.15);
-        padding: 5px 10px;
-        border-radius: 3px;
       }
 
-      .lang-switch a:hover {
-        background-color: rgba(255, 255, 255, 0.3);
-      }
-
-      @media (max-width: 768px) {
-        nav {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 0.5rem;
-        }
-
-        .nav-left,
-        .nav-right {
-          flex-wrap: wrap;
-          gap: 0.75rem;
-        }
-      }
-
-      .nav-right {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-      }
-
+      /* ---------- DROPDOWN ---------- */
       .dropdown {
         position: relative;
         display: inline-block;
       }
 
       .dropdown-toggle {
-        background-color: #882727;
+        background: transparent;
         color: white;
-        border: none;
+        border: 2px solid rgba(255,255,255,0.2);
         padding: 8px 16px;
         border-radius: 6px;
         font-weight: 500;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
       }
 
       .dropdown-toggle:hover {
-        background-color: #aa2b2b;
+        background-color: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255,255,255,0.3);
       }
 
       .dropdown-menu {
@@ -151,66 +140,66 @@
       .dropdown.open .dropdown-menu {
         display: block;
       }
+
+      /* ---------- MOBILE MENU ---------- */
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        cursor: pointer;
+        gap: 4px;
+      }
+
+      .menu-toggle div {
+        width: 22px;
+        height: 2px;
+        background: #fff;
+        border-radius: 2px;
+      }
+
+      @media (max-width: 768px) {
+        nav {
+          flex-wrap: wrap;
+        }
+
+        .menu-toggle {
+          display: flex;
+        }
+
+        .nav-left {
+          display: none;
+          flex-direction: column;
+          width: 100%;
+          margin-top: 0.75rem;
+          background-color: rgba(0,0,0,0.1);
+          border-radius: 6px;
+          padding: 0.5rem;
+        }
+
+        .nav-left.active {
+          display: flex;
+        }
+
+        .nav-left a {
+          width: 100%;
+          text-align: center;
+        }
+      }
     </style>
   </head>
-  <script>
-    let globalClickHandler = null;
-    
-    function initDropdown() {
-      const dropdown = document.querySelector('.dropdown');
-      const toggle = document.querySelector('.dropdown-toggle');
-
-      if (!dropdown || !toggle) {
-        if (globalClickHandler) {
-          document.removeEventListener('click', globalClickHandler);
-          globalClickHandler = null;
-        }
-        return;
-      }
-
-      if (globalClickHandler) {
-        document.removeEventListener('click', globalClickHandler);
-        globalClickHandler = null;
-      }
-
-      if (toggle.dataset.dropdownInitialized === 'true') {
-        return;
-      }
-
-      toggle.dataset.dropdownInitialized = 'true';
-
-      toggle.addEventListener('click', function(e) {
-        e.stopPropagation();
-        dropdown.classList.toggle('open');
-      });
-
-      globalClickHandler = function(e) {
-        const currentDropdown = document.querySelector('.dropdown');
-        if (currentDropdown && !currentDropdown.contains(e.target)) {
-          currentDropdown.classList.remove('open');
-        }
-      };
-      
-      document.addEventListener('click', globalClickHandler);
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initDropdown);
-    } else {
-      setTimeout(initDropdown, 10);
-    }
-
-    document.addEventListener('turbo:load', function() {
-      setTimeout(initDropdown, 10);
-    });
-    document.addEventListener('turbo:render', function() {
-      setTimeout(initDropdown, 10);
-    });
-  </script>
 
   <body>
     <nav>
-      <div class="nav-left">
+      <a href="<%= logged_in? ? (current_user.role == 'recruiter' ? recruiter_home_path : jobseeker_home_path) : root_path %>" class="nav-logo">
+        <img src="https://imgs.search.brave.com/Nx56ZAFFBWCa7z67geLZ0ed2ZdUOs5oDEGeM6Vpzwpk/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wMDgv/NzEwLzE3Ny9zbWFs/bC9qb2Itc2Vla2Vy/cy1sb2dvLWRlc2ln/bi10ZW1wbGF0ZS1z/ZWFyY2gtb25saW5l/LWpvYi1pY29uLXN5/bWJvbC1mcmVlLXZl/Y3Rvci5qcGc" alt="Logo" />
+        <span>JobPortal</span>
+      </a>
+
+      <div class="menu-toggle" onclick="toggleMenu()">
+        <div></div><div></div><div></div>
+      </div>
+
+      <div class="nav-left" id="menu">
         <% if logged_in? %>
           <% if current_user.role == 'recruiter' %>
             <%= link_to t('nav.home'), recruiter_home_path %>
@@ -251,7 +240,48 @@
           </div>
         <% end %>
       </div>
-
     </nav>
+
+    <script>
+      // Dropdown logic
+      let globalClickHandler = null;
+
+      function initDropdown() {
+        const dropdown = document.querySelector('.dropdown');
+        const toggle = document.querySelector('.dropdown-toggle');
+
+        if (!dropdown || !toggle) return;
+
+        if (globalClickHandler) document.removeEventListener('click', globalClickHandler);
+        globalClickHandler = null;
+
+        toggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          dropdown.classList.toggle('open');
+        });
+
+        globalClickHandler = function(e) {
+          if (!dropdown.contains(e.target)) dropdown.classList.remove('open');
+        };
+        document.addEventListener('click', globalClickHandler);
+      }
+
+      // Mobile menu toggle
+      function toggleMenu() {
+        document.getElementById('menu').classList.toggle('active');
+      }
+
+      // Add shadow on scroll
+      window.addEventListener('scroll', function() {
+        const nav = document.querySelector('nav');
+        if (window.scrollY > 10) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      });
+
+      document.addEventListener('DOMContentLoaded', initDropdown);
+    </script>
   </body>
 </html>

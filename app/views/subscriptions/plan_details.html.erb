@@ -168,20 +168,48 @@
       margin-bottom: 20px;
       font-size: 1rem;
     }
+
+    .section-title,
+    .subscription-section .subtext {
+      max-width: 750px;
+      margin: 3.5rem auto 2rem; 
+      padding: 0 1rem;
+      text-align: center;
+    }
+
+    .subscription-section .subtext {
+      font-size: 1.1rem;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .section-title {
+        font-size: 1.8rem;
+        margin-top: 5rem;
+      }
+
+      .subscription-section .subtext {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+      }
+    }
+
   </style>
 </head>
 
 <body>
   <div class="subscription-section">
     <% if current_user.subscription.present? %>
-      <h1>Your Active Subscription</h1>
+      <h1 class="section-title">Your Active Subscription</h1>
       <p class="subtext">You’re enjoying Premium benefits! Your subscription is active.</p>
     <% else %>
-      <h1>No Active Subscription</h1>
+      <h1 class="section-title">No Active Subscription</h1>
       <p class="subtext">You’re not enjoying Premium benefits! Your subscription is not active.</p>
     <% end %>
 
-    <% if @plan_detail.present? && current_user.subscription.present? && current_user.subscription.ended_at.future?%>
+
+    <% if @plan_detail.present? && current_user.subscription.present? && current_user.subscription.ended_at.future? && current_user.is_premium? %>
       <% subscription = current_user.subscription %>
 
       <div class="plan-card premium">
