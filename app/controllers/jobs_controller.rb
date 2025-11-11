@@ -23,8 +23,6 @@ class JobsController < ApplicationController
     @job = current_user.jobs.build
   end
 
-  def edit; end
-
   def create
     @job = current_user.jobs.build(job_params)
     if @job.save
@@ -42,10 +40,12 @@ class JobsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-
+  
   def view_job_description
     @job = Job.find_by(id: params[:job_id])
   end
+  
+  def edit; end
 
   def update
     if @job.update(job_params)
