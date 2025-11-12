@@ -75,3 +75,4 @@ gem 'dotenv-rails' # rubocop:disable Bundler/OrderedGems
 gem 'sidekiq-cron'
 gem 'sidekiq-scheduler'
 gem 'stripe'
+gem 'ruby-openai'

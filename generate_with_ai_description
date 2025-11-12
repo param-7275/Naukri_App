@@ -1,0 +1,37 @@
+https://search.brave.com/ask?q=how+to+implement+a+feature+where+I+can+create+a+JD+by+using+AI+in+rails&source=quick-answer-followup&quickAnswerKey=0622bf6e57e71ccecca12f&quickAnswerQuery=how+to+implement+a+feature+where+I+can+create+a+JD+by+using+AI+in+rails&conversation=085dd095e5c4d013307d83f3adecbea7af20
+
+
+
+ <div class="form-group">
+      <%= form.label :description, t('jobs.common.placeholders.description'), class: 'form-label' %>
+      <%= form.text_area :description, class: 'form-textarea', placeholder: t('jobs.common.placeholders.description'), required: true, data: { ai_generator_target: "description" } %>
+      <%= button_tag "Generate with AI", type: "button",
+                    data: { action: "click->ai_generator#generateWithAI",
+                            ai_generator_target: "button" } %>
+    </div>
+
+
+
+    <div data-controller="ai-generator">
+      <%= form.text_field :title, data: { ai_generator_target: "title" } %>
+      <%= form.text_area :description, data: { ai_generator_target: "description" } %>
+      <%= button_tag "Generate with AI",
+            type: "button",
+            data: {
+              action: "click->ai-generator#generateWithAI",
+              ai_generator_target: "button"
+            } %>
+    </div>
+
+
+    #esme alert aa rha hai
+    <div data-controller="ai-generator">
+      <%= form.text_field :title, data: { ai_generator_target: "title" } %>
+      <%= form.text_area :description, data: { ai_generator_target: "description" } %>
+      <%= button_tag "Generate with AI",
+            type: "button",
+            data: {
+              action: "click->ai-generator#generateWithAI",
+              ai_generator_target: "button"
+            } %>
+    </div>

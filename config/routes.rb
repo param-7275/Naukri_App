@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     match '/destroy(/:id)', to: 'jobs#destroy', as: 'delete_job', via: [:delete]
     get 'recruiter_applicants', to: 'jobs#applicants', as: 'recruiter_applicants'
     get 'view_job_description/(:id)', to: 'jobs#view_job_description', as: 'job_description'
+    get 'generate_ai_description', to: 'jobs#ai_description', as: 'generate_ai_description'
+
 
     # Job Applications Controller Routes
     get 'applied_jobs/', to: 'job_applications#applied_jobs', as: 'applied_jobs'

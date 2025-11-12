@@ -179,17 +179,25 @@
 <body>
   <%= form_with(model: @job, url: create_new_job_path, html: { class: 'form-container' }) do |form| %>
     <h2 class="form-title"><%= t('jobs.new.title') %></h2>
+    
+    <div data-controller="ai-generator">
+      <div class="form-group">
+        <%= form.label :title, t('jobs.common.placeholders.title'), class: 'form-label' %>
+        <%= form.text_field :title, class: 'form-input', placeholder: t('jobs.common.placeholders.title'), required: true, data: { ai_generator_target: "title" } %>
+      </div>
 
-    <div class="form-group">
-      <%= form.label :title, t('jobs.common.placeholders.title'), class: 'form-label' %>
-      <%= form.text_field :title, class: 'form-input', placeholder: t('jobs.common.placeholders.title'), required: true %>
+      <div class="form-group">
+        <%= form.label :description, t('jobs.common.placeholders.description'), class: 'form-label' %>
+        <%= form.text_area :description, class: 'form-textarea', placeholder: t('jobs.common.placeholders.description'), required: true, data: { ai_generator_target: "description" } %>
+        <%= button_tag "Generate with AI",
+              type: "button",
+              data: {
+                action: "click->ai-generator#generateWithAI",
+                ai_generator_target: "button"
+              } %>
+      </div>
     </div>
-
-    <div class="form-group">
-      <%= form.label :description, t('jobs.common.placeholders.description'), class: 'form-label' %>
-      <%= form.text_area :description, class: 'form-textarea', placeholder: t('jobs.common.placeholders.description'), required: true %>
-    </div>
-
+    
     <div class="form-group">
       <%= form.label :company_name, t('jobs.common.placeholders.company_name'), class: 'form-label' %>
       <%= form.text_field :company_name, class: 'form-input', placeholder: t('jobs.common.placeholders.company_name'), required: true %>

@@ -49,6 +49,12 @@
 </head>
 <body>
   <div class="toast-container">
+    <% if flash[:alert].present? %>
+      <% Array(flash[:alert]).each do |msg| %>
+        <div class="toast"><%= msg %></div>
+      <% end %>
+    <% end %>
+
     <% if flash[:error].present? %>
       <% Array(flash[:error]).each do |msg| %>
       <div class="toast"><%= msg %></div>
