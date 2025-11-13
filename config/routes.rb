@@ -67,5 +67,8 @@ Rails.application.routes.draw do
 
     # Defines the root path route ("/")
     root to: 'users#index'
+
+    # Add this route for showing error when user enter Invalid URL's 
+    match '*path', to: 'application#not_found', via: :all
   end
 end

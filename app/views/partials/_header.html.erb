@@ -194,18 +194,22 @@
         <img src="https://imgs.search.brave.com/Nx56ZAFFBWCa7z67geLZ0ed2ZdUOs5oDEGeM6Vpzwpk/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wMDgv/NzEwLzE3Ny9zbWFs/bC9qb2Itc2Vla2Vy/cy1sb2dvLWRlc2ln/bi10ZW1wbGF0ZS1z/ZWFyY2gtb25saW5l/LWpvYi1pY29uLXN5/bWJvbC1mcmVlLXZl/Y3Rvci5qcGc" alt="Logo" />
         <span>JobPortal</span>
       </a>
-
+     
       <div class="menu-toggle" onclick="toggleMenu()">
         <div></div><div></div><div></div>
       </div>
 
-      <div class="nav-left" id="menu">
+      <div class="nav-left" id="menu"> 
         <% if logged_in? %>
           <% if current_user.role == 'recruiter' %>
             <%= link_to t('nav.home'), recruiter_home_path %>
             <%= link_to t('nav.post_job'), new_job_path %>
             <%= link_to t('nav.show_my_jobs'), recruiter_jobs_path %>
             <%= link_to t('nav.show_applicants'), recruiter_applicants_path %>
+
+            <%# <%= link_to "English", locale: 'en' %> 
+            <%# <%= link_to "Hindi", locale: 'hi' %> 
+            <%# <%= link_to "Hindi", locale: 'hi' %> 
           <% else %>
             <%= link_to t('nav.home'), jobseeker_home_path %>
             <%= link_to t('nav.all_jobs'), all_jobs_path %>

@@ -36,7 +36,7 @@ Rails.application.configure do
     env.cache = ActiveSupport::Cache::NullStore.new
   end
   # Show full error reports.
-  config.consider_all_requests_local = true
+  config.consider_all_requests_local = false
 
   # Enable server timing
   config.server_timing = true

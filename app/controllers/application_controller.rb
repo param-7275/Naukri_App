@@ -2,7 +2,6 @@
 
 class ApplicationController < ActionController::Base
   helper_method :current_user, :logged_in?
-
   # around_action :switch_locale
 
   def switch_locale(&)
@@ -13,6 +12,10 @@ class ApplicationController < ActionController::Base
   def extract_locale_from_tld
     parsed_locale = request.host.split('.').last
     I18n.available_locales.map(&:to_s).include?(parsed_locale) ? parsed_locale : nil
+  end
+
+  def not_found
+    render file: Rails.root.join('public', '404.html'), status: :not_found, layout: false
   end
 
   private
