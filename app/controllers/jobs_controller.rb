@@ -74,7 +74,7 @@ class JobsController < ApplicationController
       Write a professional, detailed, and well-structured job description for the position: "#{title}".
       
       Follow this exact structure:
-      if "#{title}" is not maching to any job, please answer is not a valid job or something else.
+      if "#{title}" is not maching to any job, please answer is not a valid job or something else and do not add serial number like 1. , 2. ...... .
       1. Job Title  
       2. Location  
       3. Job Type  
