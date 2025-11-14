@@ -22,28 +22,7 @@ class JobsController < ApplicationController
   end
 
   def create
-    # binding.irb
     @job = current_user.jobs.build(job_params)
-    # job_title = job_params[:title]
-    # @client = OpenAI::Client.new(access_token: ENV['OPENAI_API_KEY'])
-
-    # prompt = <<~PROMPT
-    #   Instruction: Generate a professional job description for a #{job_title} position.
-    #   Content: #{@job_title}
-    #   Response:
-    # PROMPT
-
-    # response = @client.chat(
-    #   parameters: {
-    #     model: "gpt-4o-mini",
-    #     messages: [{ role: "user", content: prompt }],
-    #     temperature: 0.2,
-    #     max_tokens: 200
-    #   }
-    # )
-
-    # response.dig("choices", 0, "message", "content")&.strip
-
     if @job.save
       users = User.where(role: 'jobseeker')
       users.find_each do |user|
@@ -66,30 +45,39 @@ class JobsController < ApplicationController
     if title.blank?
       return render json: { error: "Title is required" }, status: :unprocessable_entity
     end
-    @client = OpenAI::Client.new(access_token: ENV['OPENAI_API_KEY'])
-    prompt = <<~PROMPT
-      You are an expert HR content writer.
-      Write a professional, detailed, and well-structured job description for the position: "#{title}".
-      
-      Follow this exact structure:
-      if "#{title}" is not maching to any job, please answer is not a valid job or something else and do not add serial number like 1. , 2. ...... .
-      1. Job Title  
-      2. Location  
-      3. Job Type  
-      4. Department  
-      5. Reports To  
-      6. Company Overview  
-      7. Position Overview  
-      8. Key Responsibilities  
-      9. Required Skills & Qualifications  
-      10. Preferred Qualifications  
-      11. What We Offer  
 
-      The tone should be formal, confident, and employer-focused.
-      Response:
+    api_key = ENV['OPENAI_API_KEY']
+    if api_key.blank?
+      return render json: { error: "OpenAI API key is not configured" }, status: :internal_server_error
+    end
+
+    begin
+      @client = OpenAI::Client.new(access_token: api_key)
+      prompt = <<~PROMPT
+        You are an expert HR content writer.
+        Write a professional, detailed, and well-structured job description for the position: "#{title}".
+        
+        Follow this exact structure:
+        If "#{title}" is not matching to any valid job title, please respond that it is not a valid job title and also do not add serial numbers like 1., 2., etc.
+        
+        Otherwise, structure the response as follows:
+        1. Job Title  
+        2. Location  
+        3. Job Type  
+        4. Department  
+        5. Reports To  
+        6. Company Overview  
+        7. Position Overview  
+        8. Key Responsibilities  
+        9. Required Skills & Qualifications  
+        10. Preferred Qualifications  
+        11. What We Offer  
+
+        The tone should be formal, confident, and employer-focused.
+        Response:
       PROMPT
 
-    response = @client.chat(
+      response = @client.chat(
         parameters: {
           model: 'gpt-4o-mini',
           messages: [{ role: "user", content: prompt }],
@@ -98,8 +86,18 @@ class JobsController < ApplicationController
         }
       )
 
-    jd = response.dig("choices", 0, "message", "content")&.strip
-    render json: { description: jd }
+      jd = response.dig("choices", 0, "message", "content")&.strip
+      
+      if jd.blank?
+        return render json: { error: "Failed to generate description. Please try again." }, status: :unprocessable_entity
+      end
+
+      render json: { description: jd }
+    rescue StandardError => e
+      Rails.logger.error "OpenAI API Error: #{e.message}"
+      Rails.logger.error e.backtrace.join("\n")
+      render json: { error: "An error occurred while generating the description. Please try again later." }, status: :internal_server_error
+    end
   end
   
   def view_job_description
