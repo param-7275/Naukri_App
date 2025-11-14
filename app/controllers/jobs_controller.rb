@@ -1,7 +1,5 @@
-# frozen_string_literal: true
-
 class JobsController < ApplicationController
-  before_action :ensure_recruiter!
+  before_action :ensure_recruiter!, except: [:view_job_description]
   before_action :set_job, only: %i[show edit update destroy]
 
   def index

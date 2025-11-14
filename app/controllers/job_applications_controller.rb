@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class JobApplicationsController < ApplicationController # rubocop:disable Metrics/ClassLength
+class JobApplicationsController < ApplicationController
   before_action :require_login
   before_action :ensure_jobseeker!, only: %i[new create applied_jobs]
   before_action :ensure_recruiter!, only: [:change_application_status]
@@ -84,7 +84,7 @@ class JobApplicationsController < ApplicationController # rubocop:disable Metric
     # end
   end
 
-  def change_application_status # rubocop:disable Metrics/AbcSize
+  def change_application_status
     @job_application = JobApplication.find_by(id: params[:id])
 
     if @job_application.present?
@@ -110,7 +110,7 @@ class JobApplicationsController < ApplicationController # rubocop:disable Metric
     end
   end
 
-  def create # rubocop:disable Metrics/AbcSize
+  def create
     @job = Job.find_by(id: params[:job_id])
     return redirect_to recruiter_applicants_path, alert: 'Job not found.' unless @job
 

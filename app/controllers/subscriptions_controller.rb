@@ -81,7 +81,7 @@ class SubscriptionsController < ApplicationController
     # end
   end
 
-  def new # rubocop:disable Metrics/AbcSize
+  def new
     if current_user.stripe_customer_id.blank?
       stripe_customer = Stripe::Customer.create(
         name: current_user.username,
@@ -103,7 +103,7 @@ class SubscriptionsController < ApplicationController
     redirect_to pricing_path
   end
 
-  def success # rubocop:disable Metrics/AbcSize
+  def success
     payment_intent_id = params[:payment_intent]
     pi = Stripe::PaymentIntent.retrieve(payment_intent_id)
     if pi.status == 'succeeded'

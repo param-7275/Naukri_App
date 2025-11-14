@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-source 'https://rubygems.org' # rubocop:disable Layout/EmptyLineAfterMagicComment
+source 'https://rubygems.org'
 
 ruby '3.4.4'
 
@@ -54,7 +54,6 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'letter_opener'
   gem 'web-console'
-  # gem 'rubocop', require: false
   gem 'letter_opener_web'
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
@@ -71,7 +70,7 @@ end
 gem 'devise'
 gem 'redis'
 gem 'sidekiq'
-gem 'dotenv-rails' # rubocop:disable Bundler/OrderedGems
+gem 'dotenv-rails'
 gem 'sidekiq-cron'
 gem 'sidekiq-scheduler'
 gem 'stripe'

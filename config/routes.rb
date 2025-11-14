@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     match '/update(/:id)', to: 'jobs#update', as: 'update_job', via: %i[get put patch]
     match '/destroy(/:id)', to: 'jobs#destroy', as: 'delete_job', via: [:delete]
     get 'recruiter_applicants', to: 'jobs#applicants', as: 'recruiter_applicants'
-    get 'view_job_description/(:id)', to: 'jobs#view_job_description', as: 'job_description'
+    get 'view_job_description/:job_id', to: 'jobs#view_job_description', as: 'job_description'
     get 'generate_ai_description', to: 'jobs#ai_description', as: 'generate_ai_description'
 
 
